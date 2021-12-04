@@ -6,17 +6,29 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { ZimmerListComponent } from './zimmer-list/zimmer-list.component';
+import { ZimmerDetailsComponent } from './zimmer-details/zimmer-details.component';
+import { ControlPanelComponent } from './control-panel/control-panel.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    ZimmerListComponent,
+    ZimmerDetailsComponent,
+    ControlPanelComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

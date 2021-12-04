@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm">
+            <select class="form-control">
+                <option value="all" selected disabled>בחר איזור</option>
+                <option value="all">הכל</option>
+                <option value="north">צפון</option>
+                <option value="center">מרכז</option>
+                <option value="south">דרום</option>
+            </select>
+        </div>
+        <div class="col-sm">
+            <!-- https://material.angular.io/components/datepicker/overview -->
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date">
+                <input matEndDate placeholder="End date">
+            </mat-date-range-input>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </div>
+        <div class="col-sm">
+
+        </div>
+    </div>
+</div>
