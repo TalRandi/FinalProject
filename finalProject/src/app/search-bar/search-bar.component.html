@@ -11,12 +11,20 @@
             </select>
         </div>
         <div class="col-sm">
-            <!-- https://material.angular.io/components/datepicker/overview -->
-            <mat-date-range-input [rangePicker]="picker">
-                <input matStartDate placeholder="Start date">
-                <input matEndDate placeholder="End date">
-            </mat-date-range-input>
-            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-form-field appearance="fill">
+                <mat-label>בחר תאריכים</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate placeholder="תאריך הגעה">
+                  <input matEndDate placeholder="תאריך עזיבה">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            <!-- <mat-form-field>
+                <input matInput [matDatepicker]="myDatePicker">
+                <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myDatePicker></mat-datepicker>
+            </mat-form-field> -->
         </div>
         <div class="col-sm">
 
