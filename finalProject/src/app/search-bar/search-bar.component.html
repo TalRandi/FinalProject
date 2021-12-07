@@ -1,14 +1,14 @@
 <div class="container">
     <div class="row">
-
         <div class="col-sm">
-            <select class="form-control">
-                <option value="all" selected disabled>בחר איזור</option>
-                <option value="all">הכל</option>
-                <option value="north">צפון</option>
-                <option value="center">מרכז</option>
-                <option value="south">דרום</option>
-            </select>
+            <mat-form-field appearance="fill">
+                <mat-label>בחר איזור</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let region of regions" [value]="region.value">
+                    {{region.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
         </div>
         <div class="col-sm">
             <mat-form-field appearance="fill">
@@ -20,14 +20,13 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
               </mat-form-field>
-            <!-- <mat-form-field>
-                <input matInput [matDatepicker]="myDatePicker">
-                <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
-                <mat-datepicker #myDatePicker></mat-datepicker>
-            </mat-form-field> -->
+            
         </div>
         <div class="col-sm">
-
+            <angular-input-counter></angular-input-counter>
+        </div>
+        <div class="col-sm">
+            <button mat-stroked-button color="primary">חיפוש</button>
         </div>
     </div>
 </div>
