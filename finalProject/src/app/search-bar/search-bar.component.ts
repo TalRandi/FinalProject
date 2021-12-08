@@ -4,6 +4,10 @@ interface Region {
   value: string;
   viewValue: string;
 }
+interface Sort {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-search-bar',
@@ -12,13 +16,15 @@ interface Region {
 })
 export class SearchBarComponent implements OnInit {
 
-
-
   constructor() { }
 
   ngOnInit(): void {
     
   }
+  sorts: Sort[] = [
+    {value: 'all', viewValue: 'המומלצים'},
+    {value: 'center', viewValue: 'מחיר'},
+  ];
   regions: Region[] = [
     {value: 'all', viewValue: 'הכל'},
     {value: 'north', viewValue: 'צפון'},
