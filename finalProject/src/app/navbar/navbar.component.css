@@ -1,3 +1,8 @@
 *{
     direction: rtl;
 }
+#publish{
+    color: aliceblue;
+    border: solid 2px rgb(119, 174, 255);
+    border-radius: 10px;
+}
