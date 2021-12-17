@@ -1,10 +1,9 @@
 *{
     direction: rtl;
 }
-#search_bar{
+#search-bar{
     margin-top: 0.5%;
     background-color: rgba(96, 92, 161, 0.1);
     border-radius: 25px;
     padding: 2%;
-    text-align: center;
 }

@@ -3,6 +3,16 @@
 }
 #publish{
     color: aliceblue;
-    border: solid 2px rgb(119, 174, 255);
+    border: solid 2px #ECB365;
     border-radius: 10px;
+    background-color: #041C32;
+    cursor: grab;
+}
+#publish:hover{
+    background-color: #ECB365;
+    transition: 0.5s;
+}
+.primary-color{
+    background-color: #041C32;
+    /* third-color = 064663 */
 }

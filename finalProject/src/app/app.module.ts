@@ -17,9 +17,11 @@ import { ZimmerService } from './shared-data/zimmer.service';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { ZimmerListComponent } from './zimmer-list/zimmer-list.component';
-import { ZimmerDetailsComponent } from './zimmer-details/zimmer-details.component';
+import { ZimmerListComponent } from './zimmer/zimmer-list/zimmer-list.component';
+import { ZimmerDetailsComponent } from './zimmer/zimmer-details/zimmer-details.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
+import { ZimmerComponent } from './zimmer/zimmer.component';
+import { CreateZimmerComponent } from './create-zimmer/create-zimmer.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { ControlPanelComponent } from './control-panel/control-panel.component';
     ZimmerListComponent,
     ZimmerDetailsComponent,
     ControlPanelComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ZimmerComponent,
+    CreateZimmerComponent
   ],
   imports: [
     BrowserModule,

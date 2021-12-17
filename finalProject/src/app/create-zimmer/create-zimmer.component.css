@@ -1,0 +1,15 @@
+*{
+    direction: rtl;
+    text-align: right;
+}
+.container{
+    margin-top: 60px;
+}
+
+input.ng-invalid.ng-touched{
+    border: 1px solid red;
+}
+
+.help-block{
+    color: red;
+}
