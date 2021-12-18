@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-md-4">
 
         <form (ngSubmit)="onSubmit()" #form="ngForm">
-  
+          <h1>פרטים כלליים:</h1>
           <div class="form-group">
             <label for="owner-name">שם בעל הצימר *</label>
             <input type="text" name="owner-name" ngModel class="form-control" required #ownerName="ngModel">
-            <span class="help-block" *ngIf="ownerName.touched && ownerName.invalid">* שדה זה הוא חובה!</span>
+            <span class="help-block" *ngIf="ownerName.touched && ownerName.invalid">* שדה חובה!</span>
           </div> 
     
           <div class="form-group">
@@ -19,7 +19,7 @@
           <div class="form-group">
             <label for="zimmer-name">שם צימר *</label>
             <input type="text" name="zimmer-name" ngModel class="form-control" required #zimmerName="ngModel">
-            <span class="help-block" *ngIf="zimmerName.touched && zimmerName.invalid">* שדה זה הוא חובה!</span>
+            <span class="help-block" *ngIf="zimmerName.touched && zimmerName.invalid">* שדה חובה!</span>
           </div> 
           
           <div class="form-group">
@@ -29,27 +29,33 @@
           </div> 
 
           <div class="form-group">
-            <label for="region">איזור</label>
+            <label for="region">איזור *</label>
             <select name="region" class="form-control">
               <option *ngFor="let region of regions" [value]="region">{{region }}</option>
             </select>
           </div>
 
-          <div class="row">
+          <div class="form-group">
+            <label for="general-description">תיאור *</label>
+            <textarea name="general-description" class="form-control" ngModel required rows="4" #generalDescription="ngModel"></textarea>
+            <span class="help-block" *ngIf="generalDescription.touched && generalDescription.invalid">* שדה חובה!</span>
+          </div>
+
+          <!-- <div class="row">
             <div class="form-group col-md-6">
-                <label for="regular-price">מחיר לילה אמצ"ש</label>
+                <label for="regular-price">מחיר לילה אמצ"ש *</label>
                 <input type="number" name="regular-price" class="form-control" min="1" required ngModel #regularPrice="ngModel">
                 <span class="help-block" *ngIf="regularPrice.touched && regularPrice.invalid">* שדה זה הוא חובה!</span>
             </div>
             <div class="form-group col-md-6">
-                <label for="weekend-price">מחיר לילה סופ"ש</label>
+                <label for="weekend-price">מחיר לילה סופ"ש *</label>
                 <input type="number" name="weekend-price" class="form-control" min="1" required ngModel #weekendPrice="ngModel">
                 <span class="help-block" *ngIf="weekendPrice.touched && weekendPrice.invalid">* שדה זה הוא חובה!</span>
             </div>
-          </div>
+          </div> -->
   
           <p *ngIf="form.invalid && form.touched">לפחות אחד מהשדות אינו חוקי!</p>
-          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">אישור</button>
   
         </form>
         
@@ -63,5 +69,62 @@
           </div>
         </div> -->
       
+    </div>
+    <div class="col-sm-6 border-right col-md-8">
+      <h1>פרטים על יחידות האירוח:</h1>
+      <div class="row hut-details">
+        <div class="row">
+          <div class="col-md-3 col-6">
+            <div class="form-group">
+              <label for="hut-name">שם יחידה *</label>
+              <input type="text" name="hut-name" ngModel class="form-control" required #hutName="ngModel">
+              <span class="help-block" *ngIf="hutName.touched && hutName.invalid">* שדה חובה!</span>
+            </div> 
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="form-group">
+              <label for="capacity">מקסימום אורחים *</label>
+              <input type="number" name="capacity" ngModel class="form-control" min='1' required #capacity="ngModel">
+              <span class="help-block" *ngIf="capacity.touched && capacity.invalid">* שדה חובה!</span>
+            </div> 
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="form-group">
+              <label for="regular-price">מחיר ללילה באמצ"ש *</label>
+              <input type="number" name="regular-price" ngModel class="form-control" min='1' required #regularPrice="ngModel">
+              <span class="help-block" *ngIf="regularPrice.touched && regularPrice.invalid">* שדה חובה!</span>
+            </div> 
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="form-group">
+              <label for="weekend-price">מחיר ללילה בסופ"ש *</label>
+              <input type="number" name="weekend-price" ngModel class="form-control" min='1' required #weekendPrice="ngModel">
+              <span class="help-block" *ngIf="weekendPrice.touched && weekendPrice.invalid">* שדה חובה!</span>
+            </div> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <mat-checkbox type="checkbox" name="jacuzzi" ngModel color="primary" #jacuzzi="ngModel">ג'קוזי</mat-checkbox>
+            </div> 
+          </div>
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <mat-checkbox type="checkbox" name="pool" ngModel color="primary" #pool="ngModel">בריכה</mat-checkbox>
+            </div> 
+          </div>
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <mat-checkbox type="checkbox" name="pool" ngModel color="primary" #pool="ngModel">אופציה 1</mat-checkbox>
+            </div> 
+          </div>
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <mat-checkbox type="checkbox" name="pool" ngModel color="primary" #pool="ngModel">אופציה 2</mat-checkbox>
+            </div> 
+          </div>
+        </div>
+      </div>
     </div>
   </div>

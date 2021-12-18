@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { AngularCounterModule } from 'angular-input-counter';
@@ -48,7 +49,8 @@ import { CreateZimmerComponent } from './create-zimmer/create-zimmer.component';
     AngularCounterModule,
     MatButtonModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatCheckboxModule
   ],
   providers: [ZimmerService],
   bootstrap: [AppComponent]

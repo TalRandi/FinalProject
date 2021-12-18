@@ -13,3 +13,9 @@ input.ng-invalid.ng-touched{
 .help-block{
     color: red;
 }
+.hut-details{
+    border: solid 0.1px #ECB365;
+    border-radius: 5px;
+    padding: 0 2%;
+}
+
