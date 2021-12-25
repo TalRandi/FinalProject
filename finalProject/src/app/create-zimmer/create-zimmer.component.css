@@ -17,5 +17,22 @@ input.ng-invalid.ng-touched{
     border: solid 0.1px #ECB365;
     border-radius: 5px;
     padding: 0 2%;
+    margin-top: 2%;
 }
-
+::ng-deep .mat-checkbox-inner-container {
+    margin-left:10% !important;
+}
+button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    background-color: #041C32;
+    cursor: grab;
+}
+button:hover{
+    background-color: #ECB365;
+    transition: 0.5s;
+}
+.container{
+    margin-top: 3%;
+}

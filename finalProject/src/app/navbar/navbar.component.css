@@ -16,3 +16,8 @@
     background-color: #041C32;
     /* third-color = 064663 */
 }
+#logo{
+    background-color: #ffffff;
+    padding: 5%;
+    border-radius: 6px;
+}
