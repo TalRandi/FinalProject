@@ -6,4 +6,9 @@
     background-color: rgba(96, 92, 161, 0.1);
     border-radius: 25px;
     padding: 2%;
+    text-align: start;
 }
+mat-form-field{
+    text-align:start;
+}
+

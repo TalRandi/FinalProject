@@ -1,1 +1,36 @@
-<p>zimmer-list works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 col-md-2">
+            <app-control-panel></app-control-panel>            
+        </div>
+
+        <div class="col-8">
+            <ng-template [ngIf]="zimmers_list.length > 0" [ngIfElse]="Empty">
+                <div class="row justify-content-start hut-details" *ngFor="let zimmer of zimmers_list">
+                    <!-- {{zimmer}} -->
+                    <div class="col-4">
+                        <h1>מנהרת המנהרות</h1>
+                        <h4>עזה</h4>
+                        <h2>0543456789 (משה)</h2>
+                    </div>
+                    <div class="col-4">
+                        <h2>מחיר ללילה באמצ"ש: 500</h2>
+                        <h2>מחיר ללילה בסופ"ש: 580</h2>
+                        <h4>ג'קוזי V</h4>
+                        <h4>בריכה V</h4>
+                        <h4>סאונה V</h4>
+                    </div>
+                    <div class="col-4">
+                        <img src="../../../assets/Logo.png" class="img-fluid">
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #Empty>
+                <div class="row justify-content-center">
+                    <h1>אין פריטים להצגה</h1>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+</div>

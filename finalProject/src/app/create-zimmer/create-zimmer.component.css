@@ -27,11 +27,14 @@ button{
     border: solid 2px #ECB365;
     border-radius: 10px;
     background-color: #041C32;
-    cursor: grab;
+    cursor: pointer;
 }
 button:hover{
     background-color: #ECB365;
     transition: 0.5s;
+}
+.float-md-left{
+    margin: 1% 0%;
 }
 .container{
     margin-top: 3%;

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ZimmerListComponent implements OnInit {
 
+  zimmers_list = [1, 2, 3, 4, 5]
+
   constructor() { }
 
   ngOnInit(): void {
