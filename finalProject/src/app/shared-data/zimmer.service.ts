@@ -2,21 +2,28 @@ import { Subject } from "rxjs";
 import { Zimmer } from "./zimmer.model";
 
 export class ZimmerService{
-    recipesChanged= new Subject<Zimmer[]>();
 
-    // private zimmers: Zimmer[];
+    zimmersChanged= new Subject<Zimmer[]>();
+    private zimmers: Zimmer[];
 
-    // getRecipes(){
-    //   if(this.recipes)  
-    //     return this.recipes.slice();
-    // }
-    // getRecipe(index:number){
-    //   return this.recipes[index]
-    // }
+    getZimmers(){
+      if(this.zimmers)
+        return this.zimmers.slice();
+        
+        return []
+    }
+    setZimmers(zimmers: Zimmer[]){
+        this.zimmers = zimmers;
+        this.zimmersChanged.next(this.zimmers.slice());
+    }  
+    // Todo: check if we want to return the zimmer by index or name
+    getZimmer(index: number){
+      return this.zimmers[index]
+    }
 
-    // addRecipe(recipe: Recipe){
-    //   this.recipes.push(recipe);
-    //   this.recipesChanged.next(this.recipes.slice());
+    // addZimmer(zimmer: Zimmer){
+    //   this.zimmers.push(zimmer);
+    //   this.zimmersChanged.next(this.zimmers.slice());
     // }
 
     // updateRecipe(index: number, newRecipe: Recipe){
