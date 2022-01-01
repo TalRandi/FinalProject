@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { AngularCounterModule } from 'angular-input-counter';
+import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { ZimmerService } from './shared-data/zimmer.service';
@@ -50,9 +51,11 @@ import { CreateZimmerComponent } from './create-zimmer/create-zimmer.component';
     MatButtonModule,
     MatSelectModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatIconModule
   ],
   providers: [ZimmerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

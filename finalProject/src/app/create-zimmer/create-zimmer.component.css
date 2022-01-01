@@ -33,9 +33,28 @@ button:hover{
     background-color: #ECB365;
     transition: 0.5s;
 }
+button:hover[disabled]{
+    color: aliceblue;
+    background-color: #041C32;
+    cursor: not-allowed;
+}
+button:active{
+    background-color: #f59e23;
+    transform: translateY(1px);
+    transition: none;
+}
+
 .float-md-left{
     margin: 1% 0%;
 }
 .container{
     margin-top: 3%;
+}
+
+.new-hut{
+
+}
+.hut-submitted{
+    background-color: rgb(235, 233, 233);
+    opacity: 0.7;
 }
