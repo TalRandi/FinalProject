@@ -2,10 +2,11 @@
     text-align: right;   
 }
 .hut-details{
-    border: solid 3px #041C32;
-    background-color: rgb(236, 179, 101, 1);
-    box-shadow: 1px 1px 20px 1px #041C32;
+    /* border: solid 3px #041C32; */
+    /* background-color: rgb(236, 179, 101, 1); */
+    background-color: rgb(239, 239, 255);
+    box-shadow: 5px 5px 10px 1px #04293A;
     border-radius: 5px;
-    padding: 0 2%;
-    margin-top: 2%;
+    margin-top: 3%;
+    padding-right: 2%;
 }

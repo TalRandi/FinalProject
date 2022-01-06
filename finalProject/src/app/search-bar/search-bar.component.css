@@ -2,13 +2,19 @@
     direction: rtl;
 }
 #search-bar{
-    margin-top: 0.5%;
-    background-color: rgba(96, 92, 161, 0.1);
-    border-radius: 25px;
+    margin-top: 3%;
+    background-color: rgb(239, 239, 255);
+    border-radius: 5px;
     padding: 2%;
     text-align: start;
 }
+
 mat-form-field{
     text-align:start;
 }
 
+button{
+    border-radius: 100px;
+    border: solid black 3px;
+    height: 3.5rem;
+}

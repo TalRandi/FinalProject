@@ -8,7 +8,7 @@ import { ZimmerComponent } from './zimmer/zimmer.component';
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch:'full'},
   
-  {path: 'create-BnB', component: CreateZimmerComponent},
+  {path: 'create-zimmer', component: CreateZimmerComponent},
   {path: 'home', component: ZimmerComponent, children:[
       {path:'', component:ZimmerListComponent},
       {path:':id', component:ZimmerDetailsComponent}

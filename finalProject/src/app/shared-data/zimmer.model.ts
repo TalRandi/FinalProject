@@ -2,7 +2,7 @@ import { Hut } from "./hut.model"
 
 export class Zimmer {
     public ownerName: string;
-    public phone: number;
+    public phone: string;
     public zimmerName: string;
     public email: string;
     public generalDescription: string;
@@ -11,7 +11,7 @@ export class Zimmer {
     public images: string[];
     public huts: Hut[];
 
-    constructor(ownerName: string, phone: number, zimmerName: string, email: string, generalDescription: string, 
+    constructor(ownerName: string, phone: string, zimmerName: string, email: string, generalDescription: string, 
         total_capacity: number, region: string, images: string[], huts: Hut[]){
         
         this.ownerName = ownerName;
