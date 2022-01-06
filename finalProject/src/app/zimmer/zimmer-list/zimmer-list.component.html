@@ -8,19 +8,19 @@
             <ng-template [ngIf]="zimmers_list.length > 0" [ngIfElse]="Empty">
                 <div class="row justify-content-start hut-details" *ngFor="let zimmer of zimmers_list; let index = index">
                     <!-- {{zimmer}} -->
-                    <div class="col-4">
+                    <div class="col-3">
                         <h1>{{ zimmer.zimmerName }}</h1>
                         <h4>{{ zimmer.region }} <mat-icon> location_on</mat-icon></h4>
                         <h2>{{ zimmer.ownerName }} {{ zimmer.phone }}</h2>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <h2>מחיר ללילה באמצ"ש: {{ zimmer.email }}</h2>
                         <h2>מחיר ללילה בסופ"ש: {{ zimmer.generalDescription }}</h2>
                         <h4><mat-icon>hot_tub</mat-icon> ג'קוזי</h4>
                         <h4><mat-icon>pool</mat-icon> בריכה</h4>
                         <h4><mat-icon>free_breakfast</mat-icon> ארוחת בוקר</h4>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <img src="../../../assets/{{index}}.jpg" class="img-fluid">
                     </div>
                 </div>
