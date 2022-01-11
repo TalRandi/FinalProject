@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { ZimmerService } from './shared-data/zimmer.service';
+import { DataStorageService } from './shared-data/data-storage.service';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -52,9 +54,10 @@ import { CreateZimmerComponent } from './create-zimmer/create-zimmer.component';
     MatSelectModule,
     FormsModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
-  providers: [ZimmerService],
+  providers: [ZimmerService, DataStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
