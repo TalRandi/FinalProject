@@ -21,6 +21,7 @@ export class CreateZimmerComponent implements OnInit {
   zimmer: Zimmer;
   hut: Hut;
   huts:Hut[] = []
+  images: File[] = [];
 
   constructor(private storage: DataStorageService) { }
 
@@ -57,7 +58,6 @@ export class CreateZimmerComponent implements OnInit {
         min_price_regular,
         min_price_weekend,
         this.generalForm.value.region,
-        [],
         this.huts
       )   
       console.log(this.zimmer);
@@ -65,9 +65,16 @@ export class CreateZimmerComponent implements OnInit {
         item.reset()
       })
       this.generalForm.reset();
-      this.storage.storeZimmer(this.zimmer)
+      this.storage.storeZimmer(this.zimmer, this.images)
     }
   }
+  onSelect(event: any) {
+    this.images.push(...event.addedFiles);
+  }
+  onRemove(event: any) {
+    this.images.splice(this.images.indexOf(event), 1);
+  }
+
   
   ngOnInit(): void {  }
 

@@ -40,7 +40,14 @@
             <textarea name="generalDescription" class="form-control" ngModel required rows="4" #generalDescription="ngModel"></textarea>
             <span class="help-block" *ngIf="generalDescription.touched && generalDescription.invalid">* שדה חובה!</span>
           </div>
-  
+          <hr>
+          <h1>תמונות כלליות</h1>
+          <h4>תמונות המתארות את מתחם הצימרים. אל דאגה - בהמשך תוכלו גם להעלות תמונות עבור כל יחידה</h4>
+          <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg, image/jpg, image/png, image/tiff, image/heic">
+            <ngx-dropzone-label>גרור לכאן</ngx-dropzone-label>
+            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="img" *ngFor="let img of images" [removable]="true" (removed)="onRemove(img)"></ngx-dropzone-image-preview>
+          </ngx-dropzone>
+          
           <p *ngIf="form.invalid && form.touched">לפחות אחד מהשדות אינו חוקי!</p>
           <button type="submit" class="btn" [disabled]="form.invalid || hutValidator()">אישור</button>
         </form>

@@ -26,6 +26,11 @@ import { ZimmerDetailsComponent } from './zimmer/zimmer-details/zimmer-details.c
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { ZimmerComponent } from './zimmer/zimmer.component';
 import { CreateZimmerComponent } from './create-zimmer/create-zimmer.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -55,9 +60,13 @@ import { CreateZimmerComponent } from './create-zimmer/create-zimmer.component';
     FormsModule,
     MatCheckboxModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxDropzoneModule,
+
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule
   ],
-  providers: [ZimmerService, DataStorageService],
+  providers: [ZimmerService, DataStorageService, {provide: BUCKET, useValue: 'goeasy-5d966.appspot.com'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
