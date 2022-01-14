@@ -58,6 +58,7 @@ export class CreateZimmerComponent implements OnInit {
         min_price_regular,
         min_price_weekend,
         this.generalForm.value.region,
+        Math.random().toString(36).substring(2, 15),
         this.huts
       )   
       console.log(this.zimmer);
@@ -65,7 +66,7 @@ export class CreateZimmerComponent implements OnInit {
         item.reset()
       })
       this.generalForm.reset();
-      this.storage.storeZimmer(this.zimmer, this.images)
+      this.storage.storeZimmer(this.zimmer, this.images, this.zimmer.zimmer_id)
     }
   }
   onSelect(event: any) {
@@ -97,6 +98,10 @@ export class CreateZimmerComponent implements OnInit {
       item.weekendPrice,
       item.jacuzzi,
       item.pool,
+      item.air_conditioner,
+      item.wifi,
+      item.sauna,
+      item.parking,
       []
     )
     this.huts.push(this.hut) 
