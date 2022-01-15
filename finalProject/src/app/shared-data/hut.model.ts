@@ -13,6 +13,7 @@ export class Hut {
 
     constructor(hutName: string, capacity: number, regularPrice: number, weekendPrice: number, jacuzzi: boolean, pool: boolean,
         air_conditioner: boolean, wifi: boolean, sauna: boolean, parking: boolean, images: string[]){
+            
         this.hutName = hutName;
         this.capacity = capacity
         this.regularPrice = regularPrice;
