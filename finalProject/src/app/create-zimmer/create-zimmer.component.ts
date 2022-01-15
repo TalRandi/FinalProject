@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Zimmer } from '../shared-data/zimmer.model'
 import { Hut } from '../shared-data/hut.model'
-import { DataStorageService } from '../shared-data/data-storage.service';  
+import { DataStorageService } from '../shared-data/data-storage.service';
+import { Router } from '@angular/router';  
 
 
 @Component({
@@ -23,7 +24,7 @@ export class CreateZimmerComponent implements OnInit {
   huts:Hut[] = []
   images: File[] = [];
 
-  constructor(private storage: DataStorageService) { }
+  constructor(private storage: DataStorageService, private router: Router) { }
 
   onSubmit(){
     
@@ -62,11 +63,10 @@ export class CreateZimmerComponent implements OnInit {
         this.huts
       )   
       console.log(this.zimmer);
-      this.hutForm.forEach(item => {
-        item.reset()
-      })
-      this.generalForm.reset();
-      this.storage.storeZimmer(this.zimmer, this.images, this.zimmer.zimmer_id)
+      
+      this.storeImagesUrl(this.zimmer, this.images);
+      this.storage.storeZimmer(this.zimmer, this.images);
+      this.router.navigate(['/home'])
     }
   }
   onSelect(event: any) {
@@ -81,7 +81,6 @@ export class CreateZimmerComponent implements OnInit {
 
   
   onAddHut(){
-    
     this.hut_counter.push(this.hut_counter[this.hut_counter.length-1]+1)
   }
 
@@ -120,6 +119,12 @@ export class CreateZimmerComponent implements OnInit {
       })
     }
     return isInvalidHut
+  }
+  storeImagesUrl(zimmer: Zimmer, images: File[]){
+    for (let index = 0; index < images.length; index++) {
+      let url = `/zimmer-images/${zimmer.zimmer_id}/${images[index].name}`;
+      zimmer.images.push(url)             
+  }
   }
 }
 

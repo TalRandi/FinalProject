@@ -17,7 +17,7 @@ export class ZimmerListComponent implements OnInit {
 
   ngOnInit(): void {
     this.storage.fetchZimmers().subscribe(zimmers => {
-      this.zimmers_list = zimmers
+      this.zimmers_list = zimmers  
     })
     
   }

@@ -11,28 +11,23 @@ export class DataStorageService {
     
     constructor(private http: HttpClient, private storage: AngularFireStorage){}
 
-    storeZimmer(zimmer: Zimmer, images: File[], zimmer_id: string){
+    storeZimmer(zimmer: Zimmer, images: File[]){
         
         this.http.post(this.url, zimmer).subscribe(() => {
             // Uploads all zimmer's images
             for (let index = 0; index < images.length; index++) {
-                this.storage.upload(`/zimmer-images/${zimmer_id}/${images[index].name}`, images[index]);                
+                let url = `/zimmer-images/${zimmer.zimmer_id}/${images[index].name}`;       
+                this.storage.upload(url, images[index]);                
             }
         });
     }
 
-
     fetchZimmers(){
         return this.http.get< Zimmer[]>(this.url).pipe(map(zimmers => {
+
             let result = [] 
             for(var i in zimmers)
                 result.push(zimmers[i]);
-
-
-            // this.task.task.snapshot.ref.getDownloadURL().then(downloadURL => {
-            //     console.log(downloadURL);
-            // });
-
             return result    
         })
     )}   

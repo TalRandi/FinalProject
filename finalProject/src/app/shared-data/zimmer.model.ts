@@ -11,6 +11,7 @@ export class Zimmer {
     public min_price_weekend: number;
     public region: string;
     public zimmer_id: string;
+    public images: string[] = [];
     public huts: Hut[];
 
     constructor(ownerName: string, phone: string, zimmerName: string, email: string, generalDescription: string, 

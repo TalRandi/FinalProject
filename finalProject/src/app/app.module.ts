@@ -16,7 +16,6 @@ import { AngularCounterModule } from 'angular-input-counter';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { ZimmerService } from './shared-data/zimmer.service';
 import { DataStorageService } from './shared-data/data-storage.service';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -66,7 +65,7 @@ import { environment } from '../environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule
   ],
-  providers: [ZimmerService, DataStorageService, {provide: BUCKET, useValue: 'goeasy-5d966.appspot.com'}],
+  providers: [DataStorageService, {provide: BUCKET, useValue: 'goeasy-5d966.appspot.com'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
