@@ -12,6 +12,7 @@
 }
 
 .hut-details:hover{
+    
     border: solid 1px #041C32;
     /* box-shadow: 5px 5px 10px 1px #04293A; */
     background: linear-gradient(#e6e6e69d, #ffffff, #e6e6e69d);
