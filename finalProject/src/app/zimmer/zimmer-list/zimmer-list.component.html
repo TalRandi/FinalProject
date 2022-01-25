@@ -6,7 +6,21 @@
 
         <div class="col-12 col-md-8">
             <ng-template [ngIf]="zimmers_list.length > 0" [ngIfElse]="Empty">
-                <h1><b>({{ zimmers_list.length }} תוצאות)</b></h1>
+                <div class="row">
+                    <div class="col-4 col-auto ml-auto">
+                        <h1><b>({{ zimmers_list.length }} תוצאות)</b></h1>
+                    </div>
+                    <div class="col-auto mr-auto">
+                        <mat-form-field dir='rtl' appearance="fill">
+                          <mat-label>מיין לפי</mat-label>
+                          <mat-select>
+                            <mat-option *ngFor="let sort of sorts" [value]="sort.value">
+                              {{sort.viewValue}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
                 <div class="row justify-content-start hut-details" *ngFor="let zimmer of zimmers_list; let index = index">
                     <div class="col-4">
                         <img class="rounded" [src]="zimmer.images[0] | getDownloadURL" height="300px" width="100%"> <!--class="img-fluid"-->
@@ -16,7 +30,7 @@
                         <h4>{{ zimmer.region }} <mat-icon> location_on</mat-icon></h4>
                         <h4>מקסימום אורחים: {{ zimmer.total_capacity }}</h4>
                         <h4>מספר בקתות: {{ zimmer.huts.length }}</h4>
-                        <h2>{{ zimmer.ownerName }} {{ zimmer.phone }}</h2>
+                        <h2>{{ zimmer.ownerName }} - {{ zimmer.phone }}</h2>
                         <h5>{{ zimmer.generalDescription.substring(0, 200) }}<h5 *ngIf="zimmer.generalDescription.length > 200"><b>לחץ להמשך קריאה ופרטים נוספים</b></h5></h5>
                     </div>
                     <div class="col-4">

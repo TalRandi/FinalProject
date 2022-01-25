@@ -30,6 +30,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { environment } from '../environments/environment';
     ControlPanelComponent,
     SearchBarComponent,
     ZimmerComponent,
-    CreateZimmerComponent
+    CreateZimmerComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,
