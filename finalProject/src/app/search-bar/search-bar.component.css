@@ -2,17 +2,16 @@
     direction: rtl;
 }
 #search-bar{
-    margin-top: 3%;
-    background-color: rgb(239, 239, 255);
+    margin: 3% 0;
+    background-color: #ECB365;
     border-radius: 5px;
-    padding: 2%;
+    padding-top: 1.5%;
     text-align: start;
 }
 
 mat-form-field{
     text-align:start;
 }
-
 button{
     border-radius: 100px;
     border: solid black 3px;

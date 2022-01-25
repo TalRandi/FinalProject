@@ -23,6 +23,7 @@ export class CreateZimmerComponent implements OnInit {
   hut: Hut;
   huts:Hut[] = []
   images: File[] = [];
+  features: string[] = [];
 
   constructor(private storage: DataStorageService, private router: Router) { }
 
@@ -40,6 +41,7 @@ export class CreateZimmerComponent implements OnInit {
         if(item.value.weekendPrice < min_price_weekend)
           min_price_weekend = item.value.weekendPrice
         total_capacity += item.value.capacity
+        this.fillFeatures(item.value)
         this.submitHut(item.value)
       }
       else{
@@ -60,6 +62,7 @@ export class CreateZimmerComponent implements OnInit {
         min_price_weekend,
         this.generalForm.value.region,
         Math.random().toString(36).substring(2, 15),
+        this.features,
         this.huts
       )   
       console.log(this.zimmer);
@@ -105,8 +108,22 @@ export class CreateZimmerComponent implements OnInit {
     )
     this.huts.push(this.hut) 
   }
+  private fillFeatures(item: Hut){
+    if(item.jacuzzi && !this.features.includes("jacuzzi"))
+      this.features.push("jacuzzi")
+    if(item.pool && !this.features.includes("pool"))
+      this.features.push("pool")
+    if(item.air_conditioner && !this.features.includes("air_conditioner"))
+      this.features.push("air_conditioner")
+    if(item.wifi && !this.features.includes("wifi"))
+      this.features.push("wifi")
+    if(item.sauna && !this.features.includes("sauna"))
+      this.features.push("sauna")
+    if(item.parking && !this.features.includes("parking"))
+      this.features.push("parking")
+  }
 
-    hutValidator(){
+  hutValidator(){
     
     let isInvalidHut = false
     if(this.hutForm){
@@ -124,7 +141,7 @@ export class CreateZimmerComponent implements OnInit {
     for (let index = 0; index < images.length; index++) {
       let url = `/zimmer-images/${zimmer.zimmer_id}/${images[index].name}`;
       zimmer.images.push(url)             
-  }
+    }
   }
 }
 
