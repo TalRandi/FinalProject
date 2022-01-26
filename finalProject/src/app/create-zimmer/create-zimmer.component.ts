@@ -144,8 +144,3 @@ export class CreateZimmerComponent implements OnInit {
     }
   }
 }
-
-
-
- 
-

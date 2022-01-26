@@ -16,3 +16,6 @@
     background-color: #041C32;
     /* third-color = 064663 */
 }
+mat-icon{
+    vertical-align: middle;
+}

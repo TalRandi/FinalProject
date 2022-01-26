@@ -1,35 +1,43 @@
 <div class="container">
-    <div class="row">
-        <div class="col col-auto ml-auto">
-            <h1>יצירת קשר</h1>
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <div class="row">
+            <div class="col col-auto ml-auto">
+                <h1>יצירת קשר</h1>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <input type="text" class="form-control" placeholder="שם פרטי">
+        <div class="row">
+            <div class="col form-group">
+                <input type="text" name="firstName" class="form-control" ngModel required #firstName="ngModel" placeholder="שם פרטי">
+                <span class="help-block" *ngIf="firstName.touched && firstName.invalid">* שדה חובה!</span>
+            </div>
+            <div class="col form-group">
+                <input type="text" name="lastName" class="form-control" ngModel required #lastName="ngModel" placeholder="שם משפחה">
+                <span class="help-block" *ngIf="lastName.touched && lastName.invalid">* שדה חובה!</span>
+            </div>
         </div>
-        <div class="col">
-            <input type="text" class="form-control" placeholder="שם משפחה">
+        <div class="row">
+            <div class="col form-group">
+                <input type="email" name="email" class="form-control" ngModel required email #email="ngModel" placeholder="כתובת דואר אלקטרוני">
+                <span class="help-block" *ngIf="email.touched && email.invalid">* שדה חובה!</span>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <input type="email" class="form-control" placeholder="כתובת דואר אלקטרוני">
+        <div class="row">
+            <div class="col form-group">
+                <input type="text" name="phone" class="form-control" ngModel required #phone="ngModel" minlength="10" maxlength="10" placeholder="מספר פלאפון">
+                <span class="help-block" *ngIf="phone.touched && phone.invalid">* שדה חובה!</span>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <input type="text" class="form-control" placeholder="מספר פלאפון">
+        <div class="row">
+            <div class="col form-group">
+                <textarea name="message" class="form-control" ngModel required rows="5" #message="ngModel" placeholder="טקסט חופשי"></textarea>
+                <span class="help-block" *ngIf="message.touched && message.invalid">* שדה חובה!</span>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <textarea name="message" class="form-control" ngModel rows="5" #message="ngModel" placeholder="טקסט חופשי"></textarea>
+        <div class="row">
+            <div class="col col-auto">
+                <button type="submit" class="btn" [disabled]="form.invalid">שלח</button>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col col-auto">
-            <button type="submit" class="btn">שלח</button>
-        </div>
-    </div>
+    </form> 
 </div>
+

@@ -8,6 +8,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class DataStorageService {
     
     url = 'https://goeasy-5d966-default-rtdb.europe-west1.firebasedatabase.app/pending.json'
+    url_requests = 'https://goeasy-5d966-default-rtdb.europe-west1.firebasedatabase.app/requests.json'
     
     constructor(private http: HttpClient, private storage: AngularFireStorage){}
 
@@ -20,6 +21,11 @@ export class DataStorageService {
                 this.storage.upload(url, images[index]);                
             }
         });
+    }
+    storeRequest(request: string[]){
+        this.http.post(this.url_requests, request).subscribe(() => {
+            console.log("Request has been successfully written to the firebase");
+        })
     }
 
     fetchZimmers(){

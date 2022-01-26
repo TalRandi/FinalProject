@@ -37,15 +37,23 @@
                         <h2>לילה באמצ"ש: {{ zimmer.min_price_regular }} ש"ח</h2>
                         <h2>לילה בסופ"ש: {{ zimmer.min_price_weekend }} ש"ח</h2>
                         <div class="row">
-                            <div class="col-6">
-                                <h6 *ngIf="zimmer.features.includes('jacuzzi')"><mat-icon>hot_tub</mat-icon> ג'קוזי</h6>
-                                <h6 *ngIf="zimmer.features.includes('pool')"><mat-icon>pool</mat-icon> בריכה</h6>
-                                <h6 *ngIf="zimmer.features.includes('air_conditioner')"><mat-icon>wb_sunny</mat-icon> מזגן</h6>
+                            <div class="col-6" *ngIf="zimmer.features.includes('jacuzzi')">
+                                <h6><mat-icon>hot_tub</mat-icon> ג'קוזי</h6>
                             </div>
-                            <div class="col-6">
-                                <h6 *ngIf="zimmer.features.includes('wifi')"><mat-icon>wifi</mat-icon> wifi</h6>
-                                <h6 *ngIf="zimmer.features.includes('sauna')"><mat-icon>spa</mat-icon> סאונה</h6>
-                                <h6 *ngIf="zimmer.features.includes('parking')"><mat-icon> local_parking</mat-icon> חניה</h6>
+                            <div class="col-6" *ngIf="zimmer.features.includes('pool')">
+                                <h6><mat-icon>pool</mat-icon> בריכה</h6>
+                            </div>
+                            <div class="col-6" *ngIf="zimmer.features.includes('air_conditioner')">
+                                <h6><mat-icon>wb_sunny</mat-icon> מזגן</h6>
+                            </div>
+                            <div class="col-6" *ngIf="zimmer.features.includes('wifi')">
+                                <h6><mat-icon>wifi</mat-icon> wifi</h6>
+                            </div>
+                            <div class="col-6" *ngIf="zimmer.features.includes('sauna')">
+                                <h6><mat-icon>spa</mat-icon> סאונה</h6>
+                            </div>
+                            <div class="col-6" *ngIf="zimmer.features.includes('parking')">
+                                <h6><mat-icon> local_parking</mat-icon> חניה</h6>
                             </div>
                         </div>
                     </div>
