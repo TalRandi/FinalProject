@@ -1,11 +1,23 @@
 .control{
-    /* border-radius: 2rem; */
-    /* background-color: rgb(206, 206, 253); */
-    box-shadow: 5px 5px 10px 1px #04293A;
-    /* border: solid #04293A; */
+    filter: drop-shadow(5px 5px 10px #04293A);
     background-color: #ECB365;
+    opacity: 0.9;
+    border-radius: 50px;
     padding: 3%;
     margin: 4% 0;
+}   
+.control:hover{
+    font-size: large;
+    font-weight: bold;
+    filter: drop-shadow(10px 10px 10px #04293A);
+    border-radius: 15px;
+    opacity: 1;
+}
+.wrapper{
+    margin-top: 50%;
+    padding: 20% 5%;
+    border: 3px #ECB365 outset;
+    border-radius: 30px;
 }   
 mat-form-field{
     text-align:start;

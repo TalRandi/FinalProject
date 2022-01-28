@@ -5,10 +5,10 @@
         </div>
 
         <div class="col-12 col-md-8">
-            <ng-template [ngIf]="zimmers_list.length > 0" [ngIfElse]="Empty">
+            <ng-template [ngIf]="zimmers_to_display.length > 0" [ngIfElse]="Empty">
                 <div class="row">
                     <div class="col-4 col-auto ml-auto">
-                        <h1><b>({{ zimmers_list.length }} תוצאות)</b></h1>
+                        <h1><b>({{ zimmers_to_display.length }} תוצאות)</b></h1>
                     </div>
                     <div class="col-auto mr-auto">
                         <mat-form-field dir='rtl' appearance="fill">
@@ -21,7 +21,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row justify-content-start hut-details" *ngFor="let zimmer of zimmers_list; let index = index">
+                <div class="row justify-content-start hut-details" *ngFor="let zimmer of zimmers_to_display; let index = index">
                     <div class="col-4">
                         <img class="rounded" [src]="zimmer.images[0] | getDownloadURL" height="300px" width="100%"> <!--class="img-fluid"-->
                     </div>
@@ -36,7 +36,7 @@
                     <div class="col-4">
                         <h2>לילה באמצ"ש: {{ zimmer.min_price_regular }} ש"ח</h2>
                         <h2>לילה בסופ"ש: {{ zimmer.min_price_weekend }} ש"ח</h2>
-                        <div class="row">
+                        <div class="row" *ngIf="zimmer.features != undefined">
                             <div class="col-6" *ngIf="zimmer.features.includes('jacuzzi')">
                                 <h6><mat-icon>hot_tub</mat-icon> ג'קוזי</h6>
                             </div>
