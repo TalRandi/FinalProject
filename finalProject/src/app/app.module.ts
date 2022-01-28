@@ -16,6 +16,7 @@ import { AngularCounterModule } from 'angular-input-counter';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import {MatTabsModule} from '@angular/material/tabs';
 import { DataStorageService } from './shared-data/data-storage.service';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -31,6 +32,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { PendingRequestsComponent } from './pending-requests/pending-requests/pending-requests.component';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     SearchBarComponent,
     ZimmerComponent,
     CreateZimmerComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    PendingRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +66,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     MatIconModule,
     HttpClientModule,
     NgxDropzoneModule,
+    MatTabsModule,
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule

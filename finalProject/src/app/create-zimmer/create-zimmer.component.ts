@@ -68,7 +68,7 @@ export class CreateZimmerComponent implements OnInit {
       console.log(this.zimmer);
       
       this.storeImagesUrl(this.zimmer, this.images);
-      this.storage.storeZimmer(this.zimmer, this.images);
+      this.storage.storePendingZimmer(this.zimmer, this.images);
       this.router.navigate(['/home'])
     }
   }

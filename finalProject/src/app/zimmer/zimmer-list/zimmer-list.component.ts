@@ -27,7 +27,7 @@ export class ZimmerListComponent implements OnInit {
   constructor(private storage:DataStorageService) { }
 
   ngOnInit(): void {
-    this.storage.fetchZimmers().subscribe(zimmers => {
+    this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
       this.zimmers_list = zimmers  
     })
     

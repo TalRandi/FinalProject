@@ -1,0 +1,40 @@
+*{
+    text-align: right;
+    direction: rtl;   
+}
+
+.container-fluid{
+    padding: 3%;
+}
+
+.hut-details{
+    border: solid 1px #c7c7c7;
+    /* background-color: rgb(236, 179, 101, 1); */
+    /* background-color: rgb(239, 239, 255); */
+    /* box-shadow: 5px 5px 10px 1px #04293A; */
+    border-radius: 5px;
+    margin-top: 3%;
+    padding: 1.5% 0;
+}
+
+.hut-details:hover{
+    border: solid 1px #041C32;
+    /* box-shadow: 5px 5px 10px 1px #04293A; */
+    background: linear-gradient(#e6e6e69d, #ffffff, #e6e6e69d);
+    cursor: pointer;
+}
+.hut-details:hover h1{
+    text-decoration: underline;
+}
+
+mat-icon{
+    vertical-align: middle;
+}
+
+.buttonTab{ 
+    margin-left: 1%;
+}
+
+.space{
+    margin: 1%;
+}

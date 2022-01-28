@@ -22,6 +22,7 @@ export class ContactUsComponent implements OnInit {
     this.request.push(this.contact_us_form.value.email)
     this.request.push(this.contact_us_form.value.phone)
     this.request.push(this.contact_us_form.value.message)
+    this.request.push(Math.random().toString(36).substring(2, 15))
     this.storage.storeRequest(this.request)
     this.contact_us_form.reset()
     alert("הבקשה נוצרה\nניצור קשר בהקדם!")

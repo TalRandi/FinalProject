@@ -1,0 +1,91 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <mat-tab-group dynamicHeight>
+                <mat-tab label="רשימת צימרים לאישור">
+                    <ng-template [ngIf]="zimmers.length > 0" [ngIfElse]="Empty">
+                        <div class="row">
+                            <div class="col-4 col-auto ml-auto space">
+                                <h1><b>({{ zimmers.length }} תוצאות)</b></h1>
+                            </div>
+                        </div>
+                        <div class="row justify-content-start hut-details space" *ngFor="let zimmer of zimmers; let index = index">
+                            <div class="col-4">
+                                <img class="rounded" [src]="zimmer.images[0] | getDownloadURL" height="300px" width="100%">
+                            </div>
+                            <div class="col-4">
+                                <h1>{{ zimmer.zimmerName }}</h1>
+                                <h4>{{ zimmer.region }} <mat-icon> location_on</mat-icon></h4>
+                                <h4>מקסימום אורחים: {{ zimmer.total_capacity }}</h4>
+                                <h4>מספר בקתות: {{ zimmer.huts.length }}</h4>
+                                <h2>{{ zimmer.ownerName }} - {{ zimmer.phone }}</h2>
+                                <h5>{{ zimmer.generalDescription.substring(0, 200) }}<h5 *ngIf="zimmer.generalDescription.length > 200"><b>לחץ להמשך קריאה ופרטים נוספים</b></h5></h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="row justify-content-end buttonTab">  
+                                    <button (click)="onSubmitZimmer(zimmer, index)" class="btn btn-success"><mat-icon>check</mat-icon></button>
+                                </div>
+                                <h2>לילה באמצ"ש: {{ zimmer.min_price_regular }} ש"ח</h2>
+                                <h2>לילה בסופ"ש: {{ zimmer.min_price_weekend }} ש"ח</h2>
+                                <div class="row" *ngIf="zimmer.features != undefined">
+                                    <div class="col-6" *ngIf="zimmer.features.includes('jacuzzi')">
+                                        <h6><mat-icon>hot_tub</mat-icon> ג'קוזי</h6>
+                                    </div>
+                                    <div class="col-6" *ngIf="zimmer.features.includes('pool')">
+                                        <h6><mat-icon>pool</mat-icon> בריכה</h6>
+                                    </div>
+                                    <div class="col-6" *ngIf="zimmer.features.includes('air_conditioner')">
+                                        <h6><mat-icon>wb_sunny</mat-icon> מזגן</h6>
+                                    </div>
+                                    <div class="col-6" *ngIf="zimmer.features.includes('wifi')">
+                                        <h6><mat-icon>wifi</mat-icon> wifi</h6>
+                                    </div>
+                                    <div class="col-6" *ngIf="zimmer.features.includes('sauna')">
+                                        <h6><mat-icon>spa</mat-icon> סאונה</h6>
+                                    </div>
+                                    <div class="col-6" *ngIf="zimmer.features.includes('parking')">
+                                        <h6><mat-icon> local_parking</mat-icon> חניה</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template #Empty>
+                        <div class="row justify-content-center">
+                            <h1>אין פריטים להצגה</h1>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="רשימת פניות צור קשר">
+                    <ng-template [ngIf]="requests.length > 0" [ngIfElse]="EmptyRequests">
+                        <div class="row">
+                            <div class="col-4 col-auto ml-auto space">
+                                <h1><b>({{ requests.length }} תוצאות)</b></h1>
+                            </div>
+                        </div>
+                        <div class="row justify-content-start hut-details space" *ngFor="let request of requests; let index = index">
+                            <div class="col-6">
+                                <h1>{{ request[0] }} {{ request[1] }}</h1>
+                                <h2>{{request[2]}}</h2>
+                                <h2>{{request[3]}}</h2>
+                            </div>
+                            <div class="col-5">
+                                {{ request[4] }}
+                            </div>
+                            <div class="col-1">
+                                <div class="row justify-content-end buttonTab">  
+                                    <button (click)="onSubmitRequest(request, index)" class="btn btn-success"><mat-icon>check</mat-icon></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template #EmptyRequests>
+                        <div class="row justify-content-center">
+                            <h1>אין פריטים להצגה</h1>
+                        </div>
+                    </ng-template>
+                </mat-tab>    
+            </mat-tab-group>        
+        </div>
+    </div>    
+</div>
