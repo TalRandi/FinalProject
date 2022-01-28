@@ -1,8 +1,20 @@
-<div class="container">
-
-    <div class="row control" *ngFor="let filter of filters">
+<div class="container wrapper">
+    
+    <div class="row control" *ngFor="let region of innerData.regions">
         
-        <div class="col-12"><mat-checkbox type="checkbox" color="primary">{{ filter }}</mat-checkbox></div>
+        <div class="col-12">
+            <mat-checkbox name="{{ region }}" type="checkbox" color="primary" (change)="onRegionChange($event)">{{ region }}</mat-checkbox>
+        </div>
 
     </div>
+    <hr>
+    <div class="row control" *ngFor="let filter of innerData.filters">
+        
+        <div class="col-12">
+            <mat-checkbox name="{{ filter }}" type="checkbox" color="primary" (change)="onFilterChange($event)">{{ filter }}</mat-checkbox>
+        </div>
+
+    </div>
+   
+
 </div>  

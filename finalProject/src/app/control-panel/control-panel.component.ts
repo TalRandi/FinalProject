@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InnerDataService } from '../shared-data/inner-data.service';
 
 @Component({
   selector: 'app-control-panel',
@@ -9,12 +10,18 @@ import { Component, OnInit } from '@angular/core';
 
 export class ControlPanelComponent implements OnInit {
 
-  filters = ["ג'קוזי", "בריכה", "מזגן", "WiFi", "סאונה", "צימרים בצפון", "צימרים בנגב"]
+  constructor(public innerData: InnerDataService) { }
 
-  constructor() { }
+  ngOnInit(): void { }
 
-  ngOnInit(): void { 
+  onFilterChange(event: any): void{
+    this.innerData.filters_map.set(event.source.name, event.source.checked)
+    this.innerData.subject.next(this.innerData.filters_map)
+  }
 
+  onRegionChange(event: any): void{
+    this.innerData.regions_map.set(event.source.name, event.source.checked)
+    this.innerData.subject.next(this.innerData.regions_map)
   }
 
 }

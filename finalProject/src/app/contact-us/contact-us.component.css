@@ -21,6 +21,11 @@ button:hover{
     background-color: #ECB365;
     transition: 0.5s;
 }
+button:hover[disabled]{
+    color: aliceblue;
+    background-color: #041C32;
+    cursor: not-allowed;
+}
 button:active{
     background-color: #f59e23;
     transform: translateY(1px);
