@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./zimmer.component.css']
 })
 export class ZimmerComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit(): void {

@@ -32,7 +32,9 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
 import { ContactUsComponent } from './contact-us/contact-us.component';
-import { PendingRequestsComponent } from './pending-requests/pending-requests/pending-requests.component';
+import { PendingRequestsComponent } from './pending-requests/pending-requests.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { LoadingSpinnerComponent } from './shared-data/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { PendingRequestsComponent } from './pending-requests/pending-requests/pe
     ZimmerComponent,
     CreateZimmerComponent,
     ContactUsComponent,
-    PendingRequestsComponent
+    PendingRequestsComponent,
+    AuthenticationComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,7 @@ import { PendingRequestsComponent } from './pending-requests/pending-requests/pe
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule
   ],
-  providers: [DataStorageService, {provide: BUCKET, useValue: 'goeasy-5d966.appspot.com'}],
+  providers: [{provide: BUCKET, useValue: 'goeasy-5d966.appspot.com'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

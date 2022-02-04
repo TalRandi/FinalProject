@@ -52,3 +52,7 @@ mat-icon{
     color: #041C32;
     border-radius: 10px;
 }
+#loading{
+    text-align: center;
+    margin: 14% 0%;
+}
