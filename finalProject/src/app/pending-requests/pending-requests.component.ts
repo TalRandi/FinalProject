@@ -11,6 +11,7 @@ import { Zimmer } from 'src/app/shared-data/zimmer.model';
 export class PendingRequestsComponent implements OnInit {
 
   @ViewChild('form') contact_us_form: NgForm;
+  isLoading = false;
 
   constructor(private storage: DataStorageService) { }
 
@@ -30,7 +31,13 @@ export class PendingRequestsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.storage.fetchPendingZimmers().subscribe(pending_zimmers => this.zimmers = pending_zimmers);
+    this.isLoading = true;
+    this.storage.fetchPendingZimmers().subscribe(pending_zimmers => {
+      this.zimmers = pending_zimmers;
+      this.isLoading = false;
+    },
+    error => this.isLoading = false
+    );
     this.storage.fetchRequests().subscribe(stored_requests => this.requests = stored_requests);
   }
 

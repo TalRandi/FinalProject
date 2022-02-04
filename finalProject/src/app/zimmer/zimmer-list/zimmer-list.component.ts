@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
 import { Hut } from 'src/app/shared-data/hut.model';
 import { InnerDataService } from 'src/app/shared-data/inner-data.service';
@@ -15,8 +16,11 @@ interface Sort {
   templateUrl: './zimmer-list.component.html',
   styleUrls: ['./zimmer-list.component.css']
 })
-export class ZimmerListComponent implements OnInit {
+export class ZimmerListComponent implements OnInit, OnDestroy {
 
+  isLoading = false;
+  private data: Subscription;
+  
   sorts: Sort[] = [
     {value: 'all', viewValue: 'המומלצים שלנו'},
     {value: 'center', viewValue: 'מחיר - סופ"ש'},
@@ -46,6 +50,7 @@ export class ZimmerListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
       this.all_zimmers = zimmers  
       this.zimmers_to_display = [...this.all_zimmers]
@@ -56,8 +61,8 @@ export class ZimmerListComponent implements OnInit {
       this.dictionary.set("מזגן", "air_conditioner")
       this.dictionary.set("חניה", "parking")
       
-      this.innerData.subject.subscribe(filters => {
-        
+      this.data = this.innerData.subject.subscribe(filters => {
+        this.isLoading = true;
         this.zimmers_to_display = [...this.all_zimmers]
 
         if(filters.has("בריכה")){
@@ -101,8 +106,13 @@ export class ZimmerListComponent implements OnInit {
               break
             }
           }
-        }      
+        }
+        this.isLoading = false;
       });
+      this.isLoading = false;  
     })
+  }
+  ngOnDestroy(): void {
+      this.data.unsubscribe();
   }
 }

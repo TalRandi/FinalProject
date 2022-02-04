@@ -23,3 +23,8 @@
 mat-icon{
     vertical-align: middle;
 }
+
+#loading{
+    text-align: center;
+    margin: 14% 0%;
+}

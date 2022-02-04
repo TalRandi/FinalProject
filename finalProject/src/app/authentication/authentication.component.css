@@ -1,0 +1,45 @@
+*{
+    direction: rtl;
+}
+.container{
+    margin-top: 5%;
+    padding: 3% 15%;
+    border: solid rgb(156, 156, 156) 1px;
+    border-radius: 50px;
+}
+.row{
+    margin: 2% 0;
+    justify-content: center;
+    text-align: start;
+}
+span{
+    color: red;
+}
+button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    background-color: #041C32;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #ECB365;
+    transition: 0.5s;
+}
+button:hover[disabled]{
+    color: aliceblue;
+    background-color: #041C32;
+    cursor: not-allowed;
+}
+button:active{
+    background-color: #f59e23;
+    transform: translateY(1px);
+    transition: none;
+}
+#loading{
+    text-align: center;
+    margin: 14% 0%;
+}
+.alert{
+    text-align: start;
+}
