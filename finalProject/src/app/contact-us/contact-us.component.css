@@ -9,6 +9,11 @@
 }
 .row{
     margin: 2% 0;
+    justify-content: center;
+}
+.form-group{
+    text-align: start;
+    color: red;
 }
 button{
     color: aliceblue;
@@ -16,6 +21,7 @@ button{
     border-radius: 10px;
     background-color: #041C32;
     cursor: pointer;
+    width: 6rem;
 }
 button:hover{
     background-color: #ECB365;

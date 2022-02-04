@@ -29,7 +29,6 @@ export class ContactUsComponent implements OnInit {
     this.router.navigate(['/home'])
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

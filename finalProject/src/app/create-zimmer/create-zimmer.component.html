@@ -48,14 +48,14 @@
             <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="img" *ngFor="let img of images" [removable]="true" (removed)="onRemove(img)"></ngx-dropzone-image-preview>
           </ngx-dropzone>
           
-          <button type="submit" class="btn" [disabled]="form.invalid || hutValidator() || images.length == 0">אישור</button>
+          <button type="submit" class="btn append-and-submit" [disabled]="form.invalid || hutValidator() || images.length == 0">אישור</button>
         </form>
       </div>
 
 
       <div class="col-12 col-sm-6 col-md-8 border-right">
         <h1>פרטים על יחידות האירוח:</h1>
-        <div class="row hut-details" *ngFor="let i of hut_counter; let index=index" #hut_div>
+        <div id="hut-list" class="row hut-details" *ngFor="let i of hut_counter; let index=index" #hut_div>
           <div class="container">
             <form #hutForm="ngForm">
               <div class="row float-left" *ngIf="hut_counter.length > 1">
@@ -64,62 +64,85 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-6">
                   <div class="form-group">
                     <label for="hutName">שם יחידה *</label>
                     <input type="text" name="hutName" ngModel class="form-control" required #hutName="ngModel">
                     <span class="help-block" *ngIf="hutName.touched && hutName.invalid">* שדה חובה!</span>
                   </div> 
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-6">
                   <div class="form-group">
                     <label for="capacity">מקסימום אורחים *</label>
                     <input type="number" name="capacity" ngModel class="form-control" min='1' required #capacity="ngModel">
                     <span class="help-block" *ngIf="capacity.touched && capacity.invalid">* שדה חובה!</span>
                   </div> 
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-6">
                   <div class="form-group">
-                    <label for="regularPrice">מחיר ללילה באמצ"ש *</label>
+                    <label for="regularPrice">אמצ"ש (בהזמנת לילה) *</label>
                     <input type="number" name="regularPrice" ngModel class="form-control" min='1' required #regularPrice="ngModel">
                     <span class="help-block" *ngIf="regularPrice.touched && regularPrice.invalid">* שדה חובה!</span>
                   </div> 
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-6">
                   <div class="form-group">
-                    <label for="weekendPrice">מחיר ללילה בסופ"ש *</label>
+                    <label for="weekendPrice">סופ"ש (בהזמנת לילה) *</label>
                     <input type="number" name="weekendPrice" ngModel class="form-control" min='1' required #weekendPrice="ngModel">
                     <span class="help-block" *ngIf="weekendPrice.touched && weekendPrice.invalid">* שדה חובה!</span>
                   </div> 
                 </div>
+                <div class="col-md-4 col-6">
+                  <div class="form-group">
+                    <label for="regularPriceTwoNights">אמצ"ש (בהזמנת 2 לילות) *</label>
+                    <input type="number" name="regularPriceTwoNights" ngModel class="form-control" min='1' required #regularPriceTwoNights="ngModel">
+                    <span class="help-block" *ngIf="regularPriceTwoNights.touched && regularPriceTwoNights.invalid">* שדה חובה!</span>
+                  </div> 
+                </div>
+                <div class="col-md-4 col-6">
+                  <div class="form-group">
+                    <label for="weekendPriceTwoNights">סופ"ש (בהזמנת 2 לילות) *</label>
+                    <input type="number" name="weekendPriceTwoNights" ngModel class="form-control" min='1' required #weekendPriceTwoNights="ngModel">
+                    <span class="help-block" *ngIf="weekendPriceTwoNights.touched && weekendPriceTwoNights.invalid">* שדה חובה!</span>
+                  </div> 
+                </div>
+              </div>
+              <div class="row hut-images">
+                <div class="col">
+                  <h4>תמונות מהיחידה</h4>
+                  <ngx-dropzone required (change)="onSelectHut($event, index)" accept="image/jpeg, image/jpg, image/png, image/tiff, image/heic">
+                    <ngx-dropzone-label>גרור לכאן</ngx-dropzone-label>
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="hutImg" *ngFor="let hutImg of hutImages[index]" [removable]="true" (removed)="onRemoveHut(hutImg, index)"></ngx-dropzone-image-preview>
+                  </ngx-dropzone>
+                </div>
               </div>
               <div class="row">
-                <div class="col-md-3 col-12">
+                <div class="col-md-3 col-6">
                   <div class="form-group">
                     <mat-checkbox type="checkbox" name="jacuzzi" ngModel color="primary" #jacuzzi="ngModel">ג'קוזי</mat-checkbox>
                   </div> 
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-3 col-6">
                   <div class="form-group">
                     <mat-checkbox type="checkbox" name="pool" ngModel color="primary" #pool="ngModel">בריכה</mat-checkbox>
                   </div> 
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-3 col-6">
                   <div class="form-group">
                     <mat-checkbox type="checkbox" name="air_conditioner" ngModel color="primary" #air_conditioner="ngModel">מזגן</mat-checkbox>
                   </div> 
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-3 col-6">
                   <div class="form-group">
                     <mat-checkbox type="checkbox" name="wifi" ngModel color="primary" #wifi="ngModel">WiFi</mat-checkbox>
                   </div> 
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-3 col-6">
                   <div class="form-group">
                     <mat-checkbox type="checkbox" name="sauna" ngModel color="primary" #sauna="ngModel">סאונה</mat-checkbox>
                   </div> 
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-3 col-6">
                   <div class="form-group">
                     <mat-checkbox type="checkbox" name="parking" ngModel color="primary" #parking="ngModel">חניה</mat-checkbox>
                   </div> 
@@ -129,7 +152,7 @@
           </div>
         </div>
         <div class="col-12">
-          <button type="button" (click)="onAddHut()" class="btn">+</button>
+          <button type="button" (click)="onAddHut()" class="btn append-and-submit">+</button>
         </div>
       </div>
   </div>

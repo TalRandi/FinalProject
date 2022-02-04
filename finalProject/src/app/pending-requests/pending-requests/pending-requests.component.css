@@ -38,3 +38,17 @@ mat-icon{
 .space{
     margin: 1%;
 }
+.price{
+    position: absolute;
+    bottom: 0;
+    margin-left: 2%;
+}
+.price h2{
+    display: block;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    filter: drop-shadow(1px 1px 3px rgb(18, 151, 0));
+    text-align: center;
+    font-weight: bold;
+    color: #041C32;
+    border-radius: 10px;
+}

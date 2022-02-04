@@ -13,13 +13,19 @@ export class DataStorageService {
     
     constructor(private http: HttpClient, private storage: AngularFireStorage){}
 
-    storePendingZimmer(zimmer: Zimmer, images: File[]){
+    storePendingZimmer(zimmer: Zimmer, images: File[], hutImages: File[][]){
         
         this.http.post(this.url_pending, zimmer).subscribe(() => {
             // Uploads all zimmer's images
             for (let index = 0; index < images.length; index++) {
                 let url = `/zimmer-images/${zimmer.zimmer_id}/${images[index].name}`;       
                 this.storage.upload(url, images[index]);                
+            }
+            for (let hut_index = 0; hut_index < zimmer.huts.length; hut_index++) {
+                for (let index = 0; index < hutImages[hut_index].length; index++) {  
+                    let url = `/zimmer-images/${zimmer.zimmer_id}/${zimmer.huts[hut_index].hutName}/${hutImages[hut_index][index].name}`;    
+                    this.storage.upload(url, hutImages[hut_index][index]);                
+                }
             }
         });
     }

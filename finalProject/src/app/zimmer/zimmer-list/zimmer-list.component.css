@@ -1,7 +1,8 @@
 *{
-    text-align: right;   
+    text-align: right;  
 }
 .hut-details{
+
     border: solid 1px #c7c7c7;
     /* background-color: rgb(236, 179, 101, 1); */
     /* background-color: rgb(239, 239, 255); */
@@ -19,6 +20,20 @@
 }
 .hut-details:hover h1{
     text-decoration: underline;
+}
+.price{
+    position: absolute;
+    bottom: 0;
+    margin-left: 2%;
+}
+.price h2{
+    display: block;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    filter: drop-shadow(1px 1px 3px rgb(18, 151, 0));
+    text-align: center;
+    font-weight: bold;
+    color: #041C32;
+    border-radius: 10px;
 }
 mat-icon{
     vertical-align: middle;

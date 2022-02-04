@@ -50,11 +50,19 @@ button:active{
 .container{
     margin-top: 3%;
 }
-
-.new-hut{
-
+.border-right h1{
+    margin-right: 1%;
+}
+#hut-list{
+    margin-right: 1%;
+}
+.append-and-submit{
+    margin-top: 2%;
 }
 .hut-submitted{
     background-color: rgb(235, 233, 233);
     opacity: 0.7;
+}
+.hut-images{
+    margin: 1% 0% 3% 0%;
 }

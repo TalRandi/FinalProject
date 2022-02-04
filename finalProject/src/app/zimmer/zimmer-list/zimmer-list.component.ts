@@ -27,7 +27,6 @@ export class ZimmerListComponent implements OnInit {
   all_zimmers:Zimmer[] = []
   zimmers_to_display:Zimmer[] = []
   dictionary = new Map<string, string>();
-  // res:Zimmer[] = []
   general_filter: string[] = []
   region_filter: string[] = [] 
 
