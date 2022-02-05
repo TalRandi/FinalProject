@@ -8,6 +8,9 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { PendingRequestsComponent } from './pending-requests/pending-requests.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { AuthGuard } from './authentication/auth.guard';
+import { AuthGuardAdmin } from './authentication/auth.guard.admin';
+import { MyZimmerComponent } from './zimmer/my-zimmer/my-zimmer.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch:'full'},
@@ -16,14 +19,15 @@ const routes: Routes = [
   {path: 'login-page', component: AuthenticationComponent},
   {path: 'contact-us', component: ContactUsComponent},
   {path: 'admin', component: AuthenticationComponent},
-  {path: 'admin/pending-zimmers', component: PendingRequestsComponent, canActivate: [AuthGuard]},
-
+  {path: 'admin/pending-zimmers', component: PendingRequestsComponent, canActivate: [AuthGuardAdmin]},
+  {path: 'my-zimmer', component: MyZimmerComponent, canActivate: [AuthGuard]},
  
   {path: 'home', component: ZimmerComponent, children:[
       {path:'', component:ZimmerListComponent},
-      {path:':id', component:ZimmerDetailsComponent}
+      {path:':id', component:ZimmerDetailsComponent},
   ]},
   // {path: '', redirectTo: '/home', pathMatch:'prefix'}, TO DO - Not found component
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({

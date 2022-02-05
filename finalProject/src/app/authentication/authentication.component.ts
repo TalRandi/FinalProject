@@ -45,13 +45,20 @@ export class AuthenticationComponent implements OnInit {
     this.isLoading = true;
     this.authService.signIn(this.login_form.value.email, this.login_form.value.password).subscribe((result: any) => {
       const expirationDate = new Date(new Date().getTime() + +result.expiresIn * 1000);
-      const user = new User(result.email, result.localId, result.idToken, expirationDate)
+      const user = new User(result.email, result.localId, result.idToken, expirationDate, result.email == 'harelmadmoni9@gmail.com'? true: false);
       this.authService.token = result.idToken;
       this.authService.user.next(user);
       this.authService.autoLogout(+result.expiresIn * 1000);
       this.isLoading = false;
-      localStorage.setItem('userData', JSON.stringify(user));  
-      this.router.navigate(['./pending-zimmers'], {relativeTo: this.route})
+      localStorage.setItem('userData', JSON.stringify(user));
+      if(user.admin){
+        this.authService.admin = true;
+        this.router.navigate(['/admin/pending-zimmers']);
+      }  
+      else{
+        this.authService.admin = false;
+        this.router.navigate(['/my-zimmer']);
+      }
     },
     errorRes => {
       switch(errorRes.error.error.message){

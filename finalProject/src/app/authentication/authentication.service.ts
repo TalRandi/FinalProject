@@ -9,6 +9,7 @@ export class AuthenticationService{
 
     user = new Subject<User>();
     token: any;
+    admin: boolean;
     private tokenExpirationTimer: any;
     constructor(private http: HttpClient, private router: Router) {}
 
@@ -40,10 +41,11 @@ export class AuthenticationService{
             return;
         }
 
-        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate), userData.email == 'harelmadmoni9@gmail.com'? true: false);
         
         if(loadedUser.token){ 
             this.token = userData._token;
+            this.admin = userData.admin;
             const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
             this.autoLogout(expirationDuration);
         }
@@ -59,11 +61,12 @@ export class AuthenticationService{
     logout(){
         this.user.next(undefined);
         this.token = undefined;
+        this.admin = false;
         localStorage.removeItem('userData');
         if(this.tokenExpirationTimer){
             clearTimeout(this.tokenExpirationTimer);
         }
         this.tokenExpirationTimer = null;    
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/home"]).then(() => window.location.reload());
     }
 }

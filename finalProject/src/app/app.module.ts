@@ -35,6 +35,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { PendingRequestsComponent } from './pending-requests/pending-requests.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { LoadingSpinnerComponent } from './shared-data/loading-spinner/loading-spinner.component';
+import { MyZimmerComponent } from './zimmer/my-zimmer/my-zimmer.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { LoadingSpinnerComponent } from './shared-data/loading-spinner/loading-s
     ContactUsComponent,
     PendingRequestsComponent,
     AuthenticationComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    MyZimmerComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
