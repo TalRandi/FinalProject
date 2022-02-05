@@ -11,7 +11,6 @@
     margin-top: 3%;
     padding: 1.5% 0;
 }
-
 .hut-details:hover{
     border: solid 1px #041C32;
     /* box-shadow: 5px 5px 10px 1px #04293A; */
@@ -42,4 +41,21 @@ mat-icon{
 #loading{
     text-align: center;
     margin: 14% 0%;
+}
+.zimmer-list{
+    margin: 2% 5%;
+    margin-bottom:20px;
+}
+button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    background-color: #041C32;
+    cursor: pointer;
+    display: block;
+}
+button:hover{
+    background-color: #064663;
+    color: aliceblue;
+    transition: 0.1s;
 }

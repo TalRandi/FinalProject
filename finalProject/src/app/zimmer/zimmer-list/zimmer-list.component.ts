@@ -19,12 +19,15 @@ interface Sort {
 export class ZimmerListComponent implements OnInit, OnDestroy {
 
   isLoading = false;
+  sort_direction = true;
   private data: Subscription;
   
   sorts: Sort[] = [
     {value: 'all', viewValue: 'המומלצים שלנו'},
-    {value: 'center', viewValue: 'מחיר - סופ"ש'},
-    {value: 'center', viewValue: 'מחיר - אמצ"ש'},
+    {value: 'weekend', viewValue: 'מחיר - סופ"ש'},
+    {value: 'midweek', viewValue: 'מחיר - אמצ"ש'},
+    {value: 'huts_number', viewValue: 'מספר בקתות'},
+    {value: 'total_capacity', viewValue: 'מקסימום אורחים'},
   ];
 
   hut: Hut[] = []
@@ -46,6 +49,33 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     const index = array.indexOf(zimmer);
     if (index > -1) 
       array.splice(index, 1);
+  }
+  sortBy(event: any): void{
+    this.isLoading = true
+    let sort_parameter = event.value
+    
+    switch (sort_parameter) {
+      case 'weekend':        
+        this.zimmers_to_display.sort((a,b) => (a.min_price_weekend > b.min_price_weekend) ? 1 : ((b.min_price_weekend > a.min_price_weekend) ? -1 : 0))
+        break;
+      case 'midweek':
+        this.zimmers_to_display.sort((a,b) => (a.min_price_regular > b.min_price_regular) ? 1 : ((b.min_price_regular > a.min_price_regular) ? -1 : 0))
+        break;
+      case 'huts_number':
+        this.zimmers_to_display.sort((a,b) => (a.huts.length > b.huts.length) ? 1 : ((b.huts.length > a.huts.length) ? -1 : 0))
+        break;
+      case 'total_capacity':
+        this.zimmers_to_display.sort((a,b) => (a.total_capacity > b.total_capacity) ? 1 : ((b.total_capacity > a.total_capacity) ? -1 : 0))
+        break;
+    
+      default:
+        break;
+    }
+    this.isLoading = false
+  }
+  sortDirection(): void{
+    this.zimmers_to_display.reverse();
+    this.sort_direction = !this.sort_direction
   }
 
   ngOnInit(): void {

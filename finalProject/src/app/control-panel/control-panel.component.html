@@ -1,15 +1,15 @@
 <div class="container wrapper">
     
+    <h1 class="title">איזורים</h1>
     <div class="row control" *ngFor="let region of innerData.regions">
-        
         <div class="col-12">
             <mat-checkbox name="{{ region }}" type="checkbox" color="primary" (change)="onRegionChange($event)">{{ region }}</mat-checkbox>
         </div>
 
     </div>
     <hr>
+    <h1 class="title">מתקנים</h1>        
     <div class="row control" *ngFor="let filter of innerData.filters">
-        
         <div class="col-12">
             <mat-checkbox name="{{ filter }}" type="checkbox" color="primary" (change)="onFilterChange($event)">{{ filter }}</mat-checkbox>
         </div>

@@ -23,14 +23,14 @@
           </div> 
           
           <div class="form-group">
-            <label for="email">דואר אלקטרוני</label>
-            <input type="text" name="email" ngModel class="form-control" email #email="ngModel">
+            <label for="email">דואר אלקטרוני *</label>
+            <input type="text" name="email" ngModel class="form-control" required email #email="ngModel">
             <span class="help-block" *ngIf="email.touched && email.invalid">* דואר אלקטרוני לא חוקי!</span>
           </div> 
 
           <div class="form-group">
             <label for="region">איזור *</label>
-            <select name="region" class="form-control" ngModel #region="ngModel">
+            <select name="region" class="form-control" ngModel required #region="ngModel">
               <option *ngFor="let region of regions" [value]="region">{{region}}</option>
             </select>
           </div>
