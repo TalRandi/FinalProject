@@ -1,4 +1,8 @@
-<div class="container">
+<div id="loading" *ngIf="isLoading">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+<div class="container" *ngIf="!isLoading">
     <div class="row">
       <div class="col-12 col-sm-6 col-md-4">
 
@@ -26,6 +30,12 @@
             <label for="email">דואר אלקטרוני *</label>
             <input type="text" name="email" ngModel class="form-control" required email #email="ngModel">
             <span class="help-block" *ngIf="email.touched && email.invalid">* דואר אלקטרוני לא חוקי!</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">סיסמה *</label>
+            <input type="password" name="password" ngModel class="form-control" required minlength="6" maxlength="16" #password="ngModel">
+            <span class="help-block" *ngIf="password.touched && password.invalid">* הסיסמה חייבת להכיל יותר מ-6 תווים!</span>
           </div> 
 
           <div class="form-group">
@@ -50,6 +60,9 @@
           
           <button type="submit" class="btn append-and-submit" [disabled]="form.invalid || hutValidator() || images.length == 0">אישור</button>
         </form>
+        <div class="alert alert-danger" *ngIf="error != '' ">
+          <p>{{ error }}</p>
+      </div> 
       </div>
 
 

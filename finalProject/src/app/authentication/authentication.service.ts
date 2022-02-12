@@ -10,15 +10,15 @@ export class AuthenticationService{
     user = new Subject<User>();
     token: any;
     admin: boolean;
+    zimmer: any;
     private tokenExpirationTimer: any;
     constructor(private http: HttpClient, private router: Router) {}
 
-    signUp(email: string){
+    signUp(email: string, password: string){
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAzXE1iyj6-BjGD8lrvE7Zt6wYBTTKRFoc';
         let user = {
             email: email,
-            password: "123456",
-            // password: Math.random().toString(36).substring(2, 13),
+            password: password,
             returnSecureToken: true,
         }
         return this.http.post(url, user);
@@ -41,11 +41,12 @@ export class AuthenticationService{
             return;
         }
 
-        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate), userData.email == 'harelmadmoni9@gmail.com'? true: false);
+        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate), userData.email == 'harelmadmoni9@gmail.com'? true: false, userData.zimmer);
         
         if(loadedUser.token){ 
             this.token = userData._token;
             this.admin = userData.admin;
+            this.zimmer = userData.zimmer;
             const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
             this.autoLogout(expirationDuration);
         }
@@ -61,6 +62,7 @@ export class AuthenticationService{
     logout(){
         this.user.next(undefined);
         this.token = undefined;
+        this.zimmer = undefined;
         this.admin = false;
         localStorage.removeItem('userData');
         if(this.tokenExpirationTimer){

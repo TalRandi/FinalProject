@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/authentication/authentication.service';
 
 @Component({
   selector: 'app-my-zimmer',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyZimmerComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authService: AuthenticationService) { }
 
   ngOnInit(): void {
   }

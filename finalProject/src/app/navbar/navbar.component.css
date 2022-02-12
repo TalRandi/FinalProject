@@ -6,7 +6,7 @@
     border: solid 2px #ECB365;
     border-radius: 10px;
     background-color: #041C32;
-    cursor: grab;
+    cursor: pointer;
 }
 #publish:hover{
     background-color: #ECB365;

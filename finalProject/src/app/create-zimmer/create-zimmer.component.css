@@ -66,3 +66,10 @@ button:active{
 .hut-images{
     margin: 1% 0% 3% 0%;
 }
+#loading{
+    text-align: center;
+    margin: 14% 0%;
+}
+.alert{
+    text-align: start;
+}

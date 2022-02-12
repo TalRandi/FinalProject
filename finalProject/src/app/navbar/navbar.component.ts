@@ -10,7 +10,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 export class NavbarComponent implements OnInit, OnDestroy {
   private userSub: Subscription;
   isLoggedIn = false;
-  constructor(private authService: AuthenticationService) { }
+  constructor(public authService: AuthenticationService) { }
 
   ngOnInit(): void {
       this.userSub = this.authService.user.subscribe(user => {

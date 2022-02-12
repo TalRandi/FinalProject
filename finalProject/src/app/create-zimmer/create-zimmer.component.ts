@@ -4,7 +4,8 @@ import { Zimmer } from '../shared-data/zimmer.model'
 import { Hut } from '../shared-data/hut.model'
 import { DataStorageService } from '../shared-data/data-storage.service';
 import { Router } from '@angular/router';  
-import { FILE } from 'dns';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { User } from '../authentication/user.model';
 
 
 @Component({
@@ -16,6 +17,8 @@ export class CreateZimmerComponent implements OnInit {
 
   @ViewChild('form') generalForm: NgForm;
   @ViewChildren('hutForm') hutForm: QueryList<NgForm>;
+  isLoading = false;
+  error: string = '';
   
   regions = ['צפון', 'מרכז', 'ירושלים והסביבה', 'דרום'];
   hut_counter = [0] 
@@ -27,16 +30,19 @@ export class CreateZimmerComponent implements OnInit {
   hutImages: File[][] = [];
   features: string[] = [];
 
-  constructor(private storage: DataStorageService, private router: Router) { }
+  constructor(private storage: DataStorageService, private router: Router, private authService: AuthenticationService ) { }
 
   onSubmit(){
-    
+    this.onSignUp();
+  }
+
+  private CreateZimmer(result: any){
     let valid_form = true
     this.huts = []
     let total_capacity = 0
     let min_price_regular = Number.MAX_SAFE_INTEGER, min_price_weekend = Number.MAX_SAFE_INTEGER
-    let zimmer_id = Math.random().toString(36).substring(2, 15)
-
+    let zimmer_id = Math.random().toString(36).substring(2, 15);
+    
     this.hutForm.forEach((item, index) => {
       if(item.valid){
         if(item.value.regularPriceTwoNights < min_price_regular)
@@ -61,20 +67,28 @@ export class CreateZimmerComponent implements OnInit {
         this.generalForm.value.email,
         this.generalForm.value.generalDescription,
         total_capacity,
+        "pending",
         min_price_regular,
         min_price_weekend,
         this.generalForm.value.region,
         zimmer_id,
         this.features,
-        this.huts
-      )   
-      console.log(this.zimmer);
-      
+        this.huts,
+      )    
       this.storeImagesUrl(this.zimmer, this.images);
       this.storage.storePendingZimmer(this.zimmer, this.images, this.hutImages);
-      this.router.navigate(['/home'])
+      this.authService.zimmer = this.zimmer;
+      const expirationDate = new Date(new Date().getTime() + +result.expiresIn * 1000);
+      const user = new User(result.email, result.localId, result.idToken, expirationDate, false, this.authService.zimmer);
+      this.authService.token = result.idToken;
+      this.authService.user.next(user);
+      this.authService.autoLogout(+result.expiresIn * 1000);
+      localStorage.setItem('userData', JSON.stringify(user));
+      this.authService.admin = false;
+      this.router.navigate(['/my-zimmer']);
     }
   }
+
   onSelect(event: any) {
     this.images.push(...event.addedFiles);
   }
@@ -138,7 +152,6 @@ export class CreateZimmerComponent implements OnInit {
     
     let isInvalidHut = false
     if(this.hutForm){
-      
       this.hutForm.forEach(hut => {
         if(hut.invalid){
           isInvalidHut = true
@@ -159,5 +172,26 @@ export class CreateZimmerComponent implements OnInit {
       let url = `/zimmer-images/${zimmer_id}/${hut_name}/${hutImages[index].name}`;
       hut.images.push(url)             
     }
+  }
+  onSignUp(){
+    this.authService.signUp(this.generalForm.value.email, this.generalForm.value.password).subscribe((result: any) => {
+      this.isLoading = true;
+      this.CreateZimmer(result);
+      this.isLoading = false;
+    },
+    errorRes => {
+      switch(errorRes.error.error.message){
+        case 'EMAIL_EXISTS':
+          this.error = "כתובת דואר האלקטרוני כבר קיימת במערכת!";
+          break; 
+
+        case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+          this.error = "יותר מידי נסיונות התחברות, נסה שוב מאוחר יותר!";
+          break; 
+              
+        default:
+          console.log(errorRes.error.error.message);  
+      }  
+    });
   }
 }

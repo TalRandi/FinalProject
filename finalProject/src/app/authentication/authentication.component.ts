@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { DataStorageService } from '../shared-data/data-storage.service';
+import { Zimmer } from '../shared-data/zimmer.model';
 import { AuthenticationService } from './authentication.service';
 import { User } from './user.model';
 
@@ -14,51 +16,44 @@ export class AuthenticationComponent implements OnInit {
   @ViewChild('form') login_form: NgForm;
   isLoading = false;
   error: string = '';
+  my_zimmer: Zimmer[];
 
-  constructor(private authService: AuthenticationService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private authService: AuthenticationService, private router: Router, private storage: DataStorageService) { }
 
   onSubmit(){
-    // this.authService.signUp(this.login_form.value.email).subscribe(result => {
-    //   console.log(result);
-    //   const expirationDate = new Date(new Date().getTime() + +result.expiresIn * 1000);
-    //   const user = new User(result.email, result.localId, result.idToken, expirationDate)
-    //   this.authService.user.next(user);
-    //   this.isLoading = false;  
-    // },
-    // errorRes => {
-    //   switch(errorRes.error.error.message){
-    //     case 'EMAIL_EXISTS':
-    //       this.error = "כתובת דואר האלקטרוני כבר קיימת במערכת!";
-    //       break;
+    this.onLogin();
+  }
 
-    //     case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-    //       this.error = "יותר מידי נסיונות התחברות, נסה שוב מאוחר יותר!";
-    //       break;
-        
-    //     default:
-    //       console.log(errorRes.error.error.message)
-    //   }
-    //   this.isLoading = false;
-    // });
+  ngOnInit(): void {
+  }
 
+  getZimmer(result: any){
+    this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
+      this.my_zimmer = zimmers.filter(zimmer => zimmer.email == result.email);
+      if(this.my_zimmer.length == 0)
+        this.storage.fetchPendingZimmers().subscribe(pending_zimmers => {
+          this.my_zimmer = pending_zimmers.filter(pending_zimmer => pending_zimmer.email == result.email);
+          this.adminOrUser(result);
+        })
+      else
+        this.adminOrUser(result);  
+    })
+  }
 
+  adminOrUser(result: any){
+    if(this.my_zimmer.length == 0){
+      this.saveToLocalStorage(result, 'admin');
+    }
+    else{
+      this.saveToLocalStorage(result, this.my_zimmer[0]);
+    }
+  }
+
+  onLogin(){
     this.isLoading = true;
-    this.authService.signIn(this.login_form.value.email, this.login_form.value.password).subscribe((result: any) => {
-      const expirationDate = new Date(new Date().getTime() + +result.expiresIn * 1000);
-      const user = new User(result.email, result.localId, result.idToken, expirationDate, result.email == 'harelmadmoni9@gmail.com'? true: false);
+    this.authService.signIn(this.login_form.value.email, this.login_form.value.password).subscribe((result: any) => {  
       this.authService.token = result.idToken;
-      this.authService.user.next(user);
-      this.authService.autoLogout(+result.expiresIn * 1000);
-      this.isLoading = false;
-      localStorage.setItem('userData', JSON.stringify(user));
-      if(user.admin){
-        this.authService.admin = true;
-        this.router.navigate(['/admin/pending-zimmers']);
-      }  
-      else{
-        this.authService.admin = false;
-        this.router.navigate(['/my-zimmer']);
-      }
+      this.getZimmer(result);
     },
     errorRes => {
       switch(errorRes.error.error.message){
@@ -79,10 +74,24 @@ export class AuthenticationComponent implements OnInit {
       }
       this.isLoading = false;
     });
-
   }
 
-  ngOnInit(): void {
+  saveToLocalStorage(result:any, zimmer:any){
+    const expirationDate = new Date(new Date().getTime() + +result.expiresIn * 1000);
+    const user = new User(result.email, result.localId, result.idToken, expirationDate, result.email == 'harelmadmoni9@gmail.com'? true: false, zimmer);
+    this.authService.zimmer = zimmer;
+    this.authService.user.next(user);
+    this.authService.autoLogout(+result.expiresIn * 1000);
+    this.isLoading = false;
+    localStorage.setItem('userData', JSON.stringify(user));
+    if(user.admin){
+      this.authService.admin = true;
+      this.router.navigate(['/admin/pending-zimmers']);
+    }  
+    else{
+      this.authService.admin = false;
+      this.router.navigate([`/my-zimmer/${this.authService.zimmer.zimmer_id}`]);
+    }
   }
 
 }
