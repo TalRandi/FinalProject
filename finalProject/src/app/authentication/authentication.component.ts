@@ -86,7 +86,7 @@ export class AuthenticationComponent implements OnInit {
     localStorage.setItem('userData', JSON.stringify(user));
     if(user.admin){
       this.authService.admin = true;
-      this.router.navigate(['/admin/pending-zimmers']);
+      this.router.navigate(['/admin/pending-requests']);
     }  
     else{
       this.authService.admin = false;
