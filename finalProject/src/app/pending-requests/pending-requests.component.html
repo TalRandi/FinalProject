@@ -15,12 +15,21 @@
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let zimmer of zimmers; let index = index">
                             <div class="col-4">
-                                <img class="rounded" [src]="zimmer.images[0] | getDownloadURL" height="300px" width="100%">
+                                <ngb-carousel [showNavigationIndicators]="false">
+                                    <ng-template ngbSlide *ngFor="let image of zimmers[index].images; let image_index = index">
+                                      <div>
+                                        <img [src]="image | getDownloadURL" height="300px" width="100%">
+                                      </div>
+                                      <div class="carousel-caption">
+                                            {{ zimmers[index].images.length }} / {{ image_index+1 }}
+                                      </div>
+                                    </ng-template>
+                                </ngb-carousel>
+                                <!-- <img class="rounded" [src]="zimmer.images[0] | getDownloadURL" height="300px" width="100%"> -->
                             </div>
                             <div class="col-4">
                                 <h1>{{ zimmer.zimmerName }}</h1>
                                 <h4><mat-icon> location_on</mat-icon> {{ zimmer.region }}</h4>
-                                <!-- <h4>{{ zimmer.generalDescription.substring(0, 130) }}<h5 *ngIf="zimmer.generalDescription.length > 200"><b>לחץ להמשך קריאה ופרטים נוספים</b></h5></h4> -->
                                 <h4>{{ (zimmer.generalDescription.length>130)? (zimmer.generalDescription | slice:0:130)+'...':(zimmer.generalDescription) }}<h5 *ngIf="zimmer.generalDescription.length > 130"><b>לחץ להמשך קריאה ופרטים נוספים</b></h5></h4>
                                 <div class="row" *ngIf="zimmer.features != undefined">
                                     <div class="col-6" *ngIf="zimmer.features.includes('jacuzzi')">

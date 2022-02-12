@@ -16,8 +16,7 @@ import { AngularCounterModule } from 'angular-input-counter';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import {MatTabsModule} from '@angular/material/tabs';
-import { DataStorageService } from './shared-data/data-storage.service';
+import { MatTabsModule } from '@angular/material/tabs';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -37,6 +36,7 @@ import { AuthenticationComponent } from './authentication/authentication.compone
 import { LoadingSpinnerComponent } from './shared-data/loading-spinner/loading-spinner.component';
 import { MyZimmerComponent } from './zimmer/my-zimmer/my-zimmer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 
 
 @NgModule({
@@ -55,7 +55,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AuthenticationComponent,
     LoadingSpinnerComponent,
     MyZimmerComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ImageCarouselComponent
   ],
   imports: [
     BrowserModule,

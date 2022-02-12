@@ -46,7 +46,7 @@ mat-icon{
 .price h2{
     display: block;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    filter: drop-shadow(1px 1px 3px rgb(18, 151, 0));
+    filter: drop-shadow(1px 1px 3px #ECB365);
     text-align: center;
     font-weight: bold;
     color: #041C32;
@@ -55,4 +55,16 @@ mat-icon{
 #loading{
     text-align: center;
     margin: 14% 0%;
+}
+.carousel-caption{
+    color: #ECB365;
+    text-align: center;
+    bottom: 0;
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background-color: #041c3244;
+    border-radius: 50%;
+    padding: 3%;
 }

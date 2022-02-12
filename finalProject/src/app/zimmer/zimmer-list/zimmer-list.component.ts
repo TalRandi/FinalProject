@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
 import { Hut } from 'src/app/shared-data/hut.model';
 import { InnerDataService } from 'src/app/shared-data/inner-data.service';
 import { Zimmer } from 'src/app/shared-data/zimmer.model';
-
 
 interface Sort {
   value: string;
@@ -23,7 +23,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   private data: Subscription;
   
   sorts: Sort[] = [
-    {value: 'all', viewValue: 'המומלצים שלנו'},
+    {value: 'all', viewValue: 'הכל'},
     {value: 'weekend', viewValue: 'מחיר - סופ"ש'},
     {value: 'midweek', viewValue: 'מחיר - אמצ"ש'},
     {value: 'huts_number', viewValue: 'מספר בקתות'},
@@ -36,8 +36,10 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   dictionary = new Map<string, string>();
   general_filter: string[] = []
   region_filter: string[] = [] 
+  sort_parameter: string = "all";
 
-  constructor(private storage: DataStorageService, public innerData: InnerDataService) { }
+
+  constructor(private storage: DataStorageService, public innerData: InnerDataService, private router: Router) { }
 
   private removeElement(array: string[], element: string){
     const index = array.indexOf(element);
@@ -52,9 +54,9 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   }
   sortBy(event: any): void{
     this.isLoading = true
-    let sort_parameter = event.value
+    this.sort_parameter = event.value
     
-    switch (sort_parameter) {
+    switch (this.sort_parameter) {
       case 'weekend':        
         this.zimmers_to_display.sort((a,b) => (a.min_price_weekend > b.min_price_weekend) ? 1 : ((b.min_price_weekend > a.min_price_weekend) ? -1 : 0))
         break;
@@ -74,8 +76,22 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     this.isLoading = false
   }
   sortDirection(): void{
+    if(this.sort_parameter == "all")
+      return 
+    
     this.zimmers_to_display.reverse();
     this.sort_direction = !this.sort_direction
+  }
+
+  zimmer_clicked(zimmer: Zimmer): void{
+
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/home/${zimmer.zimmer_id}`])
+    );
+  
+    window.open(url, '_blank');
+
+    // this.router.navigate(['/home/'+zimmer.zimmer_id]);
   }
 
   ngOnInit(): void {
@@ -89,6 +105,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       this.dictionary.set("סאונה", "sauna")
       this.dictionary.set("מזגן", "air_conditioner")
       this.dictionary.set("חניה", "parking")
+      
       
       this.data = this.innerData.subject.subscribe(filters => {
         this.isLoading = true;
