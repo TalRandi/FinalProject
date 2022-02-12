@@ -28,7 +28,7 @@
 .price h2{
     display: block;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    filter: drop-shadow(1px 1px 3px rgb(18, 151, 0));
+    filter: drop-shadow(1px 1px 3px #ECB365);
     text-align: center;
     font-weight: bold;
     color: #041C32;
@@ -58,4 +58,20 @@ button:hover{
     background-color: #064663;
     color: aliceblue;
     transition: 0.1s;
+}
+.carousel-caption{
+    color: #ECB365;
+    text-align: center;
+    bottom: 0;
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background-color: #041c3244;
+    border-radius: 50%;
+    padding: 3%;
+}
+.sort-btn{
+    margin-bottom: 5%;
+    display: inline;
 }
