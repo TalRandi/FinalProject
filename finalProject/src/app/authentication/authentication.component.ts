@@ -33,16 +33,16 @@ export class AuthenticationComponent implements OnInit {
       if(this.my_zimmer.length == 0)
         this.storage.fetchPendingZimmers().subscribe(pending_zimmers => {
           this.my_zimmer = pending_zimmers.filter(pending_zimmer => pending_zimmer.email == result.email);
-          this.adminOrUser(result);
+          this.clientOrUser(result);
         })
       else
-        this.adminOrUser(result);  
+        this.clientOrUser(result);  
     })
   }
 
-  adminOrUser(result: any){
+  clientOrUser(result: any){
     if(this.my_zimmer.length == 0){
-      this.saveToLocalStorage(result, 'admin');
+      this.saveToLocalStorage(result, 'client');
     }
     else{
       this.saveToLocalStorage(result, this.my_zimmer[0]);

@@ -12,12 +12,14 @@ import { AuthGuardAdmin } from './authentication/auth.guard.admin';
 import { AuthGuardId } from './authentication/auth.guard.id';
 import { MyZimmerComponent } from './zimmer/my-zimmer/my-zimmer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch:'full'},
   
   {path: 'create-zimmer', component: CreateZimmerComponent},
   {path: 'login-page', component: AuthenticationComponent},
+  {path: 'signUp-page', component: SignUpComponent},
   {path: 'contact-us', component: ContactUsComponent},
   {path: 'admin', component: AuthenticationComponent},
   {path: 'admin/pending-requests', component: PendingRequestsComponent, canActivate: [AuthGuardAdmin]},
@@ -27,7 +29,6 @@ const routes: Routes = [
       {path:'', component:ZimmerListComponent},
       {path:':id', component:ZimmerDetailsComponent},
   ]},
-  // {path: '', redirectTo: '/home', pathMatch:'prefix'}, TO DO - Not found component
   {path: '**', component: NotFoundComponent}
 ];
 

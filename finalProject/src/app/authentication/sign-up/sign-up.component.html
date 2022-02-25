@@ -5,7 +5,13 @@
     <form (ngSubmit)="onSubmit()" #form="ngForm">
         <div class="row">
             <div class="col col-auto ml-auto">
-                <h1>כניסה למנויים</h1>
+                <h1>צרו חשבון</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-8 form-group">
+                <input type="text" name="name" class="form-control" ngModel required #name="ngModel" placeholder="שם מלא">
+                <span class="help-block" *ngIf="name.touched && name.invalid">* שם לא חוקי!</span>
             </div>
         </div>
         <div class="row">
@@ -26,9 +32,6 @@
             </div>
         </div>
     </form>
-    <div class="row">
-        <a href="signUp-page">לא רשום? לחץ כאן לפתיחת חשבון</a>
-    </div>
     <div class="alert alert-danger" *ngIf="error != '' ">
         <p>{{ error }}</p>
     </div> 

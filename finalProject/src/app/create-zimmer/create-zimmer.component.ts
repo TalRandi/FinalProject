@@ -85,7 +85,7 @@ export class CreateZimmerComponent implements OnInit {
       this.authService.autoLogout(+result.expiresIn * 1000);
       localStorage.setItem('userData', JSON.stringify(user));
       this.authService.admin = false;
-      this.router.navigate(['/my-zimmer']);
+      this.router.navigate([`/my-zimmer/${zimmer_id}`]);
     }
   }
 
@@ -186,7 +186,7 @@ export class CreateZimmerComponent implements OnInit {
           break; 
 
         case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-          this.error = "יותר מידי נסיונות התחברות, נסה שוב מאוחר יותר!";
+          this.error = "יותר מידי נסיונות רישום, נסה שוב מאוחר יותר!";
           break; 
               
         default:
