@@ -92,8 +92,8 @@
                         <div class="row justify-content-start hut-details space" *ngFor="let request of requests; let index = index">
                             <div class="col-6">
                                 <h1>{{ request[0] }} {{ request[1] }}</h1>
-                                <h2>{{request[2]}}</h2>
-                                <h2>{{request[3]}}</h2>
+                                <h2>{{ request[2] }}</h2>
+                                <h2>{{ request[3] }}</h2>
                             </div>
                             <div class="col-5">
                                 {{ request[4] }}
@@ -108,6 +108,25 @@
                     <ng-template #EmptyRequests>
                         <div class="row justify-content-center">
                             <h1>אין פריטים להצגה</h1>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="היסטוריית רשימת פניות">
+                    <ng-template [ngIf]="requests_archive.length > 0" [ngIfElse]="EmptyRequests">
+                        <div class="row">
+                            <div class="col-4 col-auto ml-auto space">
+                                <h1><b>({{ requests.length }} תוצאות)</b></h1>
+                            </div>
+                        </div>
+                        <div class="row justify-content-start hut-details space" *ngFor="let request of requests_archive; let index = index">
+                            <div class="col-6">
+                                <h1>{{ request[0] }} {{ request[1] }}</h1>
+                                <h2>{{ request[2] }}</h2>
+                                <h2>{{ request[3] }}</h2>
+                            </div>
+                            <div class="col-6">
+                                {{ request[4] }}
+                            </div>
                         </div>
                     </ng-template>
                 </mat-tab>    

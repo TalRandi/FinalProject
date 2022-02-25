@@ -40,6 +40,9 @@
             <a *ngIf=!isLoggedIn class="nav-link" [routerLink]="['login-page']"><mat-icon>account_box</mat-icon> כניסה למנויים</a>
             <a style="cursor: pointer;" *ngIf="isLoggedIn" class="nav-link" (click)="onLogout()"><mat-icon>account_box</mat-icon> התנתק</a>
           </li>
+          <li *ngIf="!isLoggedIn" class="nav-item">
+            <a class="nav-link" href="signUp-page"><mat-icon>person_add</mat-icon>הרשמה</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" id="publish" aria-current="page" routerLink="create-zimmer">פרסם באתר</a>
           </li>

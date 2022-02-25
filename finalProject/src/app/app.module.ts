@@ -38,6 +38,7 @@ import { LoadingSpinnerComponent } from './shared-data/loading-spinner/loading-s
 import { MyZimmerComponent } from './zimmer/my-zimmer/my-zimmer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
+import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { ImageCarouselComponent } from './image-carousel/image-carousel.componen
     LoadingSpinnerComponent,
     MyZimmerComponent,
     NotFoundComponent,
-    ImageCarouselComponent
+    ImageCarouselComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

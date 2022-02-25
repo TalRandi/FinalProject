@@ -15,8 +15,9 @@ export class PendingRequestsComponent implements OnInit {
 
   constructor(private storage: DataStorageService) { }
 
-  zimmers: Zimmer[] = []
+  zimmers: Zimmer[] = [];
   requests: string[] = [];
+  requests_archive: string[] = [];
 
   onSubmitZimmer(zimmer: Zimmer, index: number){
     this.storage.storeAcceptedZimmer(zimmer).subscribe(() => {
@@ -27,6 +28,7 @@ export class PendingRequestsComponent implements OnInit {
   onSubmitRequest(request: string, index: number){
     this.storage.approveRequest(request).subscribe(() => {
       this.requests.splice(index, 1);
+      this.requests_archive.push(request);
     })
   }
 
@@ -39,6 +41,7 @@ export class PendingRequestsComponent implements OnInit {
     error => this.isLoading = false
     );
     this.storage.fetchRequests().subscribe(stored_requests => this.requests = stored_requests);
+    this.storage.fetchArchivedRequests().subscribe(archived_requests => this.requests_archive = archived_requests);
   }
 
 }
