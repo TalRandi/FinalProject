@@ -42,7 +42,6 @@
                     </div>
                     <div class="col-4" (click)="zimmer_clicked(zimmer)">
                         <h1>{{ zimmer.zimmerName }}</h1>
-                        <h4><mat-icon> location_on</mat-icon> {{ zimmer.region }}</h4>
                         <h4>{{ (zimmer.generalDescription.length>130)? (zimmer.generalDescription | slice:0:130)+'...':(zimmer.generalDescription) }}<h5 *ngIf="zimmer.generalDescription.length > 130"><b>לחץ להמשך קריאה ופרטים נוספים</b></h5></h4>
                         <div class="row" *ngIf="zimmer.features != undefined">
                             <div class="col-6" *ngIf="zimmer.features.includes('jacuzzi')">
@@ -50,6 +49,12 @@
                             </div>
                             <div class="col-6" *ngIf="zimmer.features.includes('pool')">
                                 <h6><mat-icon>pool</mat-icon> בריכה</h6>
+                            </div>
+                            <div class="col-6" *ngIf="zimmer.features.includes('heated_pool')">
+                                <h6><mat-icon>pool</mat-icon> בריכה מחוממת</h6>
+                            </div>
+                            <div class="col-6" *ngIf="zimmer.features.includes('indoor_pool')">
+                                <h6><mat-icon>pool</mat-icon> בריכה מקורה</h6>
                             </div>
                             <div class="col-6" *ngIf="zimmer.features.includes('air_conditioner')">
                                 <h6><mat-icon>wb_sunny</mat-icon> מזגן</h6>
@@ -66,6 +71,7 @@
                         </div>
                     </div>
                     <div class="col-4" (click)="zimmer_clicked(zimmer)">
+                        <h4><mat-icon> location_on</mat-icon> {{ zimmer.region }}</h4>
                         <h2>{{ zimmer.ownerName }} - {{ zimmer.phone }}</h2>
                         <h4>מקסימום אורחים: {{ zimmer.total_capacity }}</h4>
                         <h4>מספר בקתות: {{ zimmer.huts.length }}</h4>

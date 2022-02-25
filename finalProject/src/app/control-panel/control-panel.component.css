@@ -23,3 +23,15 @@
     font-weight: bold;
     color: #04293A;
 }
+button{
+    width: 5rem;
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    background-color: #041C32;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #ECB365;
+    transition: 0.5s;
+}

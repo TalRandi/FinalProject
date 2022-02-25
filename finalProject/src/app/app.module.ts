@@ -16,6 +16,7 @@ import { AngularCounterModule } from 'angular-input-counter';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -70,6 +71,7 @@ import { ImageCarouselComponent } from './image-carousel/image-carousel.componen
     AngularCounterModule,
     MatButtonModule,
     MatSelectModule,
+    MatRadioModule,
     FormsModule,
     MatCheckboxModule,
     MatIconModule,

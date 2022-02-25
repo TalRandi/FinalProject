@@ -125,6 +125,8 @@ export class CreateZimmerComponent implements OnInit {
       item.weekendPriceTwoNights,
       item.jacuzzi,
       item.pool,
+      item.heated_pool,
+      item.indoor_pool,
       item.air_conditioner,
       item.wifi,
       item.sauna,
@@ -138,6 +140,10 @@ export class CreateZimmerComponent implements OnInit {
       this.features.push("jacuzzi")
     if(item.pool && !this.features.includes("pool"))
       this.features.push("pool")
+    if(item.heated_pool && !this.features.includes("heated_pool"))
+      this.features.push("heated_pool")
+    if(item.indoor_pool && !this.features.includes("indoor_pool"))
+      this.features.push("indoor_pool")
     if(item.air_conditioner && !this.features.includes("air_conditioner"))
       this.features.push("air_conditioner")
     if(item.wifi && !this.features.includes("wifi"))

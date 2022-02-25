@@ -35,7 +35,8 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   zimmers_to_display:Zimmer[] = []
   dictionary = new Map<string, string>();
   general_filter: string[] = []
-  region_filter: string[] = [] 
+  region_filter: string[] = []
+  huts_number_filter: string = "";
   sort_parameter: string = "all";
 
 
@@ -100,6 +101,8 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       this.all_zimmers = zimmers  
       this.zimmers_to_display = [...this.all_zimmers]
       this.dictionary.set("בריכה", "pool")
+      this.dictionary.set("בריכה מחוממת", "heated_pool")
+      this.dictionary.set("בריכה מקורה", "indoor_pool")
       this.dictionary.set("ג'קוזי", "jacuzzi")
       this.dictionary.set("WiFi", "wifi")
       this.dictionary.set("סאונה", "sauna")
@@ -108,6 +111,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       
       
       this.data = this.innerData.subject.subscribe(filters => {
+    
         this.isLoading = true;
         this.zimmers_to_display = [...this.all_zimmers]
 
@@ -129,12 +133,40 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
               this.removeElement(this.region_filter, filter)
           });
         }
+        else if(filters.has("1")){
+          // Update the huts_number array
+          filters.forEach((checked: boolean, filter: string) => {
+            if(checked)
+              console.log(filter);
+            
+            if(checked && this.huts_number_filter != filter)
+              this.huts_number_filter = filter
+          });
+        }
 
         for (let index_zimmer = 0; index_zimmer < this.zimmers_to_display.length; index_zimmer++) {
+
           if(this.zimmers_to_display[index_zimmer].features == undefined && this.general_filter.length != 0){
             this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
             index_zimmer--
             continue
+          }
+          if(this.huts_number_filter != ""){
+            
+            if(this.huts_number_filter == "הכל"){
+              this.huts_number_filter = "";
+              console.log(this.zimmers_to_display);
+            }
+            else if(this.zimmers_to_display[index_zimmer].huts.length+'' != this.huts_number_filter){
+              this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+              index_zimmer--
+              continue
+            }
+            else if(this.huts_number_filter == "6+" && this.zimmers_to_display[index_zimmer].huts.length < 6){
+              this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+              index_zimmer--
+              continue
+            }
           }
           for (let index_filter = 0; index_filter < this.general_filter.length; index_filter++) {
               if (!this.zimmers_to_display[index_zimmer].features.includes(this.general_filter[index_filter])) {

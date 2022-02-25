@@ -24,4 +24,14 @@ export class ControlPanelComponent implements OnInit {
     this.innerData.subject.next(this.innerData.regions_map)
   }
 
+  onHutsNumber(event: any): void{
+    this.innerData.huts_map.forEach((is_true, num) => {
+      if(event.value == num)
+        this.innerData.huts_map.set(event.value, true)
+      else
+        this.innerData.huts_map.set(num, false)
+    })
+    this.innerData.subject.next(this.innerData.huts_map)
+  }
+
 }

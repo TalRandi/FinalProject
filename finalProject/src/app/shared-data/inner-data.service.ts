@@ -9,11 +9,14 @@ export class InnerDataService {
   
   subject = new Subject<Map<string, boolean>>();
 
-  filters = ["ג'קוזי", "בריכה", "מזגן", "WiFi", "סאונה", "חניה"]
+  filters = ["ג'קוזי" ,"בריכה" ,"בריכה מחוממת" ,"בריכה מקורה" ,"מזגן", "WiFi", "סאונה", "חניה"]
   filters_map = new Map<string, boolean>();
   
   regions = ['צפון', 'מרכז', 'ירושלים והסביבה', 'דרום'];
   regions_map = new Map<string, boolean>();
+
+  huts_number = ['הכל', '1', '2', '3', '4', '5', '6+']
+  huts_map = new Map<string, boolean>();
 
   constructor() {
     this.filters.forEach(filter => {
@@ -21,6 +24,9 @@ export class InnerDataService {
     })
     this.regions.forEach(region => {
       this.regions_map.set(region, false)
+    })
+    this.huts_number.forEach(number => {
+      this.huts_map.set(number, false)
     })
   }
 }
