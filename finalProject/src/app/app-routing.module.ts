@@ -19,7 +19,7 @@ const routes: Routes = [
   
   {path: 'create-zimmer', component: CreateZimmerComponent},
   {path: 'login-page', component: AuthenticationComponent},
-  {path: 'signUp-page', component: SignUpComponent},
+  {path: 'signup-page', component: SignUpComponent},
   {path: 'contact-us', component: ContactUsComponent},
   {path: 'admin', component: AuthenticationComponent},
   {path: 'admin/pending-requests', component: PendingRequestsComponent, canActivate: [AuthGuardAdmin]},

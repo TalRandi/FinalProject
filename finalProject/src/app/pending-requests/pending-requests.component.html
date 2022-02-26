@@ -4,7 +4,7 @@
 
 <div class="container-fluid" *ngIf="!isLoading">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
+        <div class="col-11 col-md-8">
             <mat-tab-group dynamicHeight>
                 <mat-tab label="רשימת צימרים לאישור">
                     <ng-template [ngIf]="zimmers.length > 0" [ngIfElse]="Empty">
@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let zimmer of zimmers; let index = index">
-                            <div class="col-4">
+                            <div class="col-12 col-md-4">
                                 <ngb-carousel [showNavigationIndicators]="false">
                                     <ng-template ngbSlide *ngFor="let image of zimmers[index].images; let image_index = index">
                                       <div>
@@ -27,7 +27,7 @@
                                 </ngb-carousel>
                                 <!-- <img class="rounded" [src]="zimmer.images[0] | getDownloadURL" height="300px" width="100%"> -->
                             </div>
-                            <div class="col-4">
+                            <div class="col-6 col-md-4">
                                 <h1>{{ zimmer.zimmerName }}</h1>
                                 <h4>{{ (zimmer.generalDescription.length>130)? (zimmer.generalDescription | slice:0:130)+'...':(zimmer.generalDescription) }}<h5 *ngIf="zimmer.generalDescription.length > 130"><b>לחץ להמשך קריאה ופרטים נוספים</b></h5></h4>
                                 <div class="row" *ngIf="zimmer.features != undefined">
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6 col-md-4">
                                 <div class="row justify-content-end buttonTab">  
                                     <button (click)="onSubmitZimmer(zimmer, index)" class="btn btn-success"><mat-icon>check</mat-icon></button>
                                 </div>
@@ -115,7 +115,7 @@
                     <ng-template [ngIf]="requests_archive.length > 0" [ngIfElse]="EmptyRequests">
                         <div class="row">
                             <div class="col-4 col-auto ml-auto space">
-                                <h1><b>({{ requests.length }} תוצאות)</b></h1>
+                                <h1><b>({{ requests_archive.length }} תוצאות)</b></h1>
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let request of requests_archive; let index = index">

@@ -5,6 +5,7 @@
     border-radius: 50px;
     padding: 3%;
     margin: 4% 0;
+
 }   
 .control:hover{
     font-size: large;
@@ -34,4 +35,12 @@ button{
 button:hover{
     background-color: #ECB365;
     transition: 0.5s;
+}
+.col-4{
+    border: solid gray 1px;
+}
+mat-radio-button{
+    border: solid gray 1px;
+    display: inline-block;
+
 }

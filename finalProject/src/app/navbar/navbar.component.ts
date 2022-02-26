@@ -25,6 +25,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.isLoggedIn = true;
       }
   }
+  togglerClicked(event: any): void{
+    console.log(event);
+    
+  }
 
   ngOnDestroy(): void {
       this.userSub.unsubscribe();

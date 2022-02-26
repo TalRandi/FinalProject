@@ -4,7 +4,7 @@
         <a class="navbar-brand" href="#">
             <img id="logo" src="../../assets/logo3.png" height="80" width="80">
         </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" (click)="togglerClicked($event)" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -21,19 +21,6 @@
           <li *ngIf="isLoggedIn && this.authService.admin" class="nav-item" [routerLinkActive]="['active']">
             <a class="nav-link" [routerLink]="['admin', 'pending-requests']"><mat-icon>playlist_add_check</mat-icon> ניהול בקשות</a>
           </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              תפריט
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">פעולה</a></li>
-              <li><a class="dropdown-item" href="#">פעולה נוספת</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">משהו אחר פה</a></li>
-            </ul>
-          </li> -->
         </ul>
         <ul class="navbar-nav mr-auto">
           <li class="nav-item" [routerLinkActive]="['active']">
@@ -41,7 +28,7 @@
             <a style="cursor: pointer;" *ngIf="isLoggedIn" class="nav-link" (click)="onLogout()"><mat-icon>account_box</mat-icon> התנתק</a>
           </li>
           <li *ngIf="!isLoggedIn" class="nav-item">
-            <a class="nav-link" href="signUp-page"><mat-icon>person_add</mat-icon>הרשמה</a>
+            <a class="nav-link" [routerLink]="['signup-page']"><mat-icon>person_add</mat-icon>הרשמה</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="publish" aria-current="page" routerLink="create-zimmer">פרסם באתר</a>

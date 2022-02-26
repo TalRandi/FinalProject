@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row" id="search-bar">
-        <div class="col-sm">
+        <div class="col-6 col-md">
           <mat-form-field appearance="fill">
             <mat-label>חפש צימר</mat-label>
             <textarea matInput
@@ -9,7 +9,7 @@
                       cdkAutosizeMinRows="1"></textarea>
           </mat-form-field>
         </div>
-        <div class="col-sm">
+        <div class="col-6 col-md">
             <mat-form-field dir='rtl' appearance="fill">
               <mat-label >בחר איזור</mat-label>
               <mat-select>
@@ -19,7 +19,7 @@
               </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-sm">
+        <div class="col-8 col-md">
           <mat-form-field appearance="fill">
             <mat-label>בחר תאריכים</mat-label>
             <mat-date-range-input [rangePicker]="picker">
@@ -30,10 +30,10 @@
             <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
         </div>
-        <div class="col-sm">
+        <div class="col-6 col-md">
             <angular-input-counter appearance="fill"></angular-input-counter>
         </div>
-        <div class="col-sm">
+        <div class="col-4 col-md">
             <button mat-stroked-button color="primary"><mat-icon>search</mat-icon></button>
         </div>
       </div>

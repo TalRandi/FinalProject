@@ -2,7 +2,7 @@
     
     <h1 class="title">איזורים</h1>
     <div class="row control" *ngFor="let region of innerData.regions">
-        <div class="col-12">
+        <div class="col-6 col-md-12">
             <mat-checkbox name="{{ region }}" type="checkbox" color="primary" (change)="onRegionChange($event)">{{ region }}</mat-checkbox>
         </div>
 
@@ -10,7 +10,7 @@
     <hr>
     <h1 class="title">מתקנים</h1>        
     <div class="row control" *ngFor="let filter of innerData.filters">
-        <div class="col-12">
+        <div class="col-6 col-md-12">
             <mat-checkbox name="{{ filter }}" type="checkbox" color="primary" (change)="onFilterChange($event)">{{ filter }}</mat-checkbox>
         </div>
 
@@ -18,10 +18,9 @@
     <hr>
     <h1 class="title">מספר בקתות</h1> 
     <div class="row">
-        <mat-radio-group aria-label="Select an option">
-            <div class="col-6" *ngFor="let number of innerData.huts_number">
+        <mat-radio-group>
+            <div class="col-md-6" *ngFor="let number of innerData.huts_number">
                 <mat-radio-button color="primary" name="{{ number }}" value="{{ number }}" (change)="onHutsNumber($event)">{{ number }}</mat-radio-button>
-                <!-- <mat-checkbox name="{{ number }}" type="checkbox" color="primary" (change)="onHutsNumber($event)">{{ number }}</mat-checkbox> -->
             </div>
         </mat-radio-group>
     </div>
