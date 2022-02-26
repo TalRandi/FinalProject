@@ -39,8 +39,4 @@ button:hover{
 .col-4{
     border: solid gray 1px;
 }
-mat-radio-button{
-    border: solid gray 1px;
-    display: inline-block;
 
-}
