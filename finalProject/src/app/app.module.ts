@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -74,6 +75,7 @@ import { SignUpComponent } from './authentication/sign-up/sign-up.component';
     MatButtonModule,
     MatSelectModule,
     MatRadioModule,
+    MatExpansionModule,
     FormsModule,
     MatCheckboxModule,
     MatIconModule,

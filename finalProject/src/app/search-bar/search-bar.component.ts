@@ -16,7 +16,11 @@ export class SearchBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
+  
+  }
+  dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
+    console.log(dateRangeStart.value);
+    console.log(dateRangeEnd.value);
   }
 
   regions: Region[] = [

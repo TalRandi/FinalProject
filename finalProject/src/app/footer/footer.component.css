@@ -2,7 +2,8 @@
     direction: rtl;
 }
 footer{
-    margin: 5% 0;
+    margin: 6% 0;
+    min-height: 10%;
 }
 .primary-color{
     background-color: #041C32;

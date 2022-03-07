@@ -22,8 +22,7 @@
 }
 .price{
     position: absolute;
-    bottom: 0;
-    margin-left: 2%;
+    margin-left: 1%;
 }
 .price h2{
     display: block;
@@ -32,7 +31,16 @@
     text-align: center;
     font-weight: bold;
     color: #041C32;
-    border-radius: 10px;
+}
+.price h5{
+    position: absolute;
+    left: 0;
+    background-color: #2e832b;
+    color: #ffffff;
+    padding: 1%;
+    font-weight: bold;
+    border-radius: 10%;
+    text-align: center;
 }
 mat-icon{
     vertical-align: middle;

@@ -2,7 +2,7 @@
     <app-loading-spinner></app-loading-spinner>
 </div>
 
-<div class="container">
+<div class="container wrapper" *ngIf="!isLoading">
     <hr>
     <div class="row">
         <div class="col-md-4 border-right">
@@ -39,50 +39,200 @@
     </div>
     <hr>
     <div class="row hut-list" *ngFor="let hut of zimmer.huts; let hut_index = index">
-        <div class="col-12 col-md-3">
-            <ngb-carousel [showNavigationIndicators]="false">
-                <ng-template ngbSlide *ngFor="let image of hut.images; let hut_image_index = index">      
-                    <img [src]="image | getDownloadURL" height="200px" width="100%">     
-                    <div class="carousel-caption">
-                        {{ hut.images.length }} / {{ hut_image_index+1 }}
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header collapsedHeight="100%" expandedHeight="200%">
+                <mat-panel-description>
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <ngb-carousel [showNavigationIndicators]="false">
+                                <ng-template ngbSlide *ngFor="let image of hut.images; let hut_image_index = index">      
+                                    <img [src]="image | getDownloadURL" height="200px" width="100%">     
+                                    <div class="carousel-caption">
+                                        {{ hut.images.length }} / {{ hut_image_index+1 }}
+                                    </div>
+                                </ng-template>
+                            </ngb-carousel>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <h2 class="hut-title">יחידה {{ hut_index+1 }}: <h3>{{ hut.hutName }}</h3></h2>
+                            <h2 class="hut-title">מקסימום אנשים ביחידה: <h3>{{ hut.capacity }}</h3></h2>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <h2 class="hut-title">מה ביחידה:</h2>
+                            <div class="row features">
+                                <div class="col-6" *ngIf="hut.jacuzzi">
+                                    <h6><mat-icon>hot_tub</mat-icon> ג'קוזי</h6>
+                                </div>
+                                <div class="col-6" *ngIf="hut.pool">
+                                    <h6><mat-icon>pool</mat-icon> בריכה</h6>
+                                </div>
+                                <div class="col-6" *ngIf="hut.air_conditioner">
+                                    <h6><mat-icon>wb_sunny</mat-icon> מזגן</h6>
+                                </div>
+                                <div class="col-6" *ngIf="hut.wifi">
+                                    <h6><mat-icon>wifi</mat-icon> wifi</h6>
+                                </div>
+                                <div class="col-6" *ngIf="hut.sauna">
+                                    <h6><mat-icon>spa</mat-icon> סאונה</h6>
+                                </div>
+                                <div class="col-6" *ngIf="hut.parking">
+                                    <h6><mat-icon> local_parking</mat-icon> חניה</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="row">
+                                <h2 class="hut-title">אמצ"ש בהזמנת לילה :<h3>{{ hut.regularPrice }}</h3></h2>
+                                <h2 class="hut-title" *ngIf="hut.regularPriceTwoNights">אמצ"ש בהזמנת 2 לילות :<h3>{{ hut.regularPriceTwoNights }}</h3></h2>
+                                <h2 class="hut-title">סופ"ש בהזמנת לילה :<h3>{{ hut.weekendPrice }}</h3></h2>
+                                <h2 class="hut-title" *ngIf="hut.weekendPriceTwoNights">סופ"ש בהזמנת 2 לילות :<h3>{{ hut.weekendPriceTwoNights }}</h3></h2>
+                            </div>
+                            <div class="row online-order">
+                                <div class="col-12">
+                                    <button (click)="onlineOrder(hut.hutName)">הזמן אונליין</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </ng-template>
-            </ngb-carousel>
-        </div>
-        <div class="col-6 col-md-3">
-            <h2 class="hut-title">יחידה {{ hut_index+1 }}: <h3>{{ hut.hutName }}</h3></h2>
-            <h2 class="hut-title">מקסימום אנשים ביחידה: <h3>{{ hut.capacity }}</h3></h2>
-        </div>
-        <div class="col-6 col-md-2">
-            <h2 class="hut-title">מה ביחידה:</h2>
-            <div class="row features">
-                <div class="col-6" *ngIf="hut.jacuzzi">
-                    <h6><mat-icon>hot_tub</mat-icon> ג'קוזי</h6>
+                </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="container order-details">
+                    <form (ngSubmit)="onOrderSubmition()" #form="ngForm">
+                        <div class="row order-title">
+                            <div class="col-12 col-md-4">
+                                <h1>הפרטים שלכם</h1>
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <input type="text" name="name" class="form-control" ngModel required #name="ngModel" minlength="2" placeholder="שם מלא">
+                                        <span class="help-block" *ngIf="name.touched && name.invalid">* שם לא חוקי!</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <input type="text" name="phone" ngModel class="form-control" required minlength="10" maxlength="10" #phone="ngModel" placeholder="מספר פלאפון">
+                                        <span class="help-block" *ngIf="phone.touched && phone.invalid">* מספר פלאפון לא חוקי!</span>
+                                        </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <input type="email" name="email" class="form-control" ngModel required email #email="ngModel" placeholder="כתובת דואר אלקטרוני">
+                                        <span class="help-block" *ngIf="email.touched && email.invalid">* דואר אלקטרוני לא חוקי!</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 form-group">
+                                        <mat-form-field>
+                                            <mat-label>בחר תאריכים</mat-label>
+                                            <mat-date-range-input [rangePicker]="dates_picker">
+                                                <input matStartDate #dateRangeStart placeholder="תאריך הגעה">
+                                                <input matEndDate #dateRangeEnd placeholder="תאריך עזיבה" (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd, hut)">
+                                            </mat-date-range-input>
+                                            <mat-datepicker-toggle matSuffix [for]="dates_picker"></mat-datepicker-toggle>
+                                            <mat-date-range-picker #dates_picker></mat-date-range-picker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 col-md form-group">
+                                        <label for="number_of_guests">מספר אורחים</label>
+                                        <angular-input-counter [max]="hut.capacity" ngModel #number_of_guests></angular-input-counter>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="special_requests">בקשות מבעל הצימר</label>
+                                        <textarea name="special_requests" class="form-control" ngModel rows="4" #special_requests="ngModel"></textarea>
+                                      </div>
+                                </div>
+                            </div>  
+                            <div class="col-12 col-md-4">
+                                <h1>פרטי תשלום</h1>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="../../../assets/images/isracard.jpg" height="40px" width="40px">
+                                    </div>
+                                    <div class="col-4">
+                                        <img src="../../../assets/images/mastercard.jpg" height="40px" width="40px">
+                                    </div>
+                                    <div class="col-4">
+                                        <img src="../../../assets/images/visa.png" height="40px" width="40px">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <input type="text" name="creditCardNumber" class="form-control" ngModel required #creditCardNumber="ngModel" placeholder="מספר כרטיס אשראי">
+                                        <span class="help-block" *ngIf="creditCardNumber.touched && creditCardNumber.invalid">* מספר אשראי לא חוקי!</span>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <input type="number" name="creditCardThree" class="form-control" ngModel required #creditCardThree="ngModel" minlength="3" maxlength="3" placeholder="3 ספרות">
+                                        <span class="help-block" *ngIf="creditCardThree.touched && creditCardThree.invalid">* 3 ספרות אינן חוקיות!</span>
+                                    </div>
+                                    <div class="col-6 form-group">
+                                        <mat-form-field>
+                                            <mat-label>תוקף כרטיס</mat-label>
+                                            <input name="creditCardValidity" matInput ngModel required #creditCardValidity>
+                                            <mat-datepicker-toggle matSuffix [for]="validity_picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #validity_picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>  
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <h1>סיכום הזמנה</h1>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3>הגעה</h3>
+                                    </div>
+                                    <div class="col-6">
+                                        <h3>עזיבה</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4>{{ dateRangeStart.value != "" ? dateRangeStart.value : "---" }}</h4>
+                                    </div>
+                                    <div class="col-6">
+                                        <h4>{{ dateRangeEnd.value != "" ? dateRangeEnd.value : "---" }}</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4><h2>מספר אורחים:</h2> {{ number_of_guests.value }}</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3>מחיר לילות אמצ"ש</h3>
+                                    </div>
+                                    <div class="col-6">
+                                        <h3>מחיר לילות סופ"ש</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4>{{ regular_price != 0 ? regular_price: "---" }}</h4>
+                                    </div>
+                                    <div class="col-6">
+                                        <h4>{{ weekend_price != 0 ? weekend_price: "---" }}</h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>בקשות מיוחדות: {{ special_requests.value != "" ? special_requests.value : "---" }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-auto">
+                                <button type="submit" class="btn" [disabled]="form.invalid || dateRangeStart.value == ''||  dateRangeEnd.value == ''">בצע הזמנה</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-6" *ngIf="hut.pool">
-                    <h6><mat-icon>pool</mat-icon> בריכה</h6>
-                </div>
-                <div class="col-6" *ngIf="hut.air_conditioner">
-                    <h6><mat-icon>wb_sunny</mat-icon> מזגן</h6>
-                </div>
-                <div class="col-6" *ngIf="hut.wifi">
-                    <h6><mat-icon>wifi</mat-icon> wifi</h6>
-                </div>
-                <div class="col-6" *ngIf="hut.sauna">
-                    <h6><mat-icon>spa</mat-icon> סאונה</h6>
-                </div>
-                <div class="col-6" *ngIf="hut.parking">
-                    <h6><mat-icon> local_parking</mat-icon> חניה</h6>
-                </div>
-            </div>
-        </div>
-        <div class="col-8 col-md-3">
-            <div class="row">
-                <h2 class="hut-title">אמצ"ש בהזמנת לילה :<h3>{{ hut.regularPrice }}</h3></h2>
-                <h2 class="hut-title" *ngIf="hut.regularPriceTwoNights">אמצ"ש בהזמנת 2 לילות :<h3>{{ hut.regularPriceTwoNights }}</h3></h2>
-                <h2 class="hut-title">סופ"ש בהזמנת לילה :<h3>{{ hut.weekendPrice }}</h3></h2>
-                <h2 class="hut-title" *ngIf="hut.weekendPriceTwoNights">סופ"ש בהזמנת 2 לילות :<h3>{{ hut.weekendPriceTwoNights }}</h3></h2>
-            </div>
-        </div>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
 </div>
