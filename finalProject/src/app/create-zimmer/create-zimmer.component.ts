@@ -74,6 +74,7 @@ export class CreateZimmerComponent implements OnInit {
         zimmer_id,
         this.features,
         this.huts,
+        []
       )    
       this.storeImagesUrl(this.zimmer, this.images);
       this.storage.storePendingZimmer(this.zimmer, this.images, this.hutImages);

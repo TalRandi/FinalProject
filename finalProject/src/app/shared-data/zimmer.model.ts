@@ -1,4 +1,5 @@
 import { Hut } from "./hut.model"
+import { Order } from "./order.model";
 
 export class Zimmer {
     public ownerName: string;
@@ -15,9 +16,10 @@ export class Zimmer {
     public features: string[];
     public images: string[] = [];
     public huts: Hut[];
+    public orders: Order[] = [];
 
     constructor(ownerName: string, phone: string, zimmerName: string, email: string, generalDescription: string, 
-        total_capacity: number, status: string, min_price_regular: number, min_price_weekend: number, region: string, zimmer_id: string, features: string[], huts: Hut[]){
+        total_capacity: number, status: string, min_price_regular: number, min_price_weekend: number, region: string, zimmer_id: string, features: string[], huts: Hut[], orders: Order[]){
         
         this.ownerName = ownerName;
         this.phone = phone;
@@ -31,6 +33,7 @@ export class Zimmer {
         this.region = region;
         this.zimmer_id = zimmer_id;
         this.features = features;
-        this.huts = huts;  
+        this.huts = huts;
+        this.orders = orders;  
     }
 }

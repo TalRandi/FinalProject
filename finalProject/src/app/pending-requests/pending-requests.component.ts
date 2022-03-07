@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
 import { Zimmer } from 'src/app/shared-data/zimmer.model';
 
@@ -10,10 +10,9 @@ import { Zimmer } from 'src/app/shared-data/zimmer.model';
 })
 export class PendingRequestsComponent implements OnInit {
 
-  @ViewChild('form') contact_us_form: NgForm;
   isLoading = false;
 
-  constructor(private storage: DataStorageService) { }
+  constructor(private storage: DataStorageService, private router: Router) { }
 
   zimmers: Zimmer[] = [];
   requests: string[] = [];
@@ -43,5 +42,11 @@ export class PendingRequestsComponent implements OnInit {
     this.storage.fetchRequests().subscribe(stored_requests => this.requests = stored_requests);
     this.storage.fetchArchivedRequests().subscribe(archived_requests => this.requests_archive = archived_requests);
   }
+  zimmer_clicked(zimmer: Zimmer): void{
 
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/home/${zimmer.zimmer_id}`])
+    );
+    window.open(url, '_blank');
+  }
 }

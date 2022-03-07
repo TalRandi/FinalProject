@@ -21,7 +21,7 @@ export class SignUpComponent implements OnInit {
 
   onSubmit(){
     this.authService.signUp(this.login_form.value.email, this.login_form.value.password).subscribe((result: any) => {
-      this.client = new Client(this.login_form.value.name, this.login_form.value.email, 0, []); 
+      this.client = new Client(this.login_form.value.name, this.login_form.value.email, 0, [], []); 
       this.isLoading = true;
       this.authService.token = result.idToken;
       let zimmer: any = 'client';  

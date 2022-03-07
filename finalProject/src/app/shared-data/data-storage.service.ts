@@ -104,6 +104,15 @@ export class DataStorageService{
                 }
         }))
     }
+    approveOrder(zimmer:Zimmer){
+        return this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
+            for(var id in zimmers)
+                if(zimmers[id].zimmer_id == zimmer.zimmer_id){
+                    delete zimmers[id];
+                    this.http.post(this.url_accepted, zimmer).subscribe();
+                }
+        }))
+    }
     storeClient(client: Client){
         this.http.post(this.url_clients, client).subscribe();
     }
