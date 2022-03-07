@@ -5,16 +5,26 @@
     text-align: center;
     margin: 14% 0%;
 }
-.container{
+.wrapper{
     border: #3ea7c7 solid 3px;
     padding: 3%;
     border-radius: 50px;
+    text-align: center;
+}
+.order-details{
+    margin: 2% 0;
+    border: #165163 solid 2px;
+    padding: 3%;
+    border-radius: 10px;
     text-align: center;
 }
 .title{
     font-size: xx-large;
     font-weight: bold;
     color: #041C32;
+}
+mat-form-field{
+    text-align:start;
 }
 .description{
     margin: 0% 3%;
@@ -24,7 +34,7 @@
     border-radius: 10%;
 }
 .hut-list{
-    margin: 2% 0;
+    margin: 5% 0;
     text-align: right;
 }
 .hut-list h3, h2{
@@ -37,4 +47,38 @@
 .hut-title{
     color: #0a3d4d;
     font-weight: bold;
+}
+.online-order button{
+    background-color: #2e832b;
+    margin: 2% 10%;
+    color: #ffffff;
+    padding: 1%;
+    font-weight: bold;
+    vertical-align: center;
+    border-radius: 10%;
+    text-align: center;
+}
+form{
+    text-align: right;
+}
+button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    background-color: #041C32;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #ECB365;
+    transition: 0.5s;
+}
+button:hover[disabled]{
+    color: aliceblue;
+    background-color: #041C32;
+    cursor: not-allowed;
+}
+button:active{
+    background-color: #f59e23;
+    transform: translateY(1px);
+    transition: none;
 }

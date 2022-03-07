@@ -71,6 +71,7 @@ export class CreateZimmerComponent implements OnInit {
         min_price_regular,
         min_price_weekend,
         this.generalForm.value.region,
+        4,
         zimmer_id,
         this.features,
         this.huts,

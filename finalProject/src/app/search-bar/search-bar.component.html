@@ -23,8 +23,8 @@
           <mat-form-field appearance="fill">
             <mat-label>בחר תאריכים</mat-label>
             <mat-date-range-input [rangePicker]="picker">
-              <input matStartDate placeholder="תאריך הגעה">
-              <input matEndDate placeholder="תאריך עזיבה">
+              <input matStartDate #dateRangeStart placeholder="תאריך הגעה">
+              <input matEndDate #dateRangeEnd placeholder="תאריך עזיבה" (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>

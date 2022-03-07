@@ -18,6 +18,10 @@ interface Sort {
 })
 export class ZimmerListComponent implements OnInit, OnDestroy {
 
+  
+  currentRate = 8;
+  
+
   isLoading = false;
   sort_direction = true;
   private data: Subscription;
