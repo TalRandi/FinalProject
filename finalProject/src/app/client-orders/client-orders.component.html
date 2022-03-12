@@ -1,0 +1,41 @@
+<div id="loading" *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+
+<div class="container-fluid" *ngIf="!isLoading">
+    <div class="row justify-content-center">
+        <div class="col-11 col-md-8">
+            <mat-tab-group dynamicHeight dir="rtl">
+                    <ng-template #Empty>
+                        <div class="row justify-content-center" style="margin: 18% 0%;">
+                            <h1>אין פריטים להצגה</h1>
+                        </div>
+                    </ng-template>
+                <mat-tab label="ההזמנות שלי">
+                    <ng-template [ngIf]="client.orders.length > 0" [ngIfElse]="Empty">
+                        <div class="row">
+                            <div class="col-4 col-auto ml-auto space">
+                                <h1><b>({{ client.orders.length }} תוצאות)</b></h1>
+                            </div>
+                        </div>
+                        <div class="row justify-content-start hut-details space" *ngFor="let order of client.orders; let index = index">
+                            <div class="col-6">
+                                <h1>{{ order.name }} {{ order.name }}</h1>
+                                <h2>{{ order.name }}</h2>
+                                <h2>{{ order.name }}</h2>
+                            </div>
+                            <div class="col-5">
+                                {{ order.name }}
+                            </div>
+                            <div class="col-1">
+                                <div class="row justify-content-end buttonTab">  
+                                    <button class="btn btn-success"><mat-icon>check</mat-icon></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>   
+            </mat-tab-group>        
+        </div>
+    </div>    
+</div>

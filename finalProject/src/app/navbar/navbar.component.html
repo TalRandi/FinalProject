@@ -24,6 +24,12 @@
         <li *ngIf="isLoggedIn && this.authService.zimmer.zimmer_id" class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['my-orders', this.authService.zimmer.zimmer_id]"><mat-icon>bookmark</mat-icon> ההזמנות שלי</a>
         </li>
+        <li *ngIf="isLoggedIn && this.authService.zimmer == 'client' && !this.authService.admin" class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['my-orders']"><mat-icon>bookmark</mat-icon> ההזמנות שלי</a>
+        </li>
+        <li *ngIf="isLoggedIn && this.authService.zimmer == 'client' && !this.authService.admin" class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['favorites']"><mat-icon>favorite</mat-icon>  מועדפים</a>
+        </li>
         <li *ngIf="isLoggedIn && this.authService.admin" class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['admin', 'pending-requests']"><mat-icon>playlist_add_check</mat-icon> ניהול בקשות</a>
         </li>

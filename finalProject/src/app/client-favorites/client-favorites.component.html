@@ -5,29 +5,34 @@
 <div class="container-fluid" *ngIf="!isLoading">
     <div class="row justify-content-center">
         <div class="col-11 col-md-8">
-            <mat-tab-group dynamicHeight dir='rtl'>
-                <mat-tab label="רשימת צימרים לאישור">
-                    <ng-template [ngIf]="zimmers.length > 0" [ngIfElse]="Empty">
+            <mat-tab-group dynamicHeight dir="rtl">
+                    <ng-template #Empty>
+                        <div class="row justify-content-center" style="margin: 18% 0%;">
+                            <h1>אין פריטים להצגה</h1>
+                        </div>
+                    </ng-template>
+                <mat-tab label="המועדפים שלי">
+                    <ng-template [ngIf]="client.favorites.length > 0" [ngIfElse]="Empty">
                         <div class="row">
-                            <div class="col-4 col-auto ml-auto space">
-                                <h1><b>({{ zimmers.length }} תוצאות)</b></h1>
+                            <div class="col-4 col-auto ml-auto">
+                                <h1><b>({{ client.favorites.length }} תוצאות)</b></h1>
                             </div>
                         </div>
-                        <div class="row justify-content-start hut-details space" *ngFor="let zimmer of zimmers; let index = index">
+                        <div class="row justify-content-start hut-details" *ngFor="let zimmer of client.favorites; let index = index">
                             <div class="col-12 col-md-4">
                                 <ngb-carousel [showNavigationIndicators]="false">
-                                    <ng-template ngbSlide *ngFor="let image of zimmers[index].images; let image_index = index">
+                                    <ng-template ngbSlide *ngFor="let image of client.favorites[index].images; let image_index = index">
                                       <div>
                                         <img [src]="image | getDownloadURL" height="300px" width="100%">
                                       </div>
                                       <div class="carousel-caption">
-                                            {{ zimmers[index].images.length }} / {{ image_index+1 }}
+                                            {{ client.favorites[index].images.length }} / {{ image_index+1 }}
                                       </div>
                                     </ng-template>
                                 </ngb-carousel>
                             </div>
                             <div class="col-6 col-md-4" (click)="zimmer_clicked(zimmer)">
-                                <h1>{{ zimmer.zimmerName }}</h1>
+                                <h1>{{ zimmer.zimmerName }}<h4><mat-icon> location_on</mat-icon> {{ zimmer.region }}</h4></h1>
                                 <h4>{{ (zimmer.generalDescription.length>130)? (zimmer.generalDescription | slice:0:130)+'...':(zimmer.generalDescription) }}<h5 *ngIf="zimmer.generalDescription.length > 130"><b>לחץ להמשך קריאה ופרטים נוספים</b></h5></h4>
                                 <div class="row" *ngIf="zimmer.features != undefined">
                                     <div class="col-6" *ngIf="zimmer.features.includes('jacuzzi')">
@@ -57,13 +62,10 @@
                                 </div>
                             </div>
                             <div class="col-6 col-md-4" (click)="zimmer_clicked(zimmer)">
-                                <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onSubmitZimmer(zimmer, index)" class="btn btn-success"><mat-icon>check</mat-icon></button>
-                                </div>
-                                <h4><mat-icon> location_on</mat-icon> {{ zimmer.region }}</h4>
                                 <h2>{{ zimmer.ownerName }} - {{ zimmer.phone }}</h2>
                                 <h4>מקסימום אורחים: {{ zimmer.total_capacity }}</h4>
                                 <h4>מספר בקתות: {{ zimmer.huts.length }}</h4>
+                                <h4>דירוג הגולשים: <ngb-rating  [rate]="(zimmer.rate != undefined)? (zimmer.rate):4" [readonly]="true" [max]="5"></ngb-rating></h4>
                                 <div class="price row">
                                     <div class="col-6">
                                         <h2>אמצ"ש החל מ {{ zimmer.min_price_regular }} ש"ח</h2>
@@ -71,60 +73,16 @@
                                     <div class="col-6">
                                         <h2>סופ"ש החל מ {{ zimmer.min_price_weekend }} ש"ח</h2>
                                     </div>
+                                    <div class="col-12">
+                                        <h5>הזמן כאן</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </ng-template>
-                    <ng-template #Empty>
-                        <div class="row justify-content-center" style="margin: 18% 0%;">
-                            <h1>אין פריטים להצגה</h1>
-                        </div>
-                    </ng-template>
-                </mat-tab>
-                <mat-tab label="רשימת פניות צור קשר">
-                    <ng-template [ngIf]="requests.length > 0" [ngIfElse]="Empty">
-                        <div class="row">
-                            <div class="col-4 col-auto ml-auto space">
-                                <h1><b>({{ requests.length }} תוצאות)</b></h1>
-                            </div>
-                        </div>
-                        <div class="row justify-content-start hut-details space" *ngFor="let request of requests; let index = index">
-                            <div class="col-6">
-                                <h1>{{ request[0] }} {{ request[1] }}</h1>
-                                <h2>{{ request[2] }}</h2>
-                                <h2>{{ request[3] }}</h2>
-                            </div>
-                            <div class="col-5">
-                                {{ request[4] }}
-                            </div>
-                            <div class="col-1">
-                                <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onSubmitRequest(request, index)" class="btn btn-success"><mat-icon>check</mat-icon></button>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-template>
-                </mat-tab>
-                <mat-tab label="היסטוריית רשימת פניות">
-                    <ng-template [ngIf]="requests_archive.length > 0" [ngIfElse]="Empty">
-                        <div class="row">
-                            <div class="col-4 col-auto ml-auto space">
-                                <h1><b>({{ requests_archive.length }} תוצאות)</b></h1>
-                            </div>
-                        </div>
-                        <div class="row justify-content-start hut-details space" *ngFor="let request of requests_archive; let index = index">
-                            <div class="col-6">
-                                <h1>{{ request[0] }} {{ request[1] }}</h1>
-                                <h2>{{ request[2] }}</h2>
-                                <h2>{{ request[3] }}</h2>
-                            </div>
-                            <div class="col-6">
-                                {{ request[4] }}
-                            </div>
-                        </div>
-                    </ng-template>
-                </mat-tab>    
+                </mat-tab>   
             </mat-tab-group>        
         </div>
     </div>    
 </div>
+

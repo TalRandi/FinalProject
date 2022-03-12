@@ -118,4 +118,12 @@ export class DataStorageService{
     storeClient(client: Client){
         this.http.post(this.url_clients, client).subscribe();
     }
+    getClient(email: string){
+        return this.http.get(this.url_clients).pipe(map((clients: any) => {
+           for(var id in clients)
+            if(clients[id].email == email){
+                return clients[id] 
+            }
+        })
+    )}
 }

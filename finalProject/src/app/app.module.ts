@@ -43,6 +43,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { ZimmerOrdersComponent } from './zimmer-orders/zimmer-orders.component';
+import { ClientOrdersComponent } from './client-orders/client-orders.component';
+import { ClientFavoritesComponent } from './client-favorites/client-favorites.component';
 
 
 @NgModule({
@@ -64,7 +66,9 @@ import { ZimmerOrdersComponent } from './zimmer-orders/zimmer-orders.component';
     NotFoundComponent,
     ImageCarouselComponent,
     SignUpComponent,
-    ZimmerOrdersComponent
+    ZimmerOrdersComponent,
+    ClientOrdersComponent,
+    ClientFavoritesComponent
   ],
   imports: [
     BrowserModule,
