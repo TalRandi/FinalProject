@@ -109,7 +109,9 @@ export class DataStorageService{
             for(var id in zimmers)
                 if(zimmers[id].zimmer_id == zimmer.zimmer_id){
                     delete zimmers[id];
-                    this.http.post(this.url_accepted, zimmer).subscribe();
+                    this.http.put(this.url_accepted, zimmers).subscribe(() => {
+                        this.http.post(this.url_accepted, zimmer).subscribe()
+                    });
                 }
         }))
     }

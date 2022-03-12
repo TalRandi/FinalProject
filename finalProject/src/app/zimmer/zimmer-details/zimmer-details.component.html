@@ -90,7 +90,7 @@
                             </div>
                             <div class="row online-order">
                                 <div class="col-12">
-                                    <button (click)="onlineOrder(hut.hutName)">הזמן אונליין</button>
+                                    <button (click)="onlineOrder()">הזמן אונליין</button>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                 </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="container order-details">
-                    <form (ngSubmit)="onOrderSubmition()" #form="ngForm">
+                    <form (ngSubmit)="onOrderSubmition(hut, hut_index)" #form="ngForm">
                         <div class="row order-title">
                             <div class="col-12 col-md-4">
                                 <h1>הפרטים שלכם</h1>
@@ -126,7 +126,7 @@
                                             <mat-label>בחר תאריכים</mat-label>
                                             <mat-date-range-input [rangePicker]="dates_picker">
                                                 <input matStartDate #dateRangeStart placeholder="תאריך הגעה">
-                                                <input matEndDate #dateRangeEnd placeholder="תאריך עזיבה" (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd, hut)">
+                                                <input matEndDate #dateRangeEnd placeholder="תאריך עזיבה">
                                             </mat-date-range-input>
                                             <mat-datepicker-toggle matSuffix [for]="dates_picker"></mat-datepicker-toggle>
                                             <mat-date-range-picker #dates_picker></mat-date-range-picker>
@@ -134,9 +134,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6 col-md form-group">
+                                    <div class="col-6 form-group">
                                         <label for="number_of_guests">מספר אורחים</label>
-                                        <angular-input-counter [max]="hut.capacity" #number_of_guests></angular-input-counter>
+                                        <input type="number" name="number_of_guests" class="form-control" [max]="hut.capacity" min="1" ngModel #number_of_guests="ngModel">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -168,15 +168,22 @@
                                         <input type="number" name="creditCardThree" class="form-control" ngModel required #creditCardThree="ngModel" minlength="3" maxlength="3" placeholder="3 ספרות">
                                         <span class="help-block" *ngIf="creditCardThree.touched && creditCardThree.invalid">* 3 ספרות אינן חוקיות!</span>
                                     </div>
-                                    <div class="col-6 form-group">
-                                        <mat-form-field>
-                                            <mat-label>תוקף כרטיס</mat-label>
-                                            <input matInput required #creditCardValidity [matDatepicker]="validity_picker">
-                                            <mat-datepicker-toggle matSuffix [for]="validity_picker"></mat-datepicker-toggle>
-                                            <mat-datepicker #validity_picker></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
                                 </div>  
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>תוקף הכרטיס</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 form-group">
+                                        <label for="validity_month">חודש</label>
+                                        <input type="number" name="validity_month" class="form-control" min="1" max="12">
+                                    </div>
+                                    <div class="col-6 form-group">
+                                        <label for="validity_year">שנה</label>
+                                        <input type="number" name="validity_year" class="form-control" min="2022" max="3000">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 col-md-4">
                                 <h1>סיכום הזמנה</h1>
@@ -211,10 +218,23 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <h4>{{ regular_price != 0 ? regular_price: "---" }}</h4>
+                                        <h4>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[0] }}</h4>
+                                        <!-- <h4>{{ regular_price != 0 ? regular_price: "---" }}</h4> -->
                                     </div>
                                     <div class="col-6">
-                                        <h4>{{ weekend_price != 0 ? weekend_price: "---" }}</h4>
+                                        <h4>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[1] }}</h4>
+                                        <!-- <h4>{{ weekend_price != 0 ? weekend_price: "---" }}</h4> -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h1>סה"כ לתשלום: </h1>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[2] }}</h2>
+                                        <!-- <h2>{{ total_price != 0 ? total_price: "---" }}</h2> -->
                                     </div>
                                 </div>
                                 <hr>

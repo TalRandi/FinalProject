@@ -10,4 +10,19 @@ body {
     /* color: aliceblue; */
 }
 
+.my-snackbar{
+    font-size: xx-large;
+    font-weight: bold;
+    background-color: #064663;
+    color: #f09517;
+    direction: rtl;
+    text-align: center;
+}
 
+.my-snackbar button {
+    font-weight: bolder;
+    text-decoration: underline;
+    color: #fdb147;
+    border: none;
+    margin: 0% 10%;
+}

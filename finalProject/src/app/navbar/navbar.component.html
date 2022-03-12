@@ -1,49 +1,4 @@
 <!-- Navigation -->
-<!-- <nav class="navbar navbar-expand-lg navbar-dark primary-color static-bottom">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img id="logo" src="../../assets/logo3.png" height="80" width="80">
-        </a>
-      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" (click)="togglerClicked($event)" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="toggler-icon top-bar"></span>
-        <span class="toggler-icon middle-bar"></span>
-        <span class="toggler-icon bottom-bar"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item" [routerLinkActive]="['active']">
-            <a class="nav-link" [routerLink]="['home']"><mat-icon>list_alt</mat-icon> רשימת הצימרים</a>
-          </li>
-          <li *ngIf="!this.authService.admin" class="nav-item" [routerLinkActive]="['active']">
-            <a class="nav-link" [routerLink]="['contact-us']"><mat-icon>contact_mail</mat-icon> צור קשר</a>
-          </li>
-          <li *ngIf="isLoggedIn && this.authService.zimmer.zimmer_id" class="nav-item" [routerLinkActive]="['active']">
-            <a class="nav-link" [routerLink]="['my-zimmer', this.authService.zimmer.zimmer_id]"><mat-icon>home</mat-icon> הצימר שלי</a>
-          </li>
-          <li *ngIf="isLoggedIn && this.authService.zimmer.zimmer_id" class="nav-item" [routerLinkActive]="['active']">
-            <a class="nav-link" [routerLink]="['my-orders', this.authService.zimmer.zimmer_id]"><mat-icon>bookmark</mat-icon> ההזמנות שלי</a>
-          </li>
-          <li *ngIf="isLoggedIn && this.authService.admin" class="nav-item" [routerLinkActive]="['active']">
-            <a class="nav-link" [routerLink]="['admin', 'pending-requests']"><mat-icon>playlist_add_check</mat-icon> ניהול בקשות</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item" [routerLinkActive]="['active']">
-            <a *ngIf=!isLoggedIn class="nav-link" [routerLink]="['login-page']"><mat-icon>account_box</mat-icon> כניסה למנויים</a>
-            <a style="cursor: pointer;" *ngIf="isLoggedIn" class="nav-link" (click)="onLogout()"><mat-icon>account_box</mat-icon> התנתק</a>
-          </li>
-          <li *ngIf="!isLoggedIn" class="nav-item">
-            <a class="nav-link" href="signup-page"><mat-icon>person_add</mat-icon> הרשמה</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="publish" aria-current="page" routerLink="create-zimmer">פרסם באתר</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav> -->
-
-  
 <nav class="navbar navbar-expand-lg navbar-dark primary-color static-bottom">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -18,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -76,6 +78,7 @@ import { ZimmerOrdersComponent } from './zimmer-orders/zimmer-orders.component';
     AngularCounterModule,
     MatButtonModule,
     MatSelectModule,
+    MatSnackBarModule,
     MatRadioModule,
     MatExpansionModule,
     FormsModule,
@@ -88,7 +91,7 @@ import { ZimmerOrdersComponent } from './zimmer-orders/zimmer-orders.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule
   ],
-  providers: [{provide: BUCKET, useValue: 'goeasy-5d966.appspot.com'}],
+  providers: [{provide: BUCKET, useValue: 'goeasy-5d966.appspot.com'}, { provide: MAT_DATE_LOCALE, useValue: 'HE' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
