@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Client } from 'src/app/shared-data/client.model';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
 import { Hut } from 'src/app/shared-data/hut.model';
 import { InnerDataService } from 'src/app/shared-data/inner-data.service';
@@ -20,7 +21,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
 
   
   currentRate = 8;
-  
+  client: Client;
 
   isLoading = false;
   sort_direction = true;
@@ -89,18 +90,27 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   }
 
   zimmer_clicked(zimmer: Zimmer): void{
-
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/home/${zimmer.zimmer_id}`])
     );
   
     window.open(url, '_blank');
-
-    // this.router.navigate(['/home/'+zimmer.zimmer_id]);
   }
 
   ngOnInit(): void {
     this.isLoading = true;
+    if(localStorage.getItem('userData')){
+      var userData = JSON.parse(localStorage.getItem('userData')!.toString());
+      if(userData.zimmer == 'client' && userData.admin == false){
+        this.storage.getClient(userData.email).subscribe(client => {
+          this.client = client;
+          if(!this.client.favorites){
+            this.client.favorites = [];
+          }
+        })
+      }
+    }
+    
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
       this.all_zimmers = zimmers  
       this.zimmers_to_display = [...this.all_zimmers]

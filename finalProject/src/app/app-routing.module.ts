@@ -14,6 +14,8 @@ import { MyZimmerComponent } from './zimmer/my-zimmer/my-zimmer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { ZimmerOrdersComponent } from './zimmer-orders/zimmer-orders.component';
+import { ClientOrdersComponent } from './client-orders/client-orders.component';
+import { ClientFavoritesComponent } from './client-favorites/client-favorites.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch:'full'},
@@ -25,7 +27,9 @@ const routes: Routes = [
   {path: 'admin', component: AuthenticationComponent},
   {path: 'admin/pending-requests', component: PendingRequestsComponent, canActivate: [AuthGuardAdmin]},
   {path: 'my-zimmer/:id', component: MyZimmerComponent, canActivate: [AuthGuardId]},
+  {path: 'my-orders', component: ClientOrdersComponent, canActivate:[AuthGuard]},
   {path: 'my-orders/:id', component: ZimmerOrdersComponent, canActivate:[AuthGuardId]},
+  {path: 'favorites', component: ClientFavoritesComponent, canActivate:[AuthGuard]},
  
   {path: 'home', component: ZimmerComponent, children:[
       {path:'', component:ZimmerListComponent},
