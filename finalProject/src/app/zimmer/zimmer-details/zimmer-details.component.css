@@ -82,3 +82,6 @@ button:active{
     transform: translateY(1px);
     transition: none;
 }
+.help-block{
+    color: red;
+}
