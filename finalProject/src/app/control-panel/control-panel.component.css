@@ -8,21 +8,31 @@
 
 }   
 .control:hover{
-    font-size: large;
     font-weight: bold;
     filter: drop-shadow(10px 10px 10px #04293A);
-    border-radius: 15px;
+    border-radius: 20px;
     opacity: 1;
 }
 .wrapper{
-    margin-top: 50%;
-    padding: 20% 5%;
-    border: 3px #ECB365 outset;
-    border-radius: 30px;
+    margin: 50% 0;
+    /* padding: 20% 5%; */
+    /* border: 3px #ECB365 outset; */
+    /* border-radius: 30px; */
 }   
-.title{
+@media screen and (max-width: 900px) {
+    .wrapper {
+        margin: 5% 0;
+    }
+}
+.super-title{
+    margin: 0 10%;
     font-weight: bold;
     color: #04293A;
+}
+.title{
+    font-weight: bold;
+    color: #ECB365;
+    text-decoration: underline;
 }
 button{
     width: 5rem;
@@ -40,3 +50,9 @@ button:hover{
     border: solid gray 1px;
 }
 
+mat-expansion-panel{
+    background-color: #064663;
+}
+mat-panel-description{
+    color: aliceblue;
+}

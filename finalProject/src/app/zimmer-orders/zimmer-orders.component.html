@@ -14,35 +14,34 @@
                 <mat-tab label="רשימת הזמנות לאישור">
                     <ng-template [ngIf]="orders.length > 0" [ngIfElse]="Empty">
                         <div class="row">
-                            <div class="col-4 col-auto ml-auto space">
+                            <div class="col-4 col-auto ml-auto title">
                                 <h1><b>({{ orders.length }} תוצאות)</b></h1>
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let order of orders; let index = index">
-                            <div class="col-3">
+                            <div class="col-12 col-md-3">
                                 <h2>פרטי המזמין</h2>
                                 <h3>שם: {{ order.name }}</h3>
                                 <h3>מספר פלאפון: {{ order.phone }}</h3>
                                 <h3>כתובת דוא"ל: {{ order.email }}</h3>
+                                <br>
                             </div>
-                            <div class="col-3 border-right">
+                            <div class="col-12 col-md-2">
                                 <h2>פרטי הזמנה</h2>
                                 <h4>בקתה: {{ order.hut_name }}</h4>
                                 <h3>הגעה: {{ order.start_date }}</h3>
                                 <h3>עזיבה: {{ order.end_date }}</h3>
                                 <h4>מספר אורחים: {{ order.guests }}</h4>
+                                <br>
                             </div>
-                            <div class="col-3 border-right">
+                            <div class="col-12 col-md-4">
                                 <h2>בקשות מיוחדות</h2>
-                                <h3>{{ order.requests }}</h3>
+                                <h3>{{ (order.requests.length != 0) ? (order.requests) : "אין" }}</h3>
+                                <br>
                             </div>
-                            <div class="col-2 border-right">
-                                <h2>מחיר</h2>
-                                <h3>{{ order.total_price }} ש"ח</h3>
-                            </div>
-                            <div class="col-1 border-right">
-                                <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onSubmitOrder(order, index)" class="btn btn-success"><mat-icon>check</mat-icon></button>
+                            <div class="col-12 col-md-3">
+                                <div class="row buttonTab">  
+                                    <button (click)="onSubmitOrder(order, index)" class="btn btn-lg btn-block btn-success">אישור הזמנה על סך {{ order.total_price }} ש"ח</button>
                                 </div>
                             </div>
                         </div>
@@ -56,24 +55,27 @@
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let order of orders_archive; let index = index">
-                            <div class="col-4">
+                            <div class="col-12 col-md-4">
                                 <h2>פרטי המזמין</h2>
                                 <h3>שם: {{ order.name }}</h3>
                                 <h3>מספר פלאפון: {{ order.phone }}</h3>
                                 <h3>כתובת דוא"ל: {{ order.email }}</h3>
+                                <br>
                             </div>
-                            <div class="col-3 border-right">
+                            <div class="col-12 col-md-2">
                                 <h2>פרטי הזמנה</h2>
                                 <h4>בקתה: {{ order.hut_name }}</h4>
                                 <h3>הגעה: {{ order.start_date }}</h3>
                                 <h3>עזיבה: {{ order.end_date }}</h3>
                                 <h4>מספר אורחים: {{ order.guests }}</h4>
+                                <br>
                             </div>
-                            <div class="col-3 border-right">
+                            <div class="col-12 col-md-4">
                                 <h2>בקשות מיוחדות</h2>
-                                <h3>{{ order.requests }}</h3>
+                                <h3>{{ (order.requests.length != 0) ? (order.requests) : "אין" }}</h3>
+                                <br>
                             </div>
-                            <div class="col-2 border-right">
+                            <div class="col-12 col-md-2">
                                 <h2>מחיר</h2>
                                 <h3>{{ order.total_price }} ש"ח</h3>
                             </div>

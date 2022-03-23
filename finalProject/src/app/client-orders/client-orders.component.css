@@ -26,6 +26,13 @@
 .hut-details:hover h1{
     text-decoration: underline;
 }
+
+.hut-details h2{
+    text-decoration: underline;
+}
+.hut-details h2, h3, h4{
+    margin: 0;
+}
 .price{
     position: absolute;
     bottom: 0;
@@ -45,11 +52,13 @@ mat-icon{
 }
 
 .buttonTab{ 
-    margin-left: 1%;
+    margin: 6% 2%;
 }
-
-.space{
+.title{
     margin: 1%;
+}
+.space{
+    margin: 1% 0 3% 0;
 }
 .price{
     position: absolute;
@@ -96,4 +105,8 @@ mat-icon{
 
 ::ng-deep .mat-tab-header::-webkit-scrollbar {
     display: none;
+}
+
+button{
+    text-align: center;
 }

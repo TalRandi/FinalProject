@@ -9,7 +9,7 @@
                 <mat-tab label="רשימת צימרים לאישור">
                     <ng-template [ngIf]="zimmers.length > 0" [ngIfElse]="Empty">
                         <div class="row">
-                            <div class="col-4 col-auto ml-auto space">
+                            <div class="col-4 col-auto ml-auto title">
                                 <h1><b>({{ zimmers.length }} תוצאות)</b></h1>
                             </div>
                         </div>
@@ -84,22 +84,23 @@
                 <mat-tab label="רשימת פניות צור קשר">
                     <ng-template [ngIf]="requests.length > 0" [ngIfElse]="Empty">
                         <div class="row">
-                            <div class="col-4 col-auto ml-auto space">
+                            <div class="col-4 col-auto ml-auto title">
                                 <h1><b>({{ requests.length }} תוצאות)</b></h1>
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let request of requests; let index = index">
-                            <div class="col-6">
-                                <h1>{{ request[0] }} {{ request[1] }}</h1>
-                                <h2>{{ request[2] }}</h2>
-                                <h2>{{ request[3] }}</h2>
+                            <div class="col-12 col-md-5">
+                                <h2>{{ request[0] }} {{ request[1] }}</h2>
+                                <h3>{{ request[2] }}</h3>
+                                <h3>{{ request[3] }}</h3>
                             </div>
-                            <div class="col-5">
+                            <div class="col-12 col-md-5">
+                                <h2><b>תוכן הפניה</b></h2>
                                 {{ request[4] }}
                             </div>
-                            <div class="col-1">
+                            <div class="col-12 col-md-2">
                                 <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onSubmitRequest(request, index)" class="btn btn-success"><mat-icon>check</mat-icon></button>
+                                    <button (click)="onSubmitRequest(request, index)" class="btn btn-lg btn-block btn-success"><mat-icon>check</mat-icon></button>
                                 </div>
                             </div>
                         </div>
@@ -108,17 +109,18 @@
                 <mat-tab label="היסטוריית רשימת פניות">
                     <ng-template [ngIf]="requests_archive.length > 0" [ngIfElse]="Empty">
                         <div class="row">
-                            <div class="col-4 col-auto ml-auto space">
+                            <div class="col-4 col-auto ml-auto title">
                                 <h1><b>({{ requests_archive.length }} תוצאות)</b></h1>
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let request of requests_archive; let index = index">
-                            <div class="col-6">
-                                <h1>{{ request[0] }} {{ request[1] }}</h1>
-                                <h2>{{ request[2] }}</h2>
-                                <h2>{{ request[3] }}</h2>
+                            <div class="col-12 col-md-6">
+                                <h2>{{ request[0] }} {{ request[1] }}</h2>
+                                <h3>{{ request[2] }}</h3>
+                                <h3>{{ request[3] }}</h3>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12 col-md-6">
+                                <h2><b>תוכן הפניה</b></h2>
                                 {{ request[4] }}
                             </div>
                         </div>

@@ -1,28 +1,54 @@
 <div class="container wrapper">
-    
-    <h1 class="title">איזורים</h1>
-    <div class="row control" *ngFor="let region of innerData.regions">
-        <div class="col-6 col-md-12">
-            <mat-checkbox name="{{ region }}" type="checkbox" color="primary" (change)="onRegionChange($event)">{{ region }}</mat-checkbox>
-        </div>
-
-    </div>
-    <hr>
-    <h1 class="title">מתקנים</h1>        
-    <div class="row control" *ngFor="let filter of innerData.filters">
-        <div class="col-6 col-md-12">
-            <mat-checkbox name="{{ filter }}" type="checkbox" color="primary" (change)="onFilterChange($event)">{{ filter }}</mat-checkbox>
-        </div>
-
-    </div>
-    <hr>
-    <h1 class="title">מספר בקתות</h1> 
     <div class="row">
-        <mat-radio-group>
-            <div class="col-md-6" *ngFor="let number of innerData.huts_number">
-                <mat-radio-button color="primary" name="{{ number }}" value="{{ number }}" (change)="onHutsNumber($event)">{{ number }}</mat-radio-button>
-            </div>
-        </mat-radio-group>
-    </div>
+        <div class="col-8 col-md-12">
+            <h3 class="super-title">אפשרויות סינון</h3>
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-description>
+                           סינון לפי איזור >
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <h1 class="title">איזורים</h1>
+                      <div class="row control" *ngFor="let region of innerData.regions">
+                          <div class="col-6 col-md-12">
+                              <mat-checkbox name="{{ region }}" type="checkbox" color="primary" (change)="onRegionChange($event)">{{ region }}</mat-checkbox>
+                          </div>
+                  
+                      </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-description>
+                           סינון לפי מתקנים 
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <h1 class="title">מתקנים</h1>        
+                      <div class="row control" *ngFor="let filter of innerData.filters">
+                          <div class="col-6 col-md-12">
+                              <mat-checkbox name="{{ filter }}" type="checkbox" color="primary" (change)="onFilterChange($event)">{{ filter }}</mat-checkbox>
+                          </div>
+                  
+                      </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-description>
+                            סינון לפי מספר בקתות
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <h1 class="title">מספר בקתות</h1> 
+                      <div class="row">
+                          <mat-radio-group>
+                              <div class="col-md-6" *ngFor="let number of innerData.huts_number">
+                                  <mat-radio-button color="primary" name="{{ number }}" value="{{ number }}" (change)="onHutsNumber($event)">{{ number }}</mat-radio-button>
+                              </div>
+                          </mat-radio-group>
+                      </div>
+                </mat-expansion-panel>
+            </mat-accordion>
 
-</div>  
+        </div>
+    </div>
+</div>
+  

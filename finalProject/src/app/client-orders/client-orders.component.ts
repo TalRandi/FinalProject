@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../shared-data/client.model';
 import { DataStorageService } from '../shared-data/data-storage.service';
+import { Order } from '../shared-data/order.model';
 
 @Component({
   selector: 'app-client-orders',
@@ -24,6 +25,10 @@ export class ClientOrdersComponent implements OnInit {
       }
       this.isLoading = false;
     }) 
+  }
+
+  onCancelOrder(order: Order, index: number): void{
+    // TODO
   }
 
 }
