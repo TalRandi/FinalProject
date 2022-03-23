@@ -115,6 +115,19 @@ export class DataStorageService{
                 }
         }))
     }
+
+    approveOrderClient(client:Client){
+        return this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
+            for(var id in clients)
+                if(clients[id].email == client.email){
+                    delete clients[id];
+                    this.http.put(this.url_clients, clients).subscribe(() => {
+                        this.http.post(this.url_clients, client).subscribe()
+                    });
+                }
+        }))
+    }
+
     storeClient(client: Client){
         this.http.post(this.url_clients, client).subscribe();
     }

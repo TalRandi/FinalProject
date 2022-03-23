@@ -7,6 +7,7 @@ import { DataStorageService } from 'src/app/shared-data/data-storage.service';
 import { Hut } from 'src/app/shared-data/hut.model';
 import { Order } from 'src/app/shared-data/order.model';
 import { Zimmer } from 'src/app/shared-data/zimmer.model';
+import { Client } from 'src/app/shared-data/client.model';
 
 @Component({
   selector: 'app-zimmer-details',
@@ -23,6 +24,7 @@ export class ZimmerDetailsComponent implements OnInit {
   isLoading = false;
   zimmer_id: string;
   zimmer: Zimmer;
+  client: Client;
 
   constructor(private storage: DataStorageService, private router: Router, private authService: AuthenticationService, private _snackBar: MatSnackBar) { }
 
@@ -78,7 +80,21 @@ export class ZimmerDetailsComponent implements OnInit {
       else{
         this.zimmer.orders = [order]
       }
-      this.storage.approveOrder(this.zimmer).subscribe()
+      this.storage.approveOrder(this.zimmer).subscribe(() => {
+        if(localStorage.getItem('userData')){
+          var userData = JSON.parse(localStorage.getItem('userData')!.toString());
+          if(userData.zimmer == 'client' && userData.admin == false){
+            this.storage.getClient(userData.email).subscribe(client => {
+              this.client = client;
+              if(!this.client.orders){
+                this.client.orders = [];
+              }
+              this.client.orders.push(order);
+              this.storage.approveOrderClient(this.client).subscribe();
+            })
+          }
+        }
+      })
     })
     
     this._snackBar.open("הזמנת התקבלה, נעדכן כאשר בעל הצימר יאשר אותה.", "אישור", {
