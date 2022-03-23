@@ -205,6 +205,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     })
   }
   ngOnDestroy(): void {
+    if(this.data)
       this.data.unsubscribe();
   }
 }

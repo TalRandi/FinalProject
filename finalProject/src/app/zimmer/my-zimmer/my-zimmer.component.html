@@ -1,1 +1,24 @@
-<p>my-zimmer works!</p>
+<div id="loading" *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+
+
+<div *ngIf="!isLoading">
+
+    <div *ngIf="my_zimmer[0].status == 'accepted'">
+    </div>
+
+    <div *ngIf="my_zimmer[0].status == 'pending'">
+        <div id="message">
+            <h1>הצימר מחכה לאישור ממנהלי האתר, לאחר שיאושר כאן תוכלו לראות ולערוך את התוכן.</h1>
+        </div>
+    </div>
+
+    <div *ngIf="my_zimmer[0].status == 'disabled'">
+        <div id="message">
+            <h1>הצימר חסום, ניתן לפנות קשר עם בעלי האתר בלינק הבא</h1>
+            <a href="/contact-us">צור קשר</a>
+        </div>
+    </div>
+
+</div>

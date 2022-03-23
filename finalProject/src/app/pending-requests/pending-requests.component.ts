@@ -19,7 +19,7 @@ export class PendingRequestsComponent implements OnInit {
   requests_archive: string[] = [];
 
   onSubmitZimmer(zimmer: Zimmer, index: number){
-    zimmer.status = "Accepted";
+    zimmer.status = "accepted";
     this.storage.storeAcceptedZimmer(zimmer).subscribe(() => {
       this.zimmers.splice(index, 1);
     });

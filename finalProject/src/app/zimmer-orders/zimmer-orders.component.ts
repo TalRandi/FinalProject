@@ -22,7 +22,7 @@ export class ZimmerOrdersComponent implements OnInit {
     this.isLoading = true;
     this.storage.fetchAcceptedZimmers().subscribe(result => {   
       this.my_zimmer = result.filter(zimmer => zimmer.zimmer_id == this.authService.zimmer.zimmer_id);
-      if(this.my_zimmer[0].orders){
+      if(this.my_zimmer[0] && this.my_zimmer[0].orders){
         this.my_zimmer[0].orders.forEach(order => {
           if(order.isApproved){
             this.orders_archive.push(order);
