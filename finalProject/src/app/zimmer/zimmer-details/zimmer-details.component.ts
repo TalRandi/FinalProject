@@ -38,8 +38,8 @@ export class ZimmerDetailsComponent implements OnInit {
     this.isLoading = true
     this.zimmer_id = this.router.url.split('/').pop()!
 
-    if(localStorage.getItem('Dates')){
-      var dates_from_local = JSON.parse(localStorage.getItem('Dates')!.toString());
+    if(localStorage.getItem('Query')){
+      var dates_from_local = JSON.parse(localStorage.getItem('Query')!.toString());
       this.startDate = dates_from_local.start
       this.endDate = dates_from_local.end
     }
