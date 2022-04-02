@@ -42,13 +42,17 @@ export class ZimmerOrdersComponent implements OnInit {
       this.my_zimmer[0].orders.forEach(stored_order => {
         if(stored_order.order_id == order.order_id){
           stored_order.isApproved = true;
-          this.storage.approveOrder(this.my_zimmer[0]).subscribe();
+          this.storage.setApproveOnBoth(this.my_zimmer[0], order.order_id);
         }
       })
     }
     order.isApproved = true;
     this.orders.splice(index, 1);
     this.orders_archive.push(order);
+  }
+  onCancelOrder(order: Order, index: number){
+    this.storage.cancelOrderOnBoth(order.order_id);
+    this.orders.splice(index, 1);
   }
 
 

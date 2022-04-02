@@ -8,7 +8,7 @@ export class Zimmer {
     public email: string;
     public generalDescription: string;
     public total_capacity: number;
-    public status: string;  // Can be accepted, pending or disabled
+    public status: string;  // Can be accepted, pending, rejected_pending, rejected_accepted or disabled
     public min_price_regular: number;
     public min_price_weekend: number;
     public region: string;

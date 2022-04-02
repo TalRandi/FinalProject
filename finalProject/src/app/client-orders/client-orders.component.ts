@@ -28,7 +28,8 @@ export class ClientOrdersComponent implements OnInit {
   }
 
   onCancelOrder(order: Order, index: number): void{
-    // TODO
+    this.storage.cancelOrderOnBoth(order.order_id);
+    this.client.orders.splice(index, 1);
   }
 
 }

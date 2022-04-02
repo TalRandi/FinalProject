@@ -112,7 +112,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     }
     
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
-      this.all_zimmers = zimmers  
+      this.all_zimmers = zimmers.filter(zimmer => zimmer.status != 'disabled');  
       this.zimmers_to_display = [...this.all_zimmers]
       this.dictionary.set("בריכה", "pool")
       this.dictionary.set("בריכה מחוממת", "heated_pool")

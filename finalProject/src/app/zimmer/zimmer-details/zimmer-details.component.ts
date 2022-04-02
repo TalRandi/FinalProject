@@ -90,7 +90,7 @@ export class ZimmerDetailsComponent implements OnInit {
                 this.client.orders = [];
               }
               this.client.orders.push(order);
-              this.storage.approveOrderClient(this.client).subscribe();
+              this.storage.updateClient(this.client).subscribe();
             })
           }
         }

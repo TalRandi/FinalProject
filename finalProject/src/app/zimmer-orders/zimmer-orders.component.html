@@ -43,6 +43,9 @@
                                 <div class="row buttonTab">  
                                     <button (click)="onSubmitOrder(order, index)" class="btn btn-lg btn-block btn-success">אישור הזמנה על סך {{ order.total_price }} ש"ח</button>
                                 </div>
+                                <div class="row buttonTab">  
+                                    <button (click)="onCancelOrder(order, index)" class="btn btn-lg btn-block btn-danger">ביטול הזמנה על סך {{ order.total_price }} ש"ח</button>
+                                </div>
                             </div>
                         </div>
                     </ng-template>

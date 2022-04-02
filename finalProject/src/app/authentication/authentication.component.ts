@@ -68,6 +68,10 @@ export class AuthenticationComponent implements OnInit {
         case 'USER_DISABLED':
           this.error = "חשבון זה חסום במערכת!";
           break;
+          
+        case 'TOO_MANY_ATTEMPTS_TRY_LATER : Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.':
+        this.error = "יותר מידי נסיונות התחברות, נסה שוב מאוחר יותר!";
+        break; 
         
         default:
           console.log(errorRes.error.error.message)

@@ -13,18 +13,18 @@ export class MyZimmerComponent implements OnInit {
 
   isLoading = false;
   my_zimmer: Zimmer[];
+  my_pending_zimmer: Zimmer[];
   constructor(private storage: DataStorageService, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.isLoading = true;
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
-      this.my_zimmer = zimmers.filter(zimmer => zimmer.zimmer_id == this.authService.zimmer.zimmer_id);
-      if(this.my_zimmer.length == 0)
-        this.storage.fetchPendingZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(pending_zimmers => {
-          this.my_zimmer = pending_zimmers.filter(pending_zimmer => pending_zimmer.zimmer_id == this.authService.zimmer.zimmer_id);
-        })
-      else
-        this.isLoading = false;       
+      if(zimmers)
+        this.my_zimmer = zimmers.filter(zimmer => zimmer.zimmer_id == this.authService.zimmer.zimmer_id);     
+    })
+    this.storage.fetchPendingZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(pending_zimmers => {
+      if(pending_zimmers)
+        this.my_pending_zimmer = pending_zimmers.filter(pending_zimmer => pending_zimmer.zimmer_id == this.authService.zimmer.zimmer_id);
     })
   }
 }

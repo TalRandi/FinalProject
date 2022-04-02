@@ -23,7 +23,7 @@ export class DataStorageService{
             // Uploads all zimmer's images
             for (let index = 0; index < images.length; index++) {
                 let url = `/zimmer-images/${zimmer.zimmer_id}/${images[index].name}`;       
-                this.storage.upload(url, images[index]);                
+                this.storage.upload(url, images[index]);               
             }
             for (let hut_index = 0; hut_index < zimmer.huts.length; hut_index++) {
                 for (let index = 0; index < hutImages[hut_index].length; index++) {  
@@ -93,6 +93,31 @@ export class DataStorageService{
             })).subscribe()
         }) 
     )}
+    storeEditedZimmer(zimmer: Zimmer){
+        return this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
+            for(var id in zimmers)
+                if(zimmers[id].zimmer_id == zimmer.zimmer_id){
+                    zimmer.orders = zimmers[id].orders;  
+                    delete zimmers[id];
+                    this.http.put(this.url_accepted, zimmers).subscribe(() => {
+                        this.storeAcceptedZimmer(zimmer).subscribe();
+                    });
+                    break; 
+                }  
+        }))
+    }
+    rejectZimmer(zimmer: Zimmer){
+        return this.http.get<Zimmer[]>(this.url_pending).pipe(map(zimmers => {
+            for(var id in zimmers)
+                if(zimmers[id].zimmer_id == zimmer.zimmer_id){
+                    delete zimmers[id];
+                    this.http.put(this.url_pending, zimmers).subscribe(() => {
+                        this.http.post(this.url_pending, zimmer).subscribe();
+                    });
+                    break; 
+                } 
+        }))
+    }
     approveRequest(request: string){
         return this.http.get<string[]>(this.url_requests).pipe(map(requests => {
             for(var id in requests)
@@ -112,11 +137,63 @@ export class DataStorageService{
                     this.http.put(this.url_accepted, zimmers).subscribe(() => {
                         this.http.post(this.url_accepted, zimmer).subscribe()
                     });
+                    break
                 }
         }))
     }
-
-    approveOrderClient(client:Client){
+    setApproveOnBoth(zimmer:Zimmer, order_id: string){
+        this.approveOrder(zimmer).subscribe(() => {
+            this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
+                for(var id in clients)
+                    clients[id].orders.forEach(order => {
+                        if(order.order_id == order_id){
+                            order.isApproved = true;
+                            let client = clients[id];
+                            delete clients[id];
+                            this.http.put(this.url_clients, clients).subscribe(() => {
+                                this.http.post(this.url_clients, client).subscribe();
+                            })
+                            return;
+                        }
+                    })
+            })).subscribe();
+        })
+    }
+    cancelOrderOnBoth(order_id: string){
+        this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
+            for(var id in zimmers){
+                if(zimmers[id].orders){
+                    let filtered_orders = zimmers[id].orders.filter(order => order.order_id != order_id);
+                    if(filtered_orders.length != zimmers[id].orders.length){
+                        let zimmer = zimmers[id];
+                        zimmer.orders = filtered_orders;
+                        delete zimmers[id];
+                        this.http.put(this.url_accepted, zimmers).subscribe(() => {
+                            this.http.post(this.url_accepted, zimmer).subscribe();
+                        })
+                        break; 
+                    }
+                }
+            }
+        })).subscribe();
+        this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
+            for(var id in clients){
+                if(clients[id].orders){
+                    let filtered_orders = clients[id].orders.filter(order => order.order_id != order_id);
+                    if(filtered_orders.length != clients[id].orders.length){
+                        let client = clients[id];
+                        client.orders = filtered_orders;
+                        delete clients[id];
+                        this.http.put(this.url_clients, clients).subscribe(() => {
+                            this.http.post(this.url_clients, client).subscribe();
+                        })
+                        break; 
+                    }
+                }
+            }
+        })).subscribe();    
+    }
+    updateClient(client:Client){
         return this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
             for(var id in clients)
                 if(clients[id].email == client.email){

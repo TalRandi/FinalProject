@@ -5,8 +5,44 @@
     text-align: center;
     margin: 18% 0%;
 }
-
-#message{
+.container-fluid{
+    padding: 3%;
+}
+.wrapper{
+    border: #3ea7c7 solid 3px;
+    padding: 3%;
+    margin-top: 5%;
+    border-radius: 50px;
     text-align: center;
-    margin: 18%;
+}
+.title{
+    font-size: xx-large;
+    font-weight: bold;
+    color: #041C32;
+}
+.description{
+    margin: 0% 3%;
+    padding: 1% 2%;
+    text-align: right;
+    background-color: rgb(225, 241, 255);
+    border-radius: 10%;
+}
+.hut-list{
+    margin: 5% 0;
+    text-align: right;
+    box-shadow: 0px 2px 2px 0px #c1c1c1;
+}
+.hut-list h3, h2{
+    margin: 0;
+    display: inline-block;
+}
+.hut-list:hover{
+    background-color: #f4f4f4;
+}
+.features h6{
+    color: #f09517;
+}
+.hut-title{
+    color: #0a3d4d;
+    font-weight: bold;
 }
