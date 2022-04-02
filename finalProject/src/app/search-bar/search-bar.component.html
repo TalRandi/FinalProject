@@ -1,40 +1,30 @@
 <div class="container">
     <div class="row" id="search-bar">
         <div class="col-6 col-md">
-          <mat-form-field appearance="fill">
-            <mat-label>חפש צימר</mat-label>
-            <textarea matInput
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"></textarea>
+          <mat-form-field dir='rtl' appearance="fill">
+            <mat-label >בחר איזור</mat-label>
+            <mat-select [value]="json_query.region" (selectionChange)="onRegionChange($event.value)">
+              <mat-option [value]="region" *ngFor="let region of innerData.regions">צימרים ב{{ region }}</mat-option>
+            </mat-select>
           </mat-form-field>
-        </div>
-        <div class="col-6 col-md">
-            <mat-form-field dir='rtl' appearance="fill">
-              <mat-label >בחר איזור</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let region of regions" [value]="region.value">
-                  {{region.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
         </div>
         <div class="col-8 col-md">
           <mat-form-field appearance="fill">
             <mat-label>בחר תאריכים</mat-label>
             <mat-date-range-input [rangePicker]="picker">
-              <input matStartDate #dateRangeStart placeholder="תאריך הגעה">
-              <input matEndDate #dateRangeEnd placeholder="תאריך עזיבה" (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+              <input matStartDate #dateRangeStart [value]="json_query.start">
+              <input matEndDate #dateRangeEnd [value]="json_query.end" (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
         </div>
         <div class="col-6 col-md">
-            <angular-input-counter appearance="fill"></angular-input-counter>
+            <!-- <mat-label >מספר אורחים</mat-label> -->
+            <angular-input-counter #number_of_guests [counterValue]="json_query.number_of_guests" appearance="fill"></angular-input-counter>
         </div>
         <div class="col-4 col-md">
-            <button mat-stroked-button color="primary"><mat-icon>search</mat-icon></button>
+            <button mat-stroked-button color="primary" (click)="onSendQuery(number_of_guests.counterValue)" ><mat-icon>search</mat-icon></button>
         </div>
       </div>
 </div>

@@ -8,6 +8,7 @@ import { Hut } from 'src/app/shared-data/hut.model';
 import { Order } from 'src/app/shared-data/order.model';
 import { Zimmer } from 'src/app/shared-data/zimmer.model';
 import { Client } from 'src/app/shared-data/client.model';
+import { InnerDataService } from '../../shared-data/inner-data.service';
 
 @Component({
   selector: 'app-zimmer-details',
@@ -25,14 +26,25 @@ export class ZimmerDetailsComponent implements OnInit {
   zimmer_id: string;
   zimmer: Zimmer;
   client: Client;
+  startDate = "";
+  endDate = "";
 
-  constructor(private storage: DataStorageService, private router: Router, private authService: AuthenticationService, private _snackBar: MatSnackBar) { }
+  constructor(private storage: DataStorageService, private router: Router, 
+              private authService: AuthenticationService, private _snackBar: MatSnackBar, 
+              public innerData: InnerDataService) { }
 
   
   ngOnInit(): void {
     this.isLoading = true
     this.zimmer_id = this.router.url.split('/').pop()!
-      
+
+    if(localStorage.getItem('Dates')){
+      var dates_from_local = JSON.parse(localStorage.getItem('Dates')!.toString());
+      this.startDate = dates_from_local.start
+      this.endDate = dates_from_local.end
+    }
+    
+
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
       this.zimmer = zimmers.filter(zimmer => {
         return zimmer.zimmer_id == this.zimmer_id

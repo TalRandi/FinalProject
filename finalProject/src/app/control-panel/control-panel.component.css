@@ -54,5 +54,10 @@ mat-expansion-panel{
     background-color: #064663;
 }
 mat-panel-description{
+    margin: 0;
     color: aliceblue;
+}
+.arrow{
+    position: absolute;
+    left: 5px;
 }
