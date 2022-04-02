@@ -40,7 +40,7 @@
                             </ng-template>
                         </ngb-carousel>
                     </div>
-                    <div class="col-6 col-md-4" (click)="zimmer_clicked(zimmer)">
+                    <div class="col-6 col-md-3" (click)="zimmer_clicked(zimmer)">
                         <h1>{{ zimmer.zimmerName }}<h4><mat-icon> location_on</mat-icon> {{ zimmer.region }}</h4></h1>
                         <h4>{{ (zimmer.generalDescription.length>130)? (zimmer.generalDescription | slice:0:130)+'...':(zimmer.generalDescription) }}<h5 *ngIf="zimmer.generalDescription.length > 130"><b>לחץ להמשך קריאה ופרטים נוספים</b></h5></h4>
                         <div class="row" *ngIf="zimmer.features != undefined">
@@ -82,10 +82,12 @@
                             <div class="col-6">
                                 <h2>סופ"ש החל מ {{ zimmer.min_price_weekend }} ש"ח</h2>
                             </div>
-                            <div class="col-12">
-                                <h5>הזמן כאן</h5>
-                            </div>
                         </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <mat-icon *ngIf="client && !isFavorite(zimmer.zimmer_id)" class="favorite">favorite_border</mat-icon>
+                        <mat-icon *ngIf="client && isFavorite(zimmer.zimmer_id)" class="favorite">favorite</mat-icon>
+                        <button (click)="zimmer_clicked(zimmer)" class="btn btn-block order-here">הזמן כאן</button>
                     </div>
                 </div>
             </ng-template>

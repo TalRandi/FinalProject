@@ -33,6 +33,14 @@
         <li *ngIf="isLoggedIn && this.authService.admin" class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['admin', 'pending-requests']"><mat-icon>playlist_add_check</mat-icon> ניהול בקשות</a>
         </li>
+        <li>
+          <div class="search-wrapper">
+            <div class="t">
+                <input #zimmer_to_search type="text" class="form-control search-zimmer" placeholder="חיפוש צימר לפי שם">
+            </div>
+            <button class="btn" (click)="onZimmerSearch(zimmer_to_search.value)" mat-stroked-button><mat-icon>search</mat-icon></button>
+          </div>
+        </li>
       </ul>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" [routerLinkActive]="['active']">

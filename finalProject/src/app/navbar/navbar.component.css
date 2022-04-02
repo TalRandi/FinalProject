@@ -20,12 +20,40 @@
 mat-icon{
     vertical-align: middle;
 }
+.search-zimmer{
+    text-align:start;
+    /* margin: 0 50%; */
+    color: aliceblue;
+    background-color: #064663;
+}
+::placeholder{
+    color: rgb(184, 185, 185);
+}
 .collapse{
     text-align: center;
 }
-
+.btn{
+    color: #ECB365;
+}
+.search-wrapper{
+    border: #ECB365 solid 1px;
+    border-radius: 5px;
+    margin-right: 10%;
+}
+input{
+    border: 0;
+}
 body{
     background-color: #ECB365;
     text-align: center;
     vertical-align: center;
+}
+
+div { display: table; }
+div.t {
+    display: table-cell;
+    width: 100%;
+}
+div.t > input {
+    width: 100%;
 }

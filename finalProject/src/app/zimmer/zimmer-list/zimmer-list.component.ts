@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { Client } from 'src/app/shared-data/client.model';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
 import { Hut } from 'src/app/shared-data/hut.model';
@@ -18,14 +19,6 @@ interface Sort {
   styleUrls: ['./zimmer-list.component.css']
 })
 export class ZimmerListComponent implements OnInit, OnDestroy {
-
-  
-  currentRate = 8;
-  client: Client;
-
-  isLoading = false;
-  sort_direction = true;
-  private data: Subscription;
   
   sorts: Sort[] = [
     {value: 'all', viewValue: 'הכל'},
@@ -35,6 +28,12 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     {value: 'total_capacity', viewValue: 'מקסימום אורחים'},
   ];
 
+  currentRate = 8;
+  client: Client;
+  isLoading = false;
+  sort_direction = true;
+  number_of_guests: number;
+  private data: Subscription;
   hut: Hut[] = []
   all_zimmers:Zimmer[] = []
   zimmers_to_display:Zimmer[] = []
@@ -98,6 +97,9 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.number_of_guests = this.innerData.number_of_guests
+    
     this.isLoading = true;
     if(localStorage.getItem('userData')){
       var userData = JSON.parse(localStorage.getItem('userData')!.toString());
@@ -111,7 +113,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       }
     }
     
-    this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
+    this.storage.fetchAcceptedZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(zimmers => {
       this.all_zimmers = zimmers.filter(zimmer => zimmer.status != 'disabled');  
       this.zimmers_to_display = [...this.all_zimmers]
       this.dictionary.set("בריכה", "pool")
@@ -123,12 +125,62 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       this.dictionary.set("מזגן", "air_conditioner")
       this.dictionary.set("חניה", "parking")
       
+      this.innerData.regions_map.forEach((value, region) => {
+        if(value)
+          this.region_filter.push(region)
+      })
       
-      this.data = this.innerData.subject.subscribe(filters => {
+      this.innerData.filters_map.forEach((value, filter) => {
+        if(value)
+          this.general_filter.push(this.dictionary.get(filter)!)
+      })   
+    
+      this.innerData.huts_map.forEach((value, hut_number) => {
+        if(value)
+          this.huts_number_filter = hut_number
+      })  
+
+      this.applyFilters()
+      
+      this.data = this.innerData.string_subject.subscribe(zimmer_to_search => {
+        
+        this.zimmers_to_display = [...this.all_zimmers]
+        if(zimmer_to_search == '')
+          return
+
+        this.isLoading = true;
+        setTimeout(() => {
+          for (let index_zimmer = 0; index_zimmer < this.zimmers_to_display.length; index_zimmer++) {
+            if(this.zimmers_to_display[index_zimmer] == undefined)
+              break     
+            if(this.zimmers_to_display[index_zimmer].zimmerName != zimmer_to_search){
+              this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+              index_zimmer--
+            }
+          }
+          this.isLoading = false;
+        }, 500)
+      })
+
+
+      this.data = this.innerData.number_subject.subscribe(number_of_guests => {
+       
+        this.number_of_guests = number_of_guests 
     
         this.isLoading = true;
-        this.zimmers_to_display = [...this.all_zimmers]
+ 
+        setTimeout(() => {
 
+          this.applyFilters()
+          this.isLoading = false;
+
+        }, 500)
+      })
+
+      this.data = this.innerData.subject.subscribe(filters => {
+        
+        // this.alreadySubscribed = true
+        
         if(filters.has("בריכה")){
           // Update the general_filter array
           filters.forEach((checked: boolean, filter: string) => {
@@ -149,61 +201,79 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
         }
         else if(filters.has("1")){
           // Update the huts_number array
-          filters.forEach((checked: boolean, filter: string) => {
-            if(checked)
-              console.log(filter);
-            
+          filters.forEach((checked: boolean, filter: string) => {            
             if(checked && this.huts_number_filter != filter)
               this.huts_number_filter = filter
           });
         }
-
-        for (let index_zimmer = 0; index_zimmer < this.zimmers_to_display.length; index_zimmer++) {
-
-          if(this.zimmers_to_display[index_zimmer].features == undefined && this.general_filter.length != 0){
-            this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
-            index_zimmer--
-            continue
-          }
-          if(this.huts_number_filter != ""){
-            
-            if(this.huts_number_filter == "הכל"){
-              this.huts_number_filter = "";
-              console.log(this.zimmers_to_display);
-            }
-            else if(this.zimmers_to_display[index_zimmer].huts.length+'' != this.huts_number_filter){
-              this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
-              index_zimmer--
-              continue
-            }
-            else if(this.huts_number_filter == "6+" && this.zimmers_to_display[index_zimmer].huts.length < 6){
-              this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
-              index_zimmer--
-              continue
-            }
-          }
-          for (let index_filter = 0; index_filter < this.general_filter.length; index_filter++) {
-              if (!this.zimmers_to_display[index_zimmer].features.includes(this.general_filter[index_filter])) {
-                this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
-                index_zimmer--
-                break
-              }  
-          }
-          for (let index_region = 0; index_region < this.region_filter.length; index_region++) {
-            if(this.zimmers_to_display[index_zimmer] == undefined)
-              break     
-            if(!this.region_filter.includes(this.zimmers_to_display[index_zimmer].region)){
-              this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
-              index_zimmer--
-              break
-            }
-          }
-        }
-        this.isLoading = false;
+        this.applyFilters()
       });
-      this.isLoading = false;  
     })
   }
+
+
+  applyFilters(): void {
+    
+    this.zimmers_to_display = [...this.all_zimmers]
+    
+    for (let index_zimmer = 0; index_zimmer < this.zimmers_to_display.length; index_zimmer++) {
+
+      if(this.zimmers_to_display[index_zimmer].features == undefined && this.general_filter.length != 0){
+        this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+        index_zimmer--
+        continue
+      }
+      if(this.huts_number_filter != ""){
+        
+        if(this.huts_number_filter == "הכל"){
+          this.huts_number_filter = "";
+          console.log(this.zimmers_to_display);
+        }
+        else if(this.zimmers_to_display[index_zimmer].huts.length+'' != this.huts_number_filter){
+          this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+          index_zimmer--
+          continue
+        }
+        else if(this.huts_number_filter == "6+" && this.zimmers_to_display[index_zimmer].huts.length < 6){
+          this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+          index_zimmer--
+          continue
+        }
+      }
+      if(this.number_of_guests){
+        
+        if(this.zimmers_to_display[index_zimmer] == undefined)
+          break     
+        if(this.zimmers_to_display[index_zimmer].total_capacity < this.number_of_guests){
+          this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+          index_zimmer--
+          continue
+        }
+      }
+      for (let index_filter = 0; index_filter < this.general_filter.length; index_filter++) {  
+        if (!this.zimmers_to_display[index_zimmer].features.includes(this.general_filter[index_filter])) {
+          this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+          index_zimmer--
+          break
+        }  
+      }
+      for (let index_region = 0; index_region < this.region_filter.length; index_region++) {
+        if(this.zimmers_to_display[index_zimmer] == undefined)
+          break     
+        if(!this.region_filter.includes(this.zimmers_to_display[index_zimmer].region)){
+          this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+          index_zimmer--
+          break
+        }
+      }
+    }
+  }
+
+  isFavorite(zimmer_id: string){
+    
+    return this.client.favorites.map(zimmer => zimmer.zimmer_id).includes(zimmer_id)
+  }
+
   ngOnDestroy(): void {
     if(this.data)
       this.data.unsubscribe();

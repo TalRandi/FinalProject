@@ -32,7 +32,7 @@
     font-weight: bold;
     color: #041C32;
 }
-.price h5{
+/* .price h5{
     position: absolute;
     left: 0;
     background-color: #2e832b;
@@ -41,7 +41,7 @@
     font-weight: bold;
     border-radius: 10%;
     text-align: center;
-}
+} */
 mat-icon{
     vertical-align: middle;
 }
@@ -58,6 +58,7 @@ button{
     color: aliceblue;
     border: solid 2px #ECB365;
     border-radius: 10px;
+    text-align: center;
     background-color: #041C32;
     cursor: pointer;
     display: block;
@@ -82,4 +83,30 @@ button:hover{
 .sort-btn{
     margin-bottom: 5%;
     display: inline;
+}
+.favorite{
+    color: #041C32;
+    transform: scale(1.5);
+    margin-right: 30%;
+}
+.favorite:hover{
+    transform: scale(1.7); 
+}
+
+@media screen and (min-width: 900px) {
+    .order-here{
+        position: absolute;
+        bottom: 0;
+        left: 15px;
+        width: 6rem;
+    }
+}
+.order-here{
+    /* position: absolute; */
+    /* bottom: 0; */
+    /* background-color: #2e832b; */
+    /* color: #ffffff; */
+    /* padding: 10%; */
+    /* font-weight: bold; */
+    /* border-radius: 10%; */
 }

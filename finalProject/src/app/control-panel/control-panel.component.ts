@@ -12,14 +12,32 @@ export class ControlPanelComponent implements OnInit {
 
   constructor(public innerData: InnerDataService) { }
 
-  ngOnInit(): void { }
+  regions_arr: any[] = []
+  filters_arr: any[] = []
+  huts_number_arr: any[] = []
+
+  ngOnInit(): void {
+
+    this.innerData.regions_map.forEach((value, region) => {
+      this.regions_arr.push({name: region, value: value})
+    })
+    
+    this.innerData.filters_map.forEach((value, filter) => {
+      this.filters_arr.push({name: filter, value: value})
+    })
+    
+    this.innerData.huts_map.forEach((value, hut_number) => {          
+      this.huts_number_arr.push({name: hut_number, value: value})
+    });
+
+  }
 
   onFilterChange(event: any): void{
     this.innerData.filters_map.set(event.source.name, event.source.checked)
     this.innerData.subject.next(this.innerData.filters_map)
   }
 
-  onRegionChange(event: any): void{
+  onRegionChange(event: any): void{    
     this.innerData.regions_map.set(event.source.name, event.source.checked)
     this.innerData.subject.next(this.innerData.regions_map)
   }

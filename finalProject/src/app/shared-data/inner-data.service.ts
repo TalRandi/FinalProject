@@ -8,6 +8,11 @@ import { Subject } from 'rxjs';
 export class InnerDataService {
   
   subject = new Subject<Map<string, boolean>>();
+  string_subject = new Subject<String>();
+  number_subject = new Subject<number>();
+
+  zimmer_to_search = ""
+  number_of_guests = 2
 
   filters = ["ג'קוזי" ,"בריכה" ,"בריכה מחוממת" ,"בריכה מקורה" ,"מזגן", "WiFi", "סאונה", "חניה"]
   filters_map = new Map<string, boolean>();
