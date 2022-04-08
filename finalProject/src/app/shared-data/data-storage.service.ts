@@ -97,7 +97,8 @@ export class DataStorageService{
         return this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
             for(var id in zimmers)
                 if(zimmers[id].zimmer_id == zimmer.zimmer_id){
-                    zimmer.orders = zimmers[id].orders;  
+                    zimmer.orders = zimmers[id].orders;
+                    zimmer.rate = zimmers[id].rate;  
                     delete zimmers[id];
                     this.http.put(this.url_accepted, zimmers).subscribe(() => {
                         this.storeAcceptedZimmer(zimmer).subscribe();
@@ -129,7 +130,7 @@ export class DataStorageService{
                 }
         }))
     }
-    approveOrder(zimmer:Zimmer){
+    updateZimmer(zimmer:Zimmer){
         return this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
             for(var id in zimmers)
                 if(zimmers[id].zimmer_id == zimmer.zimmer_id){
@@ -142,7 +143,7 @@ export class DataStorageService{
         }))
     }
     setApproveOnBoth(zimmer:Zimmer, order_id: string){
-        this.approveOrder(zimmer).subscribe(() => {
+        this.updateZimmer(zimmer).subscribe(() => {
             this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
                 for(var id in clients)
                     clients[id].orders.forEach(order => {
@@ -216,4 +217,28 @@ export class DataStorageService{
             }
         })
     )}
+    deleteEditZimmer(zimmer: Zimmer){
+        return this.http.get<Zimmer[]>(this.url_pending).pipe(map(zimmers => {
+            for(var id in zimmers)
+                if(zimmers[id].zimmer_id == zimmer.zimmer_id){
+                    delete zimmers[id];
+                    this.http.put(this.url_pending, zimmers).subscribe();
+                    break
+                }
+        }))
+    }
+    getImage(url: string){
+        return this.storage.ref(url).getDownloadURL().pipe(map(image_url => {
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.open('GET', image_url);
+            xhr.send();
+            return xhr;
+        }));
+     
+    }
+    deleteImage(url: string){
+        return this.storage.ref(url).delete();
+        //TO DO delete old zimmer photos
+    }
 }

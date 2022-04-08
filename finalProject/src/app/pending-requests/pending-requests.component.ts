@@ -27,7 +27,7 @@ export class PendingRequestsComponent implements OnInit {
     });
   }
   onRejectZimmer(zimmer: Zimmer, index: number){
-    zimmer.status = 'rejected_pending';
+    zimmer.status = 'pending_rejected';
     this.storage.rejectZimmer(zimmer).subscribe(() => {
       this.zimmers.splice(index, 1);
     })
@@ -38,7 +38,7 @@ export class PendingRequestsComponent implements OnInit {
     })
   }
   onRejectAcceptedZimmer(zimmer: Zimmer, index: number){
-    zimmer.status = 'rejected_accepted';
+    zimmer.status = 'accepted_rejected';
     this.storage.rejectZimmer(zimmer).subscribe(() => {
       this.accepted_zimmers.splice(index, 1);
     })

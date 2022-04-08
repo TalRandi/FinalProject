@@ -92,7 +92,7 @@ export class ZimmerDetailsComponent implements OnInit {
       else{
         this.zimmer.orders = [order]
       }
-      this.storage.approveOrder(this.zimmer).subscribe(() => {
+      this.storage.updateZimmer(this.zimmer).subscribe(() => {
         if(localStorage.getItem('userData')){
           var userData = JSON.parse(localStorage.getItem('userData')!.toString());
           if(userData.zimmer == 'client' && userData.admin == false){

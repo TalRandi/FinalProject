@@ -2,10 +2,6 @@
     direction: rtl;
     text-align: right;
 }
-.container{
-    margin-top: 60px;
-}
-
 input.ng-invalid.ng-touched{
     border: 1px solid red;
 }
@@ -68,7 +64,7 @@ button:active{
 }
 #loading{
     text-align: center;
-    margin: 14% 0%;
+    margin: 18% 0%;
 }
 .alert{
     text-align: start;

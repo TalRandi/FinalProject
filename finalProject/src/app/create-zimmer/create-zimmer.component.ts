@@ -113,6 +113,7 @@ export class CreateZimmerComponent implements OnInit {
   }
 
   onDeleteHut(index: number){
+    this.hutImages[index] = [];
     this.hut_counter.splice(index, 1)
   }
 

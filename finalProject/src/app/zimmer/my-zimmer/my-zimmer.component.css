@@ -46,3 +46,65 @@
     color: #0a3d4d;
     font-weight: bold;
 }
+
+.container{
+    margin-top: 3%;
+}
+
+input.ng-invalid.ng-touched{
+    border: 1px solid red;
+}
+
+.help-block{
+    color: red;
+}
+.hut-details{
+    border: solid 0.1px #ECB365;
+    border-radius: 5px;
+    padding: 0 2%;
+    margin-top: 2%;
+}
+::ng-deep .mat-checkbox-inner-container {
+    margin-left:10% !important;
+}
+button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    background-color: #041C32;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #ECB365;
+    transition: 0.5s;
+}
+button:hover[disabled]{
+    color: aliceblue;
+    background-color: #041C32;
+    cursor: not-allowed;
+}
+button:active{
+    background-color: #f59e23;
+    transform: translateY(1px);
+    transition: none;
+}
+
+.float-md-left{
+    margin: 1% 0%;
+}
+.border-right h1{
+    margin-right: 1%;
+}
+#hut-list{
+    margin-right: 1%;
+}
+.append-and-submit{
+    margin-top: 2%;
+}
+.hut-submitted{
+    background-color: rgb(235, 233, 233);
+    opacity: 0.7;
+}
+.hut-images{
+    margin: 1% 0% 3% 0%;
+}
