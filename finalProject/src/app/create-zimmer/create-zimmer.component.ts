@@ -6,6 +6,7 @@ import { DataStorageService } from '../shared-data/data-storage.service';
 import { Router } from '@angular/router';  
 import { AuthenticationService } from '../authentication/authentication.service';
 import { User } from '../authentication/user.model';
+import { EmailService } from '../shared-data/email.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class CreateZimmerComponent implements OnInit {
   hutImages: File[][] = [];
   features: string[] = [];
 
-  constructor(private storage: DataStorageService, private router: Router, private authService: AuthenticationService ) { }
+  constructor(private storage: DataStorageService, private router: Router, private authService: AuthenticationService,
+              private emailService: EmailService) { }
 
   onSubmit(){
     this.onSignUp();
@@ -88,6 +90,11 @@ export class CreateZimmerComponent implements OnInit {
       localStorage.setItem('userData', JSON.stringify(user));
       this.authService.admin = false;
       this.router.navigate([`/my-zimmer/${zimmer_id}`]);
+
+      let header = this.zimmer.ownerName + ", שלום רב "
+      let message = "אנו שמחים להודיע כי הצימר - " + this.zimmer.zimmerName + " נוצר בהצלחה ונשלח לסקירה של מנהלי האתר."
+      message += "ניתן להתעדכן בסטטוס באמצעות כניסה לחשבונך, תחת הלשונית - הצימר שלי."
+      this.emailService.sendEmail(header, this.zimmer.email, message, "GoEasy")
     }
   }
 

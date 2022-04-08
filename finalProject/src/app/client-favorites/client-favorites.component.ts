@@ -35,4 +35,11 @@ export class ClientFavoritesComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  removeFavorite(favoriteZimmer: Zimmer){
+    
+    this.client.favorites = this.client.favorites.filter(zimmer => zimmer.zimmer_id != favoriteZimmer.zimmer_id)
+
+    this.storage.updateClient(this.client).subscribe();
+  }
+
 }

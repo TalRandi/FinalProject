@@ -9,6 +9,7 @@ import { Order } from 'src/app/shared-data/order.model';
 import { Zimmer } from 'src/app/shared-data/zimmer.model';
 import { Client } from 'src/app/shared-data/client.model';
 import { InnerDataService } from '../../shared-data/inner-data.service';
+import { EmailService } from 'src/app/shared-data/email.service';
 
 @Component({
   selector: 'app-zimmer-details',
@@ -31,7 +32,7 @@ export class ZimmerDetailsComponent implements OnInit {
 
   constructor(private storage: DataStorageService, private router: Router, 
               private authService: AuthenticationService, private _snackBar: MatSnackBar, 
-              public innerData: InnerDataService) { }
+              public innerData: InnerDataService, private emailService: EmailService) { }
 
   
   ngOnInit(): void {
@@ -92,7 +93,7 @@ export class ZimmerDetailsComponent implements OnInit {
       else{
         this.zimmer.orders = [order]
       }
-      this.storage.approveOrder(this.zimmer).subscribe(() => {
+      this.storage.updateZimmer(this.zimmer).subscribe(() => {
         if(localStorage.getItem('userData')){
           var userData = JSON.parse(localStorage.getItem('userData')!.toString());
           if(userData.zimmer == 'client' && userData.admin == false){
@@ -108,6 +109,21 @@ export class ZimmerDetailsComponent implements OnInit {
         }
       })
     })
+
+    let header = this.zimmer.ownerName + ", שלום רב "
+    let line1 = "!התקבלה הזמנה חדשה"
+    let line2 = "לצימר - " + order.zimmerName
+    let line3 =  "ליחידה - " + hut.hutName
+    let line4 = "בתאריך - " + order.start_date + " ועד לתאריך - " + order.end_date
+    let line5 = "מספר אורחים: " + order.guests
+    let line6 = " שם האורח - " + order.name
+    let line7 = "מספר פלאפון - " + order.phone
+    let line8 = "בקשות מיוחדות - "
+    line8 += (order.requests ? order.requests: "אין")
+    let line9 = "אישור ההזמנה יתבצע באמצעות האתר תחת הלשונית - ההזמנות שלי"
+    
+    this.emailService.sendLongEmail(header, this.zimmer.email, line1, line2, line3, line4, line5,
+                                    line6, line7, line8, line9, "GoEasy")
     
     this._snackBar.open("הזמנת התקבלה, נעדכן כאשר בעל הצימר יאשר אותה.", "אישור", {
       duration: 10000,

@@ -129,7 +129,7 @@ export class DataStorageService{
                 }
         }))
     }
-    approveOrder(zimmer:Zimmer){
+    updateZimmer(zimmer:Zimmer){
         return this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
             for(var id in zimmers)
                 if(zimmers[id].zimmer_id == zimmer.zimmer_id){
@@ -142,7 +142,7 @@ export class DataStorageService{
         }))
     }
     setApproveOnBoth(zimmer:Zimmer, order_id: string){
-        this.approveOrder(zimmer).subscribe(() => {
+        this.updateZimmer(zimmer).subscribe(() => {
             this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
                 for(var id in clients)
                     clients[id].orders.forEach(order => {
@@ -193,7 +193,7 @@ export class DataStorageService{
             }
         })).subscribe();    
     }
-    updateClient(client:Client){
+    updateClient(client:Client){   
         return this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
             for(var id in clients)
                 if(clients[id].email == client.email){
