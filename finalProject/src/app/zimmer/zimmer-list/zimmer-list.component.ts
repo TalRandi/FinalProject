@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { stat } from 'fs';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { AuthenticationService } from 'src/app/authentication/authentication.service';
 import { Client } from 'src/app/shared-data/client.model';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
+import { EmailService } from 'src/app/shared-data/email.service';
 import { Hut } from 'src/app/shared-data/hut.model';
 import { InnerDataService } from 'src/app/shared-data/inner-data.service';
 import { Zimmer } from 'src/app/shared-data/zimmer.model';
@@ -36,6 +39,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   private data: Subscription;
   hut: Hut[] = []
   all_zimmers:Zimmer[] = []
+  disabled_zimmers:Zimmer[] = []
   zimmers_to_display:Zimmer[] = []
   dictionary = new Map<string, string>();
   general_filter: string[] = []
@@ -44,7 +48,8 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   sort_parameter: string = "all";
 
 
-  constructor(private storage: DataStorageService, public innerData: InnerDataService, private router: Router) { }
+  constructor(private storage: DataStorageService, public innerData: InnerDataService, private router: Router, public authService: AuthenticationService,
+              private emailService: EmailService) { }
 
   private removeElement(array: string[], element: string){
     const index = array.indexOf(element);
@@ -114,6 +119,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     }
     
     this.storage.fetchAcceptedZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(zimmers => {
+
       this.all_zimmers = zimmers.filter(zimmer => zimmer.status != 'disabled');  
       this.zimmers_to_display = [...this.all_zimmers]
       this.dictionary.set("בריכה", "pool")
@@ -272,6 +278,35 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   isFavorite(zimmer_id: string){
     
     return this.client.favorites.map(zimmer => zimmer.zimmer_id).includes(zimmer_id)
+  }
+
+  favoriteClicked(favoriteZimmer: Zimmer, status: string){
+    
+    const index = this.zimmers_to_display.indexOf(favoriteZimmer);
+    if (index > -1) 
+      this.zimmers_to_display.splice(index, 1);
+
+    if(status == "addFavorite")
+      this.client.favorites.push(favoriteZimmer)    
+    
+    else if(status == "removeFavorite")
+      this.client.favorites = this.client.favorites.filter(zimmer => zimmer.zimmer_id != favoriteZimmer.zimmer_id)
+    
+    this.zimmers_to_display.splice(index, 0, favoriteZimmer);
+    this.storage.updateClient(this.client).subscribe();
+    
+  }
+
+  disableZimmer(zimmer: Zimmer, index: number){
+    this.isLoading = true;
+    zimmer.status = "disabled"
+    this.zimmers_to_display.splice(index, 1);
+
+    let header = zimmer.ownerName + ", שלום רב "
+    let message = "זוהי הודעה על חסימת הצימר - " + zimmer.zimmerName
+    this.emailService.sendEmail(header, zimmer.email, message, "GoEasy")
+
+    this.storage.updateZimmer(zimmer).pipe(finalize(() => this.isLoading = false)).subscribe()
   }
 
   ngOnDestroy(): void {

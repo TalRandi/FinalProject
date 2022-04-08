@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
 import { Zimmer } from 'src/app/shared-data/zimmer.model';
+import { EmailService } from '../shared-data/email.service';
 
 @Component({
   selector: 'app-pending-requests',
@@ -13,24 +14,36 @@ export class PendingRequestsComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(private storage: DataStorageService, private router: Router) { }
+  constructor(private storage: DataStorageService, private router: Router, private emailService: EmailService) { }
 
   zimmers: Zimmer[] = [];
   accepted_zimmers: Zimmer[] = [];
+  disabled_zimmers: Zimmer[] = [];
   requests: string[] = [];
   requests_archive: string[] = [];
+  requests_index:boolean[] = []
 
   onSubmitZimmer(zimmer: Zimmer, index: number){
     zimmer.status = "accepted";
     this.storage.storeAcceptedZimmer(zimmer).subscribe(() => {
       this.zimmers.splice(index, 1);
     });
+
+    let header = zimmer.ownerName + ", שלום רב "
+    let message = "אנו שמחים להודיע כי הצימר - " + zimmer.zimmerName + " התקבל ונוסף בהצלחה לרשימת הצימרים שלנו!"
+    this.emailService.sendEmail(header, zimmer.email, message, "GoEasy")
+
   }
   onRejectZimmer(zimmer: Zimmer, index: number){
     zimmer.status = 'pending_rejected';
     this.storage.rejectZimmer(zimmer).subscribe(() => {
       this.zimmers.splice(index, 1);
     })
+
+    let header = zimmer.ownerName + ", שלום רב "
+    let message = "לצערנו, הצימר - " + zimmer.zimmerName + " אינו עבר את הסקירה ולא יפורסם"
+    this.emailService.sendEmail(header, zimmer.email, message, "GoEasy")
+
   }
   onSubmitAcceptedZimmer(zimmer: Zimmer, index: number){
     this.storage.storeEditedZimmer(zimmer).subscribe(() => {
@@ -44,11 +57,30 @@ export class PendingRequestsComponent implements OnInit {
     })
   }
   onSubmitRequest(request: string, index: number){
+    this.requests_index[index] = !this.requests_index[index] 
+  }
+
+  onAdminResponse(request: string, index: number, response: string){
+
+    let header = request[0] + " " + request[1] + ", שלום רב "
+    
+    let line1 = "התקבלה תשובה לפניה - " + request[5]
+    let line2 = ":תוכן הפניה"
+    let line3 = request[4]
+    
+    let line4 = ":תשובת מנהלי האתר"
+    let line5 = response
+
+    this.emailService.sendLongEmail(header, request[2], line1, line2, line3, "", line4,
+                                    line5, "", "", "", "GoEasy")
+
     this.storage.approveRequest(request).subscribe(() => {
       this.requests.splice(index, 1);
       this.requests_archive.push(request);
     })
+
   }
+
   ngOnInit(): void {
     this.isLoading = true;
     this.storage.fetchPendingZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(pending_zimmers => {
@@ -59,7 +91,16 @@ export class PendingRequestsComponent implements OnInit {
           this.accepted_zimmers.push(zimmer);  
       })
     });
-    this.storage.fetchRequests().subscribe(stored_requests => this.requests = stored_requests);
+    this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
+      this.disabled_zimmers = zimmers.filter(zimmer => zimmer.status == 'disabled'); 
+    })
+
+    this.storage.fetchRequests().subscribe(stored_requests => {
+      this.requests = stored_requests
+      for (let i = 0; i < this.requests.length; i++)
+        this.requests_index.push(true)        
+      
+    })
     this.storage.fetchArchivedRequests().subscribe(archived_requests => this.requests_archive = archived_requests);
   }
   zimmer_clicked(zimmer: Zimmer): void{
@@ -68,4 +109,16 @@ export class PendingRequestsComponent implements OnInit {
     );
     window.open(url, '_blank');
   }
+
+  enableZimmer(zimmer: Zimmer, index: number){
+    zimmer.status = "accepted"
+    this.disabled_zimmers.splice(index, 1);
+
+    let header = zimmer.ownerName + ", שלום רב "
+    let enable_message = "זוהי הודעה על ביטול החסימה לצימר - " + zimmer.zimmerName
+    this.emailService.sendEmail(header, zimmer.email, enable_message, "GoEasy")
+    
+    this.storage.updateZimmer(zimmer).subscribe()
+  }
+
 }

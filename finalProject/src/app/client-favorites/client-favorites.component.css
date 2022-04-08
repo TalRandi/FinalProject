@@ -9,9 +9,6 @@
 
 .hut-details{
     border: solid 1px #c7c7c7;
-    /* background-color: rgb(236, 179, 101, 1); */
-    /* background-color: rgb(239, 239, 255); */
-    /* box-shadow: 5px 5px 10px 1px #04293A; */
     border-radius: 5px;
     margin-top: 3%;
     padding: 1.5% 0;
@@ -19,7 +16,6 @@
 
 .hut-details:hover{
     border: solid 1px #041C32;
-    /* box-shadow: 5px 5px 10px 1px #04293A; */
     background: linear-gradient(#e6e6e69d, #ffffff, #e6e6e69d);
     cursor: pointer;
 }
@@ -28,8 +24,7 @@
 }
 .price{
     position: absolute;
-    bottom: 0;
-    margin-left: 2%;
+    margin-left: 1%;
 }
 .price h2{
     display: block;
@@ -46,6 +41,9 @@ mat-icon{
 
 .buttonTab{ 
     margin-left: 1%;
+}
+.title{
+    margin: 1%;
 }
 .price{
     position: absolute;
@@ -64,6 +62,9 @@ mat-icon{
 #loading{
     text-align: center;
     margin: 18% 0%;
+}
+.space{
+    margin: 1% 0 3% 0;
 }
 .zimmer-list{
     margin: 2% 5%;
@@ -92,4 +93,27 @@ mat-icon{
 
 ::ng-deep .mat-tab-header::-webkit-scrollbar {
     display: none;
+}
+
+button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #041C32;
+    cursor: pointer;
+    display: block;
+}
+
+@media screen and (min-width: 900px) {
+    .order-here{
+        position: absolute;
+        bottom: 0;
+        left: 15px;
+        width: 6rem;
+    }
+}
+
+.remove-favorite:hover{
+    color: #ECB365;
 }

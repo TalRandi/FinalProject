@@ -194,7 +194,7 @@ export class DataStorageService{
             }
         })).subscribe();    
     }
-    updateClient(client:Client){
+    updateClient(client:Client){   
         return this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
             for(var id in clients)
                 if(clients[id].email == client.email){

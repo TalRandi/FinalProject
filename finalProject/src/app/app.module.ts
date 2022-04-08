@@ -45,6 +45,7 @@ import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { ZimmerOrdersComponent } from './zimmer-orders/zimmer-orders.component';
 import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { ClientFavoritesComponent } from './client-favorites/client-favorites.component';
+import { AutosizeModule } from 'ngx-autosize';
 
 
 @NgModule({
@@ -68,7 +69,7 @@ import { ClientFavoritesComponent } from './client-favorites/client-favorites.co
     SignUpComponent,
     ZimmerOrdersComponent,
     ClientOrdersComponent,
-    ClientFavoritesComponent
+    ClientFavoritesComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +92,7 @@ import { ClientFavoritesComponent } from './client-favorites/client-favorites.co
     HttpClientModule,
     NgxDropzoneModule,
     MatTabsModule,
+    AutosizeModule,
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule

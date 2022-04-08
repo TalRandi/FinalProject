@@ -5,64 +5,69 @@
 <div class="container" *ngIf="!isLoading">
     <div class="row">
       <div class="col-12 col-sm-6 col-md-4">
-
-        <form (ngSubmit)="onSubmit()" #form="ngForm">
-          <h1>פרטים כלליים:</h1>
-          <div class="form-group">
-            <label for="ownerName">שם בעל הצימר *</label>
-            <input type="text" name="ownerName" ngModel class="form-control" required #ownerName="ngModel">
-            <span class="help-block" *ngIf="ownerName.touched && ownerName.invalid">* שדה חובה!</span>
-          </div> 
-    
-          <div class="form-group">
-            <label for="phone">מספר פלאפון *</label>
-            <input type="text" name="phone" ngModel class="form-control" required minlength="10" maxlength="10" #phone="ngModel">
-            <span class="help-block" *ngIf="phone.touched && phone.invalid">* מספר פלאפון לא חוקי!</span>
-          </div>
         
-          <div class="form-group">
-            <label for="zimmerName">שם צימר *</label>
-            <input type="text" name="zimmerName" ngModel class="form-control" required #zimmerName="ngModel">
-            <span class="help-block" *ngIf="zimmerName.touched && zimmerName.invalid">* שדה חובה!</span>
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+          <div class="row">
+            <h1>פרטים כלליים:</h1>
           </div> 
+          <div class="row">
+            <div class="form-group col-6 col-md-12">
+              <label for="ownerName">שם בעל הצימר *</label>
+              <input type="text" name="ownerName" ngModel class="form-control" required #ownerName="ngModel">
+              <span class="help-block" *ngIf="ownerName.touched && ownerName.invalid">* שדה חובה!</span>
+            </div> 
           
-          <div class="form-group">
-            <label for="email">דואר אלקטרוני *</label>
-            <input type="text" name="email" ngModel class="form-control" required email #email="ngModel">
-            <span class="help-block" *ngIf="email.touched && email.invalid">* דואר אלקטרוני לא חוקי!</span>
-          </div>
+      
+            <div class="form-group col-6 col-md-12">
+              <label for="phone">מספר פלאפון *</label>
+              <input type="text" name="phone" ngModel class="form-control" required minlength="10" maxlength="10" #phone="ngModel">
+              <span class="help-block" *ngIf="phone.touched && phone.invalid">* מספר פלאפון לא חוקי!</span>
+            </div>
           
-          <div class="form-group">
-            <label for="password">סיסמה *</label>
-            <input type="password" name="password" ngModel class="form-control" required minlength="6" maxlength="16" #password="ngModel">
-            <span class="help-block" *ngIf="password.touched && password.invalid">* הסיסמה חייבת להכיל יותר מ-6 תווים!</span>
-          </div> 
+            <div class="form-group col-6">
+              <label for="zimmerName">שם צימר *</label>
+              <input type="text" name="zimmerName" ngModel class="form-control" required #zimmerName="ngModel">
+              <span class="help-block" *ngIf="zimmerName.touched && zimmerName.invalid">* שדה חובה!</span>
+            </div> 
 
-          <div class="form-group">
-            <label for="region">איזור *</label>
-            <select name="region" class="form-control" ngModel required #region="ngModel">
-              <option *ngFor="let region of regions" [value]="region">{{region}}</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="generalDescription">תיאור *</label>
-            <textarea name="generalDescription" class="form-control" ngModel required rows="4" #generalDescription="ngModel"></textarea>
-            <span class="help-block" *ngIf="generalDescription.touched && generalDescription.invalid">* שדה חובה!</span>
-          </div>
-          <hr>
-          <h1>תמונות כלליות *</h1>
-          <h4>תמונות המתארות את מתחם הצימרים. אל דאגה - בהמשך תוכלו גם להעלות תמונות עבור כל יחידה</h4>
-          <ngx-dropzone required (change)="onSelect($event)" accept="image/jpeg, image/jpg, image/png, image/tiff, image/heic">
-            <ngx-dropzone-label>גרור לכאן</ngx-dropzone-label>
-            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="img" *ngFor="let img of images" [removable]="true" (removed)="onRemove(img)"></ngx-dropzone-image-preview>
-          </ngx-dropzone>
+            <div class="form-group col-6">
+              <label for="region">איזור *</label>
+              <select name="region" class="form-control" ngModel required #region="ngModel">
+                <option *ngFor="let region of regions" [value]="region">{{region}}</option>
+              </select>
+            </div>
+            
+            <div class="form-group col-6">
+              <label for="email">דואר אלקטרוני *</label>
+              <input type="text" name="email" ngModel class="form-control" required email #email="ngModel">
+              <span class="help-block" *ngIf="email.touched && email.invalid">* דואר אלקטרוני לא חוקי!</span>
+            </div>
           
-          <button type="submit" class="btn append-and-submit" [disabled]="form.invalid || hutValidator() || images.length == 0">אישור</button>
+            
+            <div class="form-group col-6">
+              <label for="password">סיסמה *</label>
+              <input type="password" name="password" ngModel class="form-control" required minlength="6" maxlength="16" #password="ngModel">
+              <span class="help-block" *ngIf="password.touched && password.invalid">* הסיסמה חייבת להכיל יותר מ-6 תווים!</span>
+            </div> 
+          </div>
+            <div class="form-group">
+              <label for="generalDescription">תיאור *</label>
+              <textarea name="generalDescription" class="form-control" ngModel required rows="4" #generalDescription="ngModel"></textarea>
+              <span class="help-block" *ngIf="generalDescription.touched && generalDescription.invalid">* שדה חובה!</span>
+            </div>
+            <hr>
+            <h1>תמונות כלליות *</h1>
+            <h4>תמונות המתארות את מתחם הצימרים. אל דאגה - בהמשך תוכלו גם להעלות תמונות עבור כל יחידה</h4>
+            <ngx-dropzone required (change)="onSelect($event)" accept="image/jpeg, image/jpg, image/png, image/tiff, image/heic">
+              <ngx-dropzone-label>גרור לכאן</ngx-dropzone-label>
+              <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="img" *ngFor="let img of images" [removable]="true" (removed)="onRemove(img)"></ngx-dropzone-image-preview>
+            </ngx-dropzone>
+            
+            <button type="submit" class="btn append-and-submit" [disabled]="form.invalid || hutValidator() || images.length == 0">אישור</button>
         </form>
         <div class="alert alert-danger" *ngIf="error != '' ">
           <p>{{ error }}</p>
-      </div> 
+        </div> 
       </div>
 
 

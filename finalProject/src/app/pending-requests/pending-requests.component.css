@@ -9,9 +9,6 @@
 
 .hut-details{
     border: solid 1px #c7c7c7;
-    /* background-color: rgb(236, 179, 101, 1); */
-    /* background-color: rgb(239, 239, 255); */
-    /* box-shadow: 5px 5px 10px 1px #04293A; */
     border-radius: 5px;
     margin-top: 3%;
     padding: 1.5% 0;
@@ -19,19 +16,16 @@
 
 .hut-details:hover{
     border: solid 1px #041C32;
-    /* box-shadow: 5px 5px 10px 1px #04293A; */
     background: linear-gradient(#e6e6e69d, #ffffff, #e6e6e69d);
     cursor: pointer;
 }
 .hut-details:hover h1{
     text-decoration: underline;
 }
-.hut-details h2{
+.hut-details:hover h5{
     text-decoration: underline;
 }
-.hut-details h2, h3, h4{
-    margin: 0;
-}
+
 .price{
     position: absolute;
     bottom: 0;
@@ -51,7 +45,7 @@ mat-icon{
 }
 
 .buttonTab{ 
-    margin: 6% 2%;
+    margin: 8% 2%;
 }
 
 .title{
@@ -62,17 +56,17 @@ mat-icon{
 }
 .price{
     position: absolute;
-    bottom: 0;
-    margin-left: 2%;
+    margin-left: 1%;
+    margin-top: 10%;
 }
 .price h2{
     display: block;
+    padding: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     filter: drop-shadow(1px 1px 3px #ECB365);
     text-align: center;
     font-weight: bold;
     color: #041C32;
-    border-radius: 10px;
 }
 #loading{
     text-align: center;
@@ -109,4 +103,70 @@ mat-icon{
 
 button{
     text-align: center;
+    display: block;
+}
+
+.enable-zimmer{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #041C32;
+    cursor: pointer;
+    display: block;
+}
+
+/* Mobile-screen */
+@media screen and (max-width: 900px) {
+    .prices_and_details h2, h4{
+        font-size: medium;
+        margin: 1%;
+    }
+    .price{
+        position: absolute;
+        right: 30px;
+        text-align: right;
+        margin-left: 2%;
+        padding: 0;
+    }
+    .price h2{
+        font-size: medium;
+        text-align: right;
+        font-weight: normal;
+    }
+    .description_and_features h6{
+        font-size: small;
+        margin: 0;
+        padding: 0;
+    }
+    .description_and_features h1{
+        font-size: medium;
+    }
+    .description{
+        font-size: small;
+    }
+    .block_and_book{
+        margin-top: 10%;
+    }
+    .title h1{
+        font-size: medium;
+    }
+    .buttonTab{ 
+        margin: 2%;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .enable-zimmer{
+        position: absolute;
+        left: 15px
+    }
+}
+
+
+textarea {
+    resize: horizontal;
+    overflow: hidden;
+    width: 100%;
+    height: 200px;
 }
