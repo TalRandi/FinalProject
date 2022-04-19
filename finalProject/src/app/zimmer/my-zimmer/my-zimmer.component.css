@@ -31,8 +31,11 @@
     text-align: right;
     box-shadow: 0px 2px 2px 0px #c1c1c1;
 }
-.hut-list h4, h3, h2{
+.hut-list h3, h2{
     margin: 0;
+    display: inline-block;
+}
+.price h4{
     display: inline-block;
 }
 .hut-list:hover{
@@ -108,10 +111,22 @@ button:active{
     margin: 1% 0% 3% 0%;
 }
 @media screen and (max-width: 900px) {
+
     img{
         height: 300px;
     }
     .description{
         margin: 3%;
+        padding: 5%;
+    }
+    .price h3{
+        display: block;
+    }
+    .features h6{
+        font-size: small;
+        margin: 0;
+    }
+    .hut-list h2{
+        font-size: small;
     }
 }

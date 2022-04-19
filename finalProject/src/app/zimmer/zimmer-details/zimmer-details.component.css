@@ -27,7 +27,6 @@ mat-form-field{
     text-align:start;
 }
 .description{
-    margin: 0% 3%;
     padding: 1% 2%;
     text-align: right;
     background-color: rgb(225, 241, 255);
@@ -37,8 +36,11 @@ mat-form-field{
     margin: 5% 0;
     text-align: right;
 }
-.hut-list h3, h2{
+.hut-list h4, h3, h2{
     margin: 0;
+    display: inline-block;
+}
+.price h4{
     display: inline-block;
 }
 .features h6{
@@ -93,4 +95,30 @@ button:active{
 .edit:hover{
     transform: scale(2); 
     transition: 0.5s;
+}
+
+.price_before{
+    text-decoration: line-through;
+    display: block;
+}
+.price_after{
+
+}
+
+@media screen and (max-width: 900px) {
+
+    .description{
+        margin: 3%;
+        padding: 5%;
+    }
+    .price h3{
+        display: block;
+    }
+    .features h6{
+        font-size: small;
+        margin: 0;
+    }
+    .hut-list h2{
+        font-size: small;
+    }
 }

@@ -22,12 +22,15 @@ button{
     *{
         text-align: right;
     }
-    .mat-form-field{
-        width: 100px;
+    #form1{
+        width: 210px;
+    }
+    #form2{
+        width: 210px;
     }
     button{
-        height: 2.5rem;
-        margin: 0 0 2% 0;
+        height: 3.5rem;
+        margin-top: 18%;
         width: 100%;
         text-align: center;
     }
