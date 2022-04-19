@@ -1,5 +1,6 @@
 *{
     direction: rtl;
+    transition: none;
 }
 #publish{
     color: aliceblue;
@@ -22,7 +23,6 @@ mat-icon{
 }
 .search-zimmer{
     text-align:start;
-    /* margin: 0 50%; */
     color: aliceblue;
     background-color: #064663;
 }
@@ -56,4 +56,16 @@ div.t {
 }
 div.t > input {
     width: 100%;
+}
+
+@media screen and (max-width: 900px) { 
+    *{
+        transition: none;
+    }      
+    .collapse{
+        margin: 0 15%;
+    }
+    .search-wrapper{
+        margin: 0;
+    }
 }

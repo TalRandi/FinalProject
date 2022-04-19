@@ -26,98 +26,98 @@
                             <div class="text-center" style="margin: 18% 0%;">                          
                                 <h1>אין גרסה ממתינה.</h1>
                                 <h3>ניתן לצפות בצימר ולערוך את הפרטים תחת לשונית "כרגע באתר".</h3>
-                                <button (click)="onZimmerEdit()">כפתור או לינק של עריכה</button>                         
+                                <button class="btn_edit" (click)="onZimmerEdit()">עריכה</button>                         
                             </div>
                         </ng-template>
                     <mat-tab label="כרגע באתר">
-                        <ng-template [ngIf]="my_zimmer.length > 0" [ngIfElse]="EmptyPublished">
-                            <div class="container wrapper">
-                                <hr>
+                      <ng-template [ngIf]="my_zimmer.length > 0" [ngIfElse]="EmptyPublished">
+                          <div class="container wrapper">
+                              <hr>
+                              <div class="row">
+                                  <div class="col-12 col-md-4 border-right">
+                                      <h1 class="title">שם הצימר:</h1>
+                                      <h1>{{ my_zimmer[0].zimmerName }}</h1>
+                                  </div>
+                                  <div class="col-6 col-md-4 border-right">
+                                      <h1 class="title">בעל הצימר:</h1>
+                                      <h1>{{ my_zimmer[0].ownerName }}</h1>
+                                  </div>
+                                  <div class="col-6 col-md-4 border-right border-left">
+                                      <h1 class="title">מספר פלאפון:</h1>
+                                      <h1>{{ my_zimmer[0].phone }}</h1>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                  <div class="col-12 col-md-7">
+                                      <ngb-carousel [showNavigationIndicators]="false">
+                                          <ng-template ngbSlide *ngFor="let image of my_zimmer[0].images; let image_index = index">
+                                              <div>
+                                              <img [src]="image | getDownloadURL" height="400px" width="100%">
+                                              </div>
+                                              <div class="carousel-caption">
+                                                  {{ my_zimmer[0].images.length }} / {{ image_index+1 }}
+                                              </div>
+                                          </ng-template>
+                                      </ngb-carousel>
+                                  </div>
+                                  <div class="col-11 col-md-5 description">
+                                      <h1>תיאור כללי:</h1>
+                                      <h4>{{ my_zimmer[0].generalDescription }}</h4>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="row hut-list" *ngFor="let hut of my_zimmer[0].huts; let hut_index = index">
                                 <div class="row">
-                                    <div class="col-md-4 border-right">
-                                        <h1 class="title">שם הצימר:</h1>
-                                        <h1>{{ my_zimmer[0].zimmerName }}</h1>
-                                    </div>
-                                    <div class="col-md-4 border-right">
-                                        <h1 class="title">בעל הצימר:</h1>
-                                        <h1>{{ my_zimmer[0].ownerName }}</h1>
-                                    </div>
-                                    <div class="col-md-4 border-right border-left">
-                                        <h1 class="title">מספר פלאפון:</h1>
-                                        <h1>{{ my_zimmer[0].phone }}</h1>
-                                    </div>
+                                  <div class="col-12 col-md-4">
+                                    <ngb-carousel [showNavigationIndicators]="false">
+                                      <ng-template ngbSlide *ngFor="let image of hut.images; let hut_image_index = index">      
+                                        <img [src]="image | getDownloadURL" height="300px" width="100%">     
+                                        <div class="carousel-caption">
+                                            {{ hut.images.length }} / {{ hut_image_index+1 }}
+                                        </div>
+                                      </ng-template>
+                                    </ngb-carousel>
+                                  </div>
+                                  <div class="col-6 col-md-3">
+                                      <h2 class="hut-title">יחידה {{ hut_index+1 }}: <h3>{{ hut.hutName }}</h3></h2>
+                                      <h2 class="hut-title">מקסימום אנשים ביחידה: <h3>{{ hut.capacity }}</h3></h2>
+                                  </div>
+                                  <div class="col-6 col-md-2">
+                                      <h2 class="hut-title">מה ביחידה:</h2>
+                                      <div class="row features">
+                                          <div class="col-6" *ngIf="hut.jacuzzi">
+                                              <h6><mat-icon>hot_tub</mat-icon> ג'קוזי</h6>
+                                          </div>
+                                          <div class="col-6" *ngIf="hut.pool">
+                                              <h6><mat-icon>pool</mat-icon> בריכה</h6>
+                                          </div>
+                                          <div class="col-6" *ngIf="hut.air_conditioner">
+                                              <h6><mat-icon>wb_sunny</mat-icon> מזגן</h6>
+                                          </div>
+                                          <div class="col-6" *ngIf="hut.wifi">
+                                              <h6><mat-icon>wifi</mat-icon> wifi</h6>
+                                          </div>
+                                          <div class="col-6" *ngIf="hut.sauna">
+                                              <h6><mat-icon>spa</mat-icon> סאונה</h6>
+                                          </div>
+                                          <div class="col-6" *ngIf="hut.parking">
+                                              <h6><mat-icon> local_parking</mat-icon> חניה</h6>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-3 price">
+
+                                    <h3 class="hut-title">אמצ"ש בהזמנת לילה :<h4>{{ hut.regularPrice }}</h4></h3>
+                                    <h3 class="hut-title" *ngIf="hut.regularPriceTwoNights">אמצ"ש בהזמנת 2 לילות :<h4>{{ hut.regularPriceTwoNights }}</h4></h3>
+                                    <h3 class="hut-title">סופ"ש בהזמנת לילה :<h4>{{ hut.weekendPrice }}</h4></h3>
+                                    <h3 class="hut-title" *ngIf="hut.weekendPriceTwoNights">סופ"ש בהזמנת 2 לילות :<h4>{{ hut.weekendPriceTwoNights }}</h4></h3>                                            
+                                  </div>
+
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-10 col-md-4">
-                                        <ngb-carousel [showNavigationIndicators]="false">
-                                            <ng-template ngbSlide *ngFor="let image of my_zimmer[0].images; let image_index = index">
-                                                <div>
-                                                <img [src]="image | getDownloadURL" height="300px" width="100%">
-                                                </div>
-                                                <div class="carousel-caption">
-                                                    {{ my_zimmer[0].images.length }} / {{ image_index+1 }}
-                                                </div>
-                                            </ng-template>
-                                        </ngb-carousel>
-                                    </div>
-                                    <div class="col-12 col-md-7 description">
-                                        <h1>תיאור כללי:</h1>
-                                        <h4>{{ my_zimmer[0].generalDescription }}</h4>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row hut-list" *ngFor="let hut of my_zimmer[0].huts; let hut_index = index">
-                                    <div class="row">
-                                        <div class="col-12 col-md-3">
-                                            <ngb-carousel [showNavigationIndicators]="false">
-                                                <ng-template ngbSlide *ngFor="let image of hut.images; let hut_image_index = index">      
-                                                    <img [src]="image | getDownloadURL" height="200px" width="100%">     
-                                                    <div class="carousel-caption">
-                                                        {{ hut.images.length }} / {{ hut_image_index+1 }}
-                                                    </div>
-                                                </ng-template>
-                                            </ngb-carousel>
-                                        </div>
-                                        <div class="col-6 col-md-3">
-                                            <h2 class="hut-title">יחידה {{ hut_index+1 }}: <h3>{{ hut.hutName }}</h3></h2>
-                                            <h2 class="hut-title">מקסימום אנשים ביחידה: <h3>{{ hut.capacity }}</h3></h2>
-                                        </div>
-                                        <div class="col-6 col-md-2">
-                                            <h2 class="hut-title">מה ביחידה:</h2>
-                                            <div class="row features">
-                                                <div class="col-6" *ngIf="hut.jacuzzi">
-                                                    <h6><mat-icon>hot_tub</mat-icon> ג'קוזי</h6>
-                                                </div>
-                                                <div class="col-6" *ngIf="hut.pool">
-                                                    <h6><mat-icon>pool</mat-icon> בריכה</h6>
-                                                </div>
-                                                <div class="col-6" *ngIf="hut.air_conditioner">
-                                                    <h6><mat-icon>wb_sunny</mat-icon> מזגן</h6>
-                                                </div>
-                                                <div class="col-6" *ngIf="hut.wifi">
-                                                    <h6><mat-icon>wifi</mat-icon> wifi</h6>
-                                                </div>
-                                                <div class="col-6" *ngIf="hut.sauna">
-                                                    <h6><mat-icon>spa</mat-icon> סאונה</h6>
-                                                </div>
-                                                <div class="col-6" *ngIf="hut.parking">
-                                                    <h6><mat-icon> local_parking</mat-icon> חניה</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <div class="row">
-                                                <h2 class="hut-title">אמצ"ש בהזמנת לילה :<h3>{{ hut.regularPrice }}</h3></h2>
-                                                <h2 class="hut-title" *ngIf="hut.regularPriceTwoNights">אמצ"ש בהזמנת 2 לילות :<h3>{{ hut.regularPriceTwoNights }}</h3></h2>
-                                                <h2 class="hut-title">סופ"ש בהזמנת לילה :<h3>{{ hut.weekendPrice }}</h3></h2>
-                                                <h2 class="hut-title" *ngIf="hut.weekendPriceTwoNights">סופ"ש בהזמנת 2 לילות :<h3>{{ hut.weekendPriceTwoNights }}</h3></h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                              </div>
                             </div>   
-                        </ng-template>
+                          </ng-template>
                     </mat-tab>
                     <mat-tab label="ממתין לאישור">
                         <ng-template [ngIf]="my_pending_zimmer.length > 0" [ngIfElse]="EmptyUnpublished">

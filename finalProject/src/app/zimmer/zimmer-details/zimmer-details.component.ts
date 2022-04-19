@@ -29,9 +29,11 @@ export class ZimmerDetailsComponent implements OnInit {
   client: Client;
   startDate = "";
   endDate = "";
+  points: number = 0;
+  points_to_use: number = 0;
 
   constructor(private storage: DataStorageService, private router: Router, 
-              private authService: AuthenticationService, private _snackBar: MatSnackBar, 
+              public authService: AuthenticationService, private _snackBar: MatSnackBar, 
               public innerData: InnerDataService, private emailService: EmailService) { }
 
   
@@ -61,7 +63,15 @@ export class ZimmerDetailsComponent implements OnInit {
           })[0]
         })
       }
+      if(this.authService.zimmer == 'client'){
+        var userData = JSON.parse(localStorage.getItem('userData')!.toString());
+        this.storage.getClient(userData.email).subscribe(client => {
+          this.client = client;
+          this.points = this.client.points
+        })
+      }
     })
+    
   }
   onOrderSubmition(hut: Hut, index: number){
 
@@ -165,6 +175,12 @@ export class ZimmerDetailsComponent implements OnInit {
     let total_price = regular_price + weekend_price
     return [regular_price, weekend_price, total_price]
   }
+
+  onCreditPointsChange(credit_points: number){
+    this.points_to_use = credit_points
+  }
   
   onlineOrder(): void{ }
+
+
 }

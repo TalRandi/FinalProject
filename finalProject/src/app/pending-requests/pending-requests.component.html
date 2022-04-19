@@ -71,11 +71,16 @@
                             </div>
                             <div class="col-12 col-md-1 block_and_book">
                                 <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onSubmitZimmer(zimmer, index)" class="btn btn-block btn-success"><mat-icon>check</mat-icon></button>
+                                    <button (click)="onSubmitZimmer(zimmer, index)" class="btn btn-block btn-success">אשר</button>
                                 </div>
                                 <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onRejectZimmer(zimmer, index)" class="btn btn-block btn-danger"><mat-icon>cancel</mat-icon></button>
+                                    <button (click)="onSubmitZimmerRejection(index)" class="btn btn-block btn-danger">דחה</button>
                                 </div>
+                            </div>
+                            <div class="col-12 col-md-12" [hidden]="reject_pending_response_index[index]">
+                                <h2 for="reject_pending_response">נימוק לדחיית הצימר: '{{zimmer.zimmerName}}'</h2>
+                                <textarea autosize name="reject_pending_response" ngModel #reject_pending_response="ngModel" rows="5"></textarea>
+                                <button (click)="onRejectAcceptedZimmer(zimmer, index, reject_pending_response.value)" class="btn btn-success">שלח</button>
                             </div>
                         </div>
                     </ng-template>
@@ -150,11 +155,16 @@
                             </div>
                             <div class="col-12 col-md-1 block_and_book">
                                 <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onSubmitAcceptedZimmer(zimmer, index)" class="btn btn-block btn-success"><mat-icon>check</mat-icon></button>
+                                    <button (click)="onSubmitZimmer(zimmer, index)" class="btn btn-block btn-success">אשר</button>
                                 </div>
                                 <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onRejectAcceptedZimmer(zimmer, index)" class="btn btn-block btn-danger"><mat-icon>cancel</mat-icon></button>
+                                    <button (click)="onSubmitZimmerRejection(index)" class="btn btn-block btn-danger">דחה</button>
                                 </div>
+                            </div>
+                            <div class="col-12 col-md-12" [hidden]="reject_edited_pending_response_index[index]">
+                                <h2 for="reject_edited_pending_response">נימוק לדחיית הצימר: '{{zimmer.zimmerName}}'</h2>
+                                <textarea autosize name="reject_edited_pending_response" ngModel #reject_edited_pending_response="ngModel" rows="5"></textarea>
+                                <button (click)="onRejectEditedZimmer(zimmer, index, reject_edited_pending_response.value)" class="btn btn-success">שלח</button>
                             </div>
                         </div>
                     </ng-template>
@@ -179,7 +189,7 @@
                             </div>
                             <div class="col-12 col-md-2">
                                 <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onSubmitRequest(request, index)" class="btn btn-lg btn-block btn-success">השב</button>
+                                    <button (click)="onSubmitRequest(index)" class="btn btn-lg btn-block btn-success">השב</button>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12" [hidden]="requests_index[index]">

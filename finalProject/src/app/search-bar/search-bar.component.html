@@ -1,16 +1,20 @@
 <div class="container">
     <div class="row" id="search-bar">
-      <div class="col-4 col-md-3">
+      <div class="col-7 col-md-3">
         <mat-label >בחר איזור</mat-label>
-        <mat-form-field dir='rtl' appearance="fill">
+        <mat-form-field id="form1" dir='rtl' appearance="fill">
           <mat-select [value]="json_query.region" (selectionChange)="onRegionChange($event.value)">
             <mat-option [value]="region" *ngFor="let region of innerData.regions">צימרים ב{{ region }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-4 col-md-3">
+      <div class="col-5 col-md-3">
+        <mat-label >מספר אורחים</mat-label>
+        <angular-input-counter #number_of_guests [counterValue]="json_query.number_of_guests" appearance="fill"></angular-input-counter>
+    </div>
+      <div class="col-7 col-md-3">
         <mat-label>בחר תאריכים</mat-label>
-        <mat-form-field appearance="fill">
+        <mat-form-field id="form2" appearance="fill">
           <mat-date-range-input [rangePicker]="picker">
             <input matStartDate #dateRangeStart [value]="json_query.start">
             <input matEndDate #dateRangeEnd [value]="json_query.end" (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
@@ -19,11 +23,7 @@
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
       </div>
-      <div class="col-4 col-md-3">
-          <mat-label >מספר אורחים</mat-label>
-          <angular-input-counter #number_of_guests [counterValue]="json_query.number_of_guests" appearance="fill"></angular-input-counter>
-      </div>
-      <div class="col-12 col-md-2">
+      <div class="col-4 col-md-2">
           <button mat-stroked-button color="primary" (click)="onSendQuery(number_of_guests.counterValue)" ><mat-icon>search</mat-icon></button>
       </div>
     </div>

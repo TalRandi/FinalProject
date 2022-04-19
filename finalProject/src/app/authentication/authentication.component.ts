@@ -81,6 +81,7 @@ export class AuthenticationComponent implements OnInit {
   }
 
   saveToLocalStorage(result:any, zimmer:any){
+
     const expirationDate = new Date(new Date().getTime() + +result.expiresIn * 1000);
     const user = new User(result.email, result.localId, result.idToken, expirationDate, result.email == 'harelmadmoni9@gmail.com'? true: false, zimmer);
     this.authService.zimmer = zimmer;
@@ -98,4 +99,6 @@ export class AuthenticationComponent implements OnInit {
     }
   }
 
+
 }
+

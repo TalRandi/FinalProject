@@ -1,7 +1,5 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
@@ -32,7 +30,7 @@ export class MyZimmerComponent implements OnInit {
   hut_counter: number[];
   zimmer_to_display:Zimmer;
   features: string[] = [];
-  constructor(private storage: DataStorageService, private authService: AuthenticationService, private router: Router) { }
+  constructor(private storage: DataStorageService, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.isLoading = true;

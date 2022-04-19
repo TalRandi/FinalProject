@@ -5,26 +5,26 @@
 <div class="container wrapper" *ngIf="!isLoading">
     <hr>
     <div class="row">
-        <div class="col-md-4 border-right">
+        <div class="col-12 col-md-4 border-right">
             <h1 class="title">שם הצימר:</h1>
             <h1>{{ zimmer.zimmerName }}</h1>
         </div>
-        <div class="col-md-4 border-right">
+        <div class="col-6 col-md-4 border-right">
             <h1 class="title">בעל הצימר:</h1>
             <h1>{{ zimmer.ownerName }}</h1>
         </div>
-        <div class="col-md-4 border-right border-left">
+        <div class="col-6 col-md-4 border-right border-left">
             <h1 class="title">מספר פלאפון:</h1>
             <h1>{{ zimmer.phone }}</h1>
         </div>
     </div>
     <hr>
     <div class="row">
-        <div class="col-10 col-md-4">
+        <div class="col-12 col-md-7">
             <ngb-carousel [showNavigationIndicators]="false">
                 <ng-template ngbSlide *ngFor="let image of zimmer.images; let image_index = index">
                     <div>
-                    <img [src]="image | getDownloadURL" height="300px" width="100%">
+                    <img [src]="image | getDownloadURL" height="400px" width="100%">
                     </div>
                     <div class="carousel-caption">
                         {{ zimmer.images.length }} / {{ image_index+1 }}
@@ -32,7 +32,7 @@
                 </ng-template>
             </ngb-carousel>
         </div>
-        <div class="col-12 col-md-7 description">
+        <div class="col-11 col-md-5 description">
             <h1>תיאור כללי:</h1>
             <h4>{{ zimmer.generalDescription }}</h4>
         </div>
@@ -44,10 +44,10 @@
                 <mat-expansion-panel-header collapsedHeight="100%" expandedHeight="200%">
                 <mat-panel-description>
                     <div class="row">
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <ngb-carousel [showNavigationIndicators]="false">
                                 <ng-template ngbSlide *ngFor="let image of hut.images; let hut_image_index = index">      
-                                    <img [src]="image | getDownloadURL" height="200px" width="100%">     
+                                    <img [src]="image | getDownloadURL" height="300px" width="100%">     
                                     <div class="carousel-caption">
                                         {{ hut.images.length }} / {{ hut_image_index+1 }}
                                     </div>
@@ -81,13 +81,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3">
-                            <div class="row">
-                                <h2 class="hut-title">אמצ"ש בהזמנת לילה :<h3>{{ hut.regularPrice }}</h3></h2>
-                                <h2 class="hut-title" *ngIf="hut.regularPriceTwoNights">אמצ"ש בהזמנת 2 לילות :<h3>{{ hut.regularPriceTwoNights }}</h3></h2>
-                                <h2 class="hut-title">סופ"ש בהזמנת לילה :<h3>{{ hut.weekendPrice }}</h3></h2>
-                                <h2 class="hut-title" *ngIf="hut.weekendPriceTwoNights">סופ"ש בהזמנת 2 לילות :<h3>{{ hut.weekendPriceTwoNights }}</h3></h2>
-                            </div>
+                        <div class="col-12 col-md-3 price">
+                            
+                                <h3 class="hut-title">אמצ"ש בהזמנת לילה :<h4>{{ hut.regularPrice }}</h4></h3>
+                                <h3 class="hut-title" *ngIf="hut.regularPriceTwoNights">אמצ"ש בהזמנת 2 לילות :<h4>{{ hut.regularPriceTwoNights }}</h4></h3>
+                                <h3 class="hut-title">סופ"ש בהזמנת לילה :<h4>{{ hut.weekendPrice }}</h4></h3>
+                                <h3 class="hut-title" *ngIf="hut.weekendPriceTwoNights">סופ"ש בהזמנת 2 לילות :<h4>{{ hut.weekendPriceTwoNights }}</h4></h3>                            
                             <div class="row online-order">
                                 <div class="col-12">
                                     <button (click)="onlineOrder()">הזמן אונליין</button>
@@ -189,6 +188,19 @@
 
                                     </div>
                                 </div>
+                                <div class="row" *ngIf="this.authService.zimmer == 'client' || this.authService.admin">
+                                    <div class="col-12">
+                                        <h2>שימוש בנקודות</h2>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="this.authService.zimmer == 'client' || this.authService.admin">
+                                    <div class="col-6 form-group">
+
+                                        <input type="number" name="credit_points" (change)="onCreditPointsChange(credit_points.value)" ngModel class="form-control" min="0" [max]="points" step="5" #credit_points="ngModel">
+                                        <span class="help-block" *ngIf="credit_points.touched && credit_points.invalid">* אין מספיק נקודות</span>
+
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 col-md-4">
                                 <h1>סיכום הזמנה</h1>
@@ -224,11 +236,9 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <h4>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[0] }}</h4>
-                                        <!-- <h4>{{ regular_price != 0 ? regular_price: "---" }}</h4> -->
                                     </div>
                                     <div class="col-6">
                                         <h4>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[1] }}</h4>
-                                        <!-- <h4>{{ weekend_price != 0 ? weekend_price: "---" }}</h4> -->
                                     </div>
                                 </div>
                                 <div class="row">
@@ -238,8 +248,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <h2>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[2] }}</h2>
-                                        <!-- <h2>{{ total_price != 0 ? total_price: "---" }}</h2> -->
+                                        <h2 [ngClass]="{'price_before' : points_to_use != 0 && calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[2] - points_to_use > 0}">{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[2] }}</h2>
+                                        <h2 *ngIf="points_to_use != 0 && calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[2] - points_to_use > 0" [ngClass]="{'price_after' : points_to_use != 0}">{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[2] - points_to_use }}</h2>
                                     </div>
                                 </div>
                                 <hr>

@@ -46,6 +46,7 @@ import { ZimmerOrdersComponent } from './zimmer-orders/zimmer-orders.component';
 import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { ClientFavoritesComponent } from './client-favorites/client-favorites.component';
 import { AutosizeModule } from 'ngx-autosize';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { AutosizeModule } from 'ngx-autosize';
     ZimmerOrdersComponent,
     ClientOrdersComponent,
     ClientFavoritesComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,
