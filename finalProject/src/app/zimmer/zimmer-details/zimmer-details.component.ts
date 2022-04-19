@@ -10,6 +10,7 @@ import { Zimmer } from 'src/app/shared-data/zimmer.model';
 import { Client } from 'src/app/shared-data/client.model';
 import { InnerDataService } from '../../shared-data/inner-data.service';
 import { EmailService } from 'src/app/shared-data/email.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-zimmer-details',
@@ -29,9 +30,10 @@ export class ZimmerDetailsComponent implements OnInit {
   client: Client;
   startDate = "";
   endDate = "";
+  edit = false;
 
   constructor(private storage: DataStorageService, private router: Router, 
-              private authService: AuthenticationService, private _snackBar: MatSnackBar, 
+              public authService: AuthenticationService, private _snackBar: MatSnackBar, 
               public innerData: InnerDataService, private emailService: EmailService) { }
 
   
@@ -47,18 +49,15 @@ export class ZimmerDetailsComponent implements OnInit {
     
 
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
-      this.zimmer = zimmers.filter(zimmer => {
-        return zimmer.zimmer_id == this.zimmer_id
-      })[0]
-      this.isLoading = false;
+      this.zimmer = zimmers.filter(zimmer => { return zimmer.zimmer_id == this.zimmer_id })[0]
+      if(this.zimmer)
+        this.isLoading = false
       if(this.zimmer === undefined && !this.authService.admin){
         this.router.navigate(['/not-found']);
       }
       else if(this.zimmer === undefined && this.authService.admin){
-        this.storage.fetchPendingZimmers().subscribe(zimmers => {
-          this.zimmer = zimmers.filter(zimmer => {
-            return zimmer.zimmer_id == this.zimmer_id
-          })[0]
+        this.storage.fetchPendingZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(zimmers => {
+          this.zimmer = zimmers.filter(zimmer => { return zimmer.zimmer_id == this.zimmer_id })[0]
         })
       }
     })
@@ -79,6 +78,7 @@ export class ZimmerDetailsComponent implements OnInit {
       hut.hutName,
       this.form.get(index)?.form.value.number_of_guests,
       Math.random().toString(36).substring(2, 10),
+      false,
       false,
       this.calculatePricing(start, end, hut)[2]
     ) 
@@ -123,7 +123,7 @@ export class ZimmerDetailsComponent implements OnInit {
     let line9 = "אישור ההזמנה יתבצע באמצעות האתר תחת הלשונית - ההזמנות שלי"
     
     this.emailService.sendLongEmail(header, this.zimmer.email, line1, line2, line3, line4, line5,
-                                    line6, line7, line8, line9, "GoEasy")
+                                   line6, line7, line8, line9, "GoEasy")
     
     this._snackBar.open("הזמנת התקבלה, נעדכן כאשר בעל הצימר יאשר אותה.", "אישור", {
       duration: 10000,
@@ -167,4 +167,28 @@ export class ZimmerDetailsComponent implements OnInit {
   }
   
   onlineOrder(): void{ }
+  onFetchEditZimmer(){
+    if(!this.edit){
+      this.storage.fetchPendingZimmers().subscribe(zimmers => {
+        let edited_zimmer = zimmers.filter(zimmer => {return zimmer.zimmer_id == this.zimmer_id})[0];
+        if(edited_zimmer){
+          this.zimmer = edited_zimmer;
+          let css = document.getElementsByClassName('wrapper') as HTMLCollectionOf<HTMLElement>;
+          css[0].style.setProperty('border-style', 'dashed');
+          this.edit = true;
+        }
+      })
+    }
+    else{
+      this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
+        let active_zimmer = zimmers.filter(zimmer => {return zimmer.zimmer_id == this.zimmer_id})[0];
+        if(active_zimmer){
+          this.zimmer = active_zimmer;
+          let css = document.getElementsByClassName('wrapper') as HTMLCollectionOf<HTMLElement>;
+          css[0].style.setProperty('border-style', 'solid');
+          this.edit = false;
+        }
+      })
+    }
+  }
 }

@@ -24,9 +24,10 @@
                         </ng-template>
                         <ng-template #EmptyUnpublished>
                             <div class="text-center" style="margin: 18% 0%;">                          
-                                <h1>אין גרסה ממתינה.</h1>
-                                <h3>ניתן לצפות בצימר ולערוך את הפרטים תחת לשונית "כרגע באתר".</h3>
-                                <button (click)="onZimmerEdit()">כפתור או לינק של עריכה</button>                         
+                                <h1>כאן ניתן לערוך את הצימר.</h1>
+                                <h3>בזמן הסקירה של מנהלי האתר הגרסה הישנה עדיין תוצג ברשימת הצימרים.</h3>
+                                <br><br>
+                                <button class="btn" (click)="onZimmerEdit()">לעריכת הצימר לחץ כאן</button>                         
                             </div>
                         </ng-template>
                     <mat-tab label="כרגע באתר">
@@ -122,15 +123,18 @@
                     <mat-tab label="ממתין לאישור">
                         <ng-template [ngIf]="my_pending_zimmer.length > 0" [ngIfElse]="EmptyUnpublished">
                             <div *ngIf="my_pending_zimmer[0].status == 'pending' || my_pending_zimmer[0].status == 'accepted'" class="text-center" style="margin: 18% 0%;">                          
-                                <h1>הצימר בבדיקה.</h1>
-                                <h3>עד 2 ימי עסקים.</h3>
-                                <button (click)="onZimmerDelete()" *ngIf=" my_pending_zimmer[0].status == 'accepted'">ביטול עריכה</button>                         
+                                <h1>הצימר בסקירה של מנהלי האתר.</h1>
+                                <h3>התהליך עלול לקחת כמה ימים.</h3>
+                                <br><br>
+                                <button class="btn" (click)="onZimmerDelete()" *ngIf=" my_pending_zimmer[0].status == 'accepted'">למחיקת העריכה לחץ כאן</button>                         
                             </div>
                             <div *ngIf="my_pending_zimmer[0].status == 'pending_rejected' || my_pending_zimmer[0].status == 'accepted_rejected'" class="text-center" style="margin: 18% 0%;">                          
-                                <h1>לצערנו הצימר זקוק לשיפוץ!</h1>
-                                <h3>כאן נכתוב את ההערות של מה לשפר.</h3>
-                                <button (click)="onZimmerEdit()">כפתור או לינק של עריכה</button>
-                                <button (click)="onZimmerDelete()" *ngIf=" my_pending_zimmer[0].status == 'accepted_rejected'">ביטול עריכה</button>                         
+                                <h1>לצערנו מצאנו משהו לא טוב בסקירה!</h1>
+                                <h3>שלחנו אימייל עם פרטי הסיקור של הצימר.</h3>
+                                <br><br>
+                                <button class="btn" (click)="onZimmerEdit()">לעריכת הצימר לחץ כאן</button>
+                                <br><br>
+                                <button class="btn" (click)="onZimmerDelete()" *ngIf=" my_pending_zimmer[0].status == 'accepted_rejected'">למחיקת העריכה לחץ כאן</button>                         
                             </div>
                         </ng-template>
                     </mat-tab>

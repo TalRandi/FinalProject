@@ -205,12 +205,15 @@ export class MyZimmerComponent implements OnInit {
         this.huts,
         []
       )
+      
       this.storeImagesUrl(this.zimmer, this.images);
       this.storage.deleteEditZimmer(this.zimmer).subscribe(() => {
-        this.storage.storePendingZimmer(this.zimmer, this.images, this.hutImages);
-        this.edit_mode = false;
-        this.selectedIndex = 1;
-        this.ngOnInit();
+        setTimeout(() => {
+          this.storage.storePendingZimmer(this.zimmer, this.images, this.hutImages);
+          this.edit_mode = false;
+          this.selectedIndex = 1;
+          this.ngOnInit();
+        }, 1000)   
       })
     }
   }

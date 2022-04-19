@@ -194,6 +194,28 @@ export class DataStorageService{
             }
         })).subscribe();    
     }
+    setRatedOnBoth(client:Client, order_id: string, client_rate: number){
+        this.updateClient(client).subscribe(() => {
+            this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
+                for(var id in zimmers){
+                    if(zimmers[id].orders)
+                        zimmers[id].orders.forEach(order => {
+                            if(order.order_id == order_id){
+                                order.isRated = true;
+                                let zimmer = zimmers[id];
+                                zimmer.rate = zimmer.rate * 0.9 + client_rate * 0.1;
+                                delete zimmers[id];
+                                this.http.put(this.url_accepted, zimmers).subscribe(() => {
+                                    this.http.post(this.url_accepted, zimmer).subscribe();
+                                })
+                                return;
+                            }
+                        })
+                }    
+            })).subscribe();
+        })
+        
+    }
     updateClient(client:Client){   
         return this.http.get<Client[]>(this.url_clients).pipe(map(clients => {
             for(var id in clients)
@@ -239,6 +261,5 @@ export class DataStorageService{
     }
     deleteImage(url: string){
         return this.storage.ref(url).delete();
-        //TO DO delete old zimmer photos
     }
 }

@@ -3,6 +3,9 @@
 </div>
 
 <div class="container wrapper" *ngIf="!isLoading">
+    <h1 *ngIf="this.authService.admin && !edit">הצימר שכרגע באתר</h1>
+    <h1 *ngIf="this.authService.admin && edit">העריכה של בעלי הצימר</h1>
+    <mat-icon class="edit" *ngIf="this.authService.admin" (click)="onFetchEditZimmer()">compare</mat-icon>
     <hr>
     <div class="row">
         <div class="col-md-4 border-right">
@@ -224,11 +227,9 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <h4>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[0] }}</h4>
-                                        <!-- <h4>{{ regular_price != 0 ? regular_price: "---" }}</h4> -->
                                     </div>
                                     <div class="col-6">
                                         <h4>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[1] }}</h4>
-                                        <!-- <h4>{{ weekend_price != 0 ? weekend_price: "---" }}</h4> -->
                                     </div>
                                 </div>
                                 <div class="row">
@@ -239,7 +240,6 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h2>{{ calculatePricing(dateRangeStart.value, dateRangeEnd.value, hut)[2] }}</h2>
-                                        <!-- <h2>{{ total_price != 0 ? total_price: "---" }}</h2> -->
                                     </div>
                                 </div>
                                 <hr>

@@ -43,6 +43,9 @@
         </li>
       </ul>
       <ul class="navbar-nav mr-auto">
+        <li *ngIf="!isLoading && isLoggedIn && this.authService.zimmer == 'client' && !this.authService.admin" class="nav-item">
+          <a class="nav-link">הנקודות שצברתי: {{ points }}</a>
+        </li>
         <li class="nav-item" [routerLinkActive]="['active']">
           <a *ngIf=!isLoggedIn class="nav-link" [routerLink]="['login-page']"><mat-icon>account_box</mat-icon> כניסה למנויים</a>
           <a style="cursor: pointer;" *ngIf="isLoggedIn" class="nav-link" (click)="onLogout()"><mat-icon>account_box</mat-icon> התנתק</a>

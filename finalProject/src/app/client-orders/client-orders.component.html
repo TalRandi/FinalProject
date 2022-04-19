@@ -20,31 +20,74 @@
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let order of client.orders; let index = index">
                             <div class="col-12 col-md-3">
-                                <h2>פרטי המזמין</h2>
+                                <h2 class="underline">פרטי המזמין</h2>
                                 <h3>שם: {{ order.name }}</h3>
                                 <h3>מספר פלאפון: {{ order.phone }}</h3>
                                 <h3>כתובת דוא"ל: {{ order.email }}</h3>
                             </div>
                             <div class="col-12 col-md-2">
-                                <h2>פרטי הזמנה</h2>
+                                <h2 class="underline">פרטי הזמנה</h2>
                                 <h4>צימר: {{ order.zimmerName }}</h4>
                                 <h4>בקתה: {{ order.hut_name }}</h4>
                                 <h3>הגעה: {{ order.start_date }}</h3>
                                 <h3>עזיבה: {{ order.end_date }}</h3>
                                 <h4>מספר אורחים: {{ order.guests }}</h4>
+                                <h3>סכום: {{ order.total_price }} ש"ח</h3>
                             </div>
                             <div class="col-12 col-md-4">
-                                <h2>בקשות מיוחדות</h2>
+                                <h2 class="underline">בקשות מיוחדות</h2>
                                 <h3>{{ order.requests }}</h3>
                             </div>
-                            <!-- <div class="col-12 col-md-3">
-                                <h2>מחיר</h2>
-                                <h3>{{ order.total_price }} ש"ח</h3>
-                            </div> -->
                             <div class="col-12 col-md-3" *ngIf="!order.isApproved">
                                 <div class="row justify-content-end buttonTab">  
                                     <button (click)="onCancelOrder(order, index)" class="btn btn-lg btn-block btn-danger">ביטול הזמנה</button>
                                 </div>
+                            </div>
+                            <div class="col-12 col-md-3" *ngIf="order.isApproved && !order.isRated">
+                                <div class="row justify-content-end buttonTab">  
+                                    <button (click)="onRateZimmer(index)" class="btn btn-lg btn-block btn-info">דירוג הצימר</button>
+                                </div>
+                                <h3>כדאי לדרג! תקבלו נקודות להזמנות הבאות.</h3>
+                            </div>
+                            <div class="col-12 col-md-12" [hidden]="orders_index[index]">
+                                <div class="container">
+                                    <form (ngSubmit)="onSubmit(order, index)" #form="ngForm">
+                                        <div class="row">
+                                            <div class="col col-auto ml-auto">
+                                                <h1 class="underline">דירוג הצימר</h1>                                          
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-md-6 form-group">
+                                                <h2>תמונות מייצגות את המצב הקיים בצימר</h2>
+                                            </div>
+                                            <div class="col col-md-4 form-group">
+                                                <ngb-rating name="rate1" class="rating" [max]="5" ngModel="1"></ngb-rating>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-md-6 form-group">
+                                                <h2>יחס כולל של בעלי הצימר</h2>                                           
+                                             </div>
+                                            <div class="col col-md-4 form-group">
+                                                <ngb-rating name="rate2" class="rating" [max]="5" ngModel="1"></ngb-rating> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-md-6 form-group">
+                                                <h2>מהירות אישור ההזמנה</h2>                                            
+                                            </div>
+                                            <div class="col col-md-4 form-group">
+                                                <ngb-rating name="rate3" class="rating" [max]="5" ngModel="1"></ngb-rating> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-auto">
+                                                <button type="submit" [disabled]="form.invalid" class="btn btn-success">שלח</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> 
                             </div>
                         </div>
                     </ng-template>
