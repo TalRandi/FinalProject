@@ -15,7 +15,7 @@
                     <ng-template [ngIf]="client.favorites.length > 0" [ngIfElse]="Empty">
                         <div class="row">
                             <div class="col-4 col-auto ml-auto title">
-                                <h1><b>({{ client.favorites.length }} תוצאות)</b></h1>
+                                <h1 class="result-title">({{ client.favorites.length }} תוצאות)</h1>
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let zimmer of client.favorites; let index = index">

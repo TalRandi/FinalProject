@@ -160,7 +160,7 @@ export class DataStorageService{
             })).subscribe();
         })
     }
-    cancelOrderOnBoth(order_id: string){
+    cancelOrderOnBoth(order_id: string, points: number){
         this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
             for(var id in zimmers){
                 if(zimmers[id].orders){
@@ -183,6 +183,7 @@ export class DataStorageService{
                     let filtered_orders = clients[id].orders.filter(order => order.order_id != order_id);
                     if(filtered_orders.length != clients[id].orders.length){
                         let client = clients[id];
+                        client.points += points
                         client.orders = filtered_orders;
                         delete clients[id];
                         this.http.put(this.url_clients, clients).subscribe(() => {

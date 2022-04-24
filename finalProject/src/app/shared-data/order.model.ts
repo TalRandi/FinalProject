@@ -12,9 +12,10 @@ export class Order{
     isApproved: boolean;
     isRated: boolean;
     total_price: number;
+    points_used: number;
 
     constructor(zimmerName: string, name: string, phone: string, email: string, start_date: string, end_date: string, requests: string,
-        hut_name: string, guests: number, order_id: string, isApproved: boolean, isRated: boolean, total_price: number){
+        hut_name: string, guests: number, order_id: string, isApproved: boolean, isRated: boolean, total_price: number, points_used: number){
             
         this.zimmerName = zimmerName;    
         this.name = name;
@@ -29,6 +30,7 @@ export class Order{
         this.isApproved =  isApproved;
         this.isRated = isRated;
         this.total_price = total_price;
+        this.points_used = points_used;
     }
 
 }

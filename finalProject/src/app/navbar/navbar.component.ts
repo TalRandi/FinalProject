@@ -12,6 +12,7 @@ import { InnerDataService } from '../shared-data/inner-data.service';
   styleUrls: ['./navbar.component.css']
 })
 
+
 export class NavbarComponent implements OnInit, OnDestroy {
   private userSub: Subscription;
   isLoggedIn = false;
@@ -24,20 +25,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void { 
     this.userSub = this.authService.user.subscribe(user => {
-    if(user){
-      this.isLoggedIn = true;
-      setTimeout(() => {
-        this.loadClient();
-      }, 500); 
-    }
-    else{
-      this.isLoggedIn = false;
-    }
-  })
+      if(user){
+        this.isLoggedIn = true;
+        setTimeout(() => {
+          this.loadClient();
+        }, 500); 
+      }
+      else{
+        this.isLoggedIn = false;
+      }
+    })
     if(this.authService.token){
       this.isLoggedIn = true;
       this.loadClient();
     }
+    
+    
   }
 
   onZimmerSearch(zimmer_to_search: any): void{
@@ -54,7 +57,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.isLoggedIn = false;
   }
   loadClient(){
-    if(this.authService.zimmer == 'client'){
+    if(this.authService.zimmer == 'client' && !this.authService.admin){
       this.isLoading = true;
       if(localStorage.getItem('userData')){
         var userData = JSON.parse(localStorage.getItem('userData')!.toString());
@@ -66,4 +69,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     }
   }
+
 }

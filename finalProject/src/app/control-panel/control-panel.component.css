@@ -1,12 +1,30 @@
 .control{
     filter: drop-shadow(5px 5px 10px #04293A);
-    background-color: #ECB365;
+    border: solid 1px #ECB365;
+    background-color: #ecb46595;
     opacity: 0.9;
-    border-radius: 50px;
+    border-radius: 20px;
     padding: 3%;
     margin: 4% 0;
+    width: auto;
 }   
 .control:hover{
+    font-weight: bold;
+    filter: drop-shadow(10px 10px 10px #04293A);
+    border-radius: 20px;
+    opacity: 1;
+}
+.control-mat{
+    filter: drop-shadow(5px 5px 10px #04293A);
+    border: solid 1px #ECB365;
+    background-color: #ecb46595;
+    opacity: 0.9;
+    border-radius: 20px;
+    margin: 5%;
+    width: 300%;
+    text-align: center;
+}
+.control-mat:hover{
     font-weight: bold;
     filter: drop-shadow(10px 10px 10px #04293A);
     border-radius: 20px;
@@ -28,9 +46,12 @@
     color: #04293A;
 }
 .title{
-    font-weight: bold;
+    /* font-weight: bold; */
     color: #ECB365;
     text-decoration: underline;
+}
+.panel-title{
+    color: #ECB365;
 }
 button{
     width: 5rem;
@@ -49,7 +70,7 @@ button:hover{
 }
 
 mat-expansion-panel{
-    background-color: #064663;
+    background-color: #064663be;
 }
 mat-panel-description{
     margin: 0;

@@ -15,7 +15,7 @@
                     <ng-template [ngIf]="orders.length > 0" [ngIfElse]="Empty">
                         <div class="row">
                             <div class="col-4 col-auto ml-auto title">
-                                <h1><b>({{ orders.length }} תוצאות)</b></h1>
+                                <h1 class="result-title">({{ orders.length }} תוצאות)</h1>
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let order of orders; let index = index">
@@ -54,7 +54,7 @@
                     <ng-template [ngIf]="orders_archive.length > 0" [ngIfElse]="Empty">
                         <div class="row">
                             <div class="col-4 col-auto ml-auto space">
-                                <h1><b>({{ orders_archive.length }} תוצאות)</b></h1>
+                                <h1 class="result-title">({{ orders_archive.length }} תוצאות)</h1>
                             </div>
                         </div>
                         <div class="row justify-content-start hut-details space" *ngFor="let order of orders_archive; let index = index">

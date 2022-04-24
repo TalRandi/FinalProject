@@ -5,7 +5,7 @@
             <mat-accordion>
                 <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header>
-                        <mat-panel-description>
+                        <mat-panel-description class="panel-title">
                            סינון לפי איזור <mat-icon class="arrow">arrow_drop_down</mat-icon>
                         </mat-panel-description>
                       </mat-expansion-panel-header>
@@ -19,7 +19,7 @@
                 </mat-expansion-panel>
                 <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header>
-                        <mat-panel-description>
+                        <mat-panel-description class="panel-title">
                            סינון לפי מתקנים <mat-icon class="arrow">arrow_drop_down</mat-icon>
                         </mat-panel-description>
                       </mat-expansion-panel-header>
@@ -33,14 +33,14 @@
                 </mat-expansion-panel>
                 <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header>
-                        <mat-panel-description>
+                        <mat-panel-description class="panel-title">
                             סינון לפי מספר בקתות <mat-icon class="arrow">arrow_drop_down</mat-icon>
                         </mat-panel-description>
                       </mat-expansion-panel-header>
                       <h1 class="title">מספר בקתות</h1> 
                       <div class="row">
                           <mat-radio-group>
-                              <div class="col-md-6" *ngFor="let number of huts_number_arr">
+                              <div class="col-md-6" class="control-mat" *ngFor="let number of huts_number_arr">
                                   <mat-radio-button [checked]="number.value" color="primary" name="{{ number.name }}" value="{{ number.name }}" (change)="onHutsNumber($event)">{{ number.name }}</mat-radio-button>
                               </div>
                           </mat-radio-group>

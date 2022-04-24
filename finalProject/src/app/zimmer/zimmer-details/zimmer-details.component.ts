@@ -12,6 +12,7 @@ import { InnerDataService } from '../../shared-data/inner-data.service';
 import { EmailService } from 'src/app/shared-data/email.service';
 import { finalize } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-zimmer-details',
   templateUrl: './zimmer-details.component.html',
@@ -36,7 +37,7 @@ export class ZimmerDetailsComponent implements OnInit {
 
   constructor(private storage: DataStorageService, private router: Router, 
               public authService: AuthenticationService, private _snackBar: MatSnackBar, 
-              public innerData: InnerDataService, private emailService: EmailService) { }
+              public innerData: InnerDataService, private emailService: EmailService,) { }
 
   
   ngOnInit(): void {
@@ -90,7 +91,8 @@ export class ZimmerDetailsComponent implements OnInit {
       Math.random().toString(36).substring(2, 10),
       false,
       false,
-      this.calculatePricing(start, end, hut)[2]
+      this.calculatePricing(start, end, hut)[2],
+      this.points_to_use
     ) 
 
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
@@ -112,12 +114,15 @@ export class ZimmerDetailsComponent implements OnInit {
               if(!this.client.orders){
                 this.client.orders = [];
               }
+              this.client.points -= this.points_to_use
+  
               this.client.orders.push(order);
               this.storage.updateClient(this.client).subscribe();
             })
           }
         }
       })
+
     })
 
     let header = this.zimmer.ownerName + ", שלום רב "

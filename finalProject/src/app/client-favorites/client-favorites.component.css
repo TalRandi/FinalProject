@@ -104,8 +104,14 @@ button{
     cursor: pointer;
     display: block;
 }
+.result-title{
+    background-image: linear-gradient(43deg, #041C32 10%, #ECB365 200%, #041C32 10%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
 @media screen and (min-width: 900px) {
+
     .order-here{
         position: absolute;
         bottom: 0;

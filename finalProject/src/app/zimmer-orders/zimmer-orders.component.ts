@@ -69,7 +69,7 @@ export class ZimmerOrdersComponent implements OnInit {
 
   }
   onCancelOrder(order: Order, index: number){
-    this.storage.cancelOrderOnBoth(order.order_id);
+    this.storage.cancelOrderOnBoth(order.order_id, order.points_used);
     this.orders.splice(index, 1);
 
     

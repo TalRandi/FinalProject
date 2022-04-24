@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataAuthService } from 'src/app/shared-data/data-auth.service';
-import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -15,8 +14,7 @@ export class ForgotPasswordComponent implements OnInit {
   isLoading = false;
   error: string = ""
 
-  constructor(private fireAuth: DataAuthService, private authService: AuthenticationService,
-              private router: Router) { }
+  constructor(private fireAuth: DataAuthService, private router: Router) { }
 
   ngOnInit(): void {
 

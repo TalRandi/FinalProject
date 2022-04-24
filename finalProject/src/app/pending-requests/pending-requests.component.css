@@ -116,6 +116,12 @@ button{
     display: block;
 }
 
+.result-title{
+    background-image: linear-gradient(43deg, #041C32 10%, #ECB365 200%, #041C32 10%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 /* Mobile-screen */
 @media screen and (max-width: 900px) {
     .prices_and_details h2, h4{

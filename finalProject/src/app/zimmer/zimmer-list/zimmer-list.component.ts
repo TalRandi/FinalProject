@@ -24,11 +24,12 @@ interface Sort {
 export class ZimmerListComponent implements OnInit, OnDestroy {
   
   sorts: Sort[] = [
-    {value: 'all', viewValue: 'הכל'},
+    {value: 'all', viewValue: '-'},
     {value: 'weekend', viewValue: 'מחיר - סופ"ש'},
     {value: 'midweek', viewValue: 'מחיר - אמצ"ש'},
     {value: 'huts_number', viewValue: 'מספר בקתות'},
     {value: 'total_capacity', viewValue: 'מקסימום אורחים'},
+    {value: 'rating', viewValue: 'דירוג'},
   ];
 
   currentRate = 8;
@@ -62,35 +63,53 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     if (index > -1) 
       array.splice(index, 1);
   }
+
+  getByValue(map: Map<string, string>, searchValue: string) {
+    for (let [key, value] of map.entries()) {
+      if (value === searchValue)
+        return key;
+    }
+    return undefined
+  }
+
   sortBy(event: any): void{
     this.isLoading = true
     this.sort_parameter = event.value
     
-    switch (this.sort_parameter) {
-      case 'weekend':        
-        this.zimmers_to_display.sort((a,b) => (a.min_price_weekend > b.min_price_weekend) ? 1 : ((b.min_price_weekend > a.min_price_weekend) ? -1 : 0))
-        break;
-      case 'midweek':
-        this.zimmers_to_display.sort((a,b) => (a.min_price_regular > b.min_price_regular) ? 1 : ((b.min_price_regular > a.min_price_regular) ? -1 : 0))
-        break;
-      case 'huts_number':
-        this.zimmers_to_display.sort((a,b) => (a.huts.length > b.huts.length) ? 1 : ((b.huts.length > a.huts.length) ? -1 : 0))
-        break;
-      case 'total_capacity':
-        this.zimmers_to_display.sort((a,b) => (a.total_capacity > b.total_capacity) ? 1 : ((b.total_capacity > a.total_capacity) ? -1 : 0))
-        break;
-    
-      default:
-        break;
-    }
-    this.isLoading = false
+    setTimeout(() => {
+      switch (this.sort_parameter) {
+        case 'weekend':        
+          this.zimmers_to_display.sort((a,b) => (a.min_price_weekend > b.min_price_weekend) ? 1 : ((b.min_price_weekend > a.min_price_weekend) ? -1 : 0))
+          break;
+        case 'midweek':
+          this.zimmers_to_display.sort((a,b) => (a.min_price_regular > b.min_price_regular) ? 1 : ((b.min_price_regular > a.min_price_regular) ? -1 : 0))
+          break;
+        case 'huts_number':
+          this.zimmers_to_display.sort((a,b) => (a.huts.length > b.huts.length) ? 1 : ((b.huts.length > a.huts.length) ? -1 : 0))
+          break;
+        case 'total_capacity':
+          this.zimmers_to_display.sort((a,b) => (a.total_capacity > b.total_capacity) ? 1 : ((b.total_capacity > a.total_capacity) ? -1 : 0))
+          break;
+        case 'rating':
+          this.zimmers_to_display.sort((a,b) => (a.rate > b.rate) ? 1 : ((b.rate > a.rate) ? -1 : 0))
+          break;
+      
+        default:
+          break;
+      }
+      this.isLoading = false
+    }, 200);
   }
-  sortDirection(): void{
+  sortDirection(): void{ 
+
     if(this.sort_parameter == "all")
       return 
-    
-    this.zimmers_to_display.reverse();
-    this.sort_direction = !this.sort_direction
+    this.isLoading = true
+    setTimeout(() => {
+      this.zimmers_to_display.reverse();
+      this.sort_direction = !this.sort_direction
+      this.isLoading = false
+    }, 200);
   }
 
   zimmer_clicked(zimmer: Zimmer): void{
@@ -130,7 +149,8 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       this.dictionary.set("סאונה", "sauna")
       this.dictionary.set("מזגן", "air_conditioner")
       this.dictionary.set("חניה", "parking")
-      
+    
+
       this.innerData.regions_map.forEach((value, region) => {
         if(value)
           this.region_filter.push(region)
@@ -185,7 +205,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
 
       this.data = this.innerData.subject.subscribe(filters => {
         
-        // this.alreadySubscribed = true
+        this.isLoading = true;
         
         if(filters.has("בריכה")){
           // Update the general_filter array
@@ -213,6 +233,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
           });
         }
         this.applyFilters()
+        this.isLoading = false;
       });
     })
   }
