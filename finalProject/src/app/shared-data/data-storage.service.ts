@@ -50,9 +50,9 @@ export class DataStorageService{
 
     fetchAcceptedZimmers(){     
         return this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
-            let result = [] 
+            let result = []
             for(var id in zimmers)
-                result.push(zimmers[id]);         
+                result.push(zimmers[id]);               
             return result    
         })
     )}

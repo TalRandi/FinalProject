@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { User } from '../authentication/user.model';
 import { EmailService } from '../shared-data/email.service';
+import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
+import { Address } from 'ngx-google-places-autocomplete/objects/address';
 
 
 @Component({
@@ -30,9 +32,29 @@ export class CreateZimmerComponent implements OnInit {
   images: File[] = [];
   hutImages: File[][] = [];
   features: string[] = [];
+  validAddress = false;
+  firstTouch = false;
+   
+  options = {
+    componentRestrictions: { country: "il" },
+    fields: ["geometry", "formatted_address", "vicinity"],
+    strictBounds: false,
+    types: ["geocode"],
+  } as unknown as Options;
+  
 
   constructor(private storage: DataStorageService, private router: Router, private authService: AuthenticationService,
               private emailService: EmailService) { }
+
+  handleAddressChange(address: Address){
+    this.firstTouch = true;
+    if(address.geometry && address.formatted_address && address.vicinity){
+      this.validAddress = true;
+      this.generalForm.value.address = address; 
+    }
+    else
+      this.validAddress = false;
+  }  
 
   onSubmit(){
     this.onSignUp();
@@ -73,6 +95,7 @@ export class CreateZimmerComponent implements OnInit {
         min_price_regular,
         min_price_weekend,
         this.generalForm.value.region,
+        this.generalForm.value.address,
         4,
         zimmer_id,
         this.features,
@@ -113,7 +136,7 @@ export class CreateZimmerComponent implements OnInit {
     this.hutImages[index].splice(this.hutImages[index].indexOf(event), 1);
   }
    
-  ngOnInit(): void {  }
+  ngOnInit(): void { }
 
   onAddHut(){
     this.hut_counter.push(this.hut_counter[this.hut_counter.length-1]+1)  

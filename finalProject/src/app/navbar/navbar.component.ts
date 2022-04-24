@@ -54,7 +54,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.isLoggedIn = false;
   }
   loadClient(){
-    if(this.authService.zimmer == 'client'){
+    if(this.authService.zimmer == 'client' && !this.authService.admin){
       this.isLoading = true;
       if(localStorage.getItem('userData')){
         var userData = JSON.parse(localStorage.getItem('userData')!.toString());

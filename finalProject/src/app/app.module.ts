@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AppComponent } from './app.component';
@@ -95,6 +96,7 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
     NgxDropzoneModule,
     MatTabsModule,
     AutosizeModule,
+    GooglePlaceModule,
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule
