@@ -1,5 +1,7 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Address } from 'ngx-google-places-autocomplete/objects/address';
+import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
 import { DataStorageService } from 'src/app/shared-data/data-storage.service';
@@ -30,7 +32,25 @@ export class MyZimmerComponent implements OnInit {
   hut_counter: number[];
   zimmer_to_display:Zimmer;
   features: string[] = [];
+  validAddress = true;
+   
+  options = {
+    componentRestrictions: { country: "il" },
+    fields: ["geometry", "formatted_address", "vicinity"],
+    strictBounds: false,
+    types: ["geocode"],
+  } as unknown as Options;
+
   constructor(private storage: DataStorageService, private authService: AuthenticationService) { }
+
+  handleAddressChange(address: Address){
+    if(address.geometry && address.formatted_address && address.vicinity){
+      this.validAddress = true;
+      this.generalForm.value.address = address; 
+    }
+    else
+      this.validAddress = false;
+  } 
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -49,11 +69,11 @@ export class MyZimmerComponent implements OnInit {
   onZimmerEdit(){
     this.hut_counter = [...Array(this.zimmer_to_display.huts.length).keys()];
     this.zimmer_to_display.images.forEach(image_url => {
-      this.storage.getImage(image_url).subscribe(request => {       
+      this.storage.getImage(image_url).subscribe(request => {     
         request.onload = () => {
           let image_name = image_url.split("/").pop()
           let file = new File([request.response], image_name? image_name: "Untitled", {type: "image/jpg"})
-          this.images.push(file)
+          this.images.push(file)  
         }; 
       });
     })
@@ -163,6 +183,10 @@ export class MyZimmerComponent implements OnInit {
     return isInvalidHut
   }
   onSubmit(){
+    if(!this.generalForm.value.address.formatted_address){
+      this.handleAddressChange(this.zimmer_to_display.address);
+    }
+    
     this.isLoading = true;
     let valid_form = true;
     this.huts = [];
@@ -197,6 +221,7 @@ export class MyZimmerComponent implements OnInit {
         min_price_regular,
         min_price_weekend,
         this.generalForm.value.region,
+        this.generalForm.value.address,
         4,
         zimmer_id,
         this.features,

@@ -26,25 +26,23 @@ export class PendingRequestsComponent implements OnInit {
   reject_edited_pending_response_index:boolean[] = []
 
   onSubmitZimmer(zimmer: Zimmer, index: number){
-
     zimmer.status = "accepted";
     this.storage.storeAcceptedZimmer(zimmer).subscribe(() => {
       this.zimmers.splice(index, 1);
+      let header = zimmer.ownerName + ", שלום רב "
+      let message = "אנו שמחים להודיע כי הצימר - " + zimmer.zimmerName + " התקבל ונוסף בהצלחה לרשימת הצימרים שלנו!"
+      this.emailService.sendEmail(header, zimmer.email, message, "GoEasy")
     });
 
-    let header = zimmer.ownerName + ", שלום רב "
-    let message = "אנו שמחים להודיע כי הצימר - " + zimmer.zimmerName + " התקבל ונוסף בהצלחה לרשימת הצימרים שלנו!"
-    this.emailService.sendEmail(header, zimmer.email, message, "GoEasy")
   }
 
   onSubmitAcceptedZimmer(zimmer: Zimmer, index: number){
     this.storage.storeEditedZimmer(zimmer).subscribe(() => {
       this.accepted_zimmers.splice(index, 1);
+      let header = zimmer.ownerName + ", שלום רב "
+      let message = "אנו שמחים להודיע כי הגרסה החדשה - " + zimmer.zimmerName + " התקבלה ונוספה בהצלחה לרשימת הצימרים שלנו!"
+      this.emailService.sendEmail(header, zimmer.email, message, "GoEasy")
     })
-
-    let header = zimmer.ownerName + ", שלום רב "
-    let message = "אנו שמחים להודיע כי הגרסה החדשה - " + zimmer.zimmerName + " התקבלה ונוספה בהצלחה לרשימת הצימרים שלנו!"
-    this.emailService.sendEmail(header, zimmer.email, message, "GoEasy")
   }
 
   onRejectEditedZimmer(zimmer: Zimmer, index: number, response: string){
@@ -80,6 +78,9 @@ export class PendingRequestsComponent implements OnInit {
 
   onSubmitZimmerRejection(index: number){
     this.reject_pending_response_index[index] = !this.reject_pending_response_index[index] 
+  }
+  onSubmitZimmerRejectionEdit(index: number){
+    this.reject_edited_pending_response_index[index] = ! this.reject_edited_pending_response_index[index] 
   }
 
   onSubmitRequest(index: number){
