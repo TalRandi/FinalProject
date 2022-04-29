@@ -33,7 +33,9 @@ export class MyZimmerComponent implements OnInit {
   zimmer_to_display:Zimmer;
   features: string[] = [];
   validAddress = true;
-   
+  address_lat: number;
+  address_lng: number;
+  
   options = {
     componentRestrictions: { country: "il" },
     fields: ["geometry", "formatted_address", "vicinity"],
@@ -55,9 +57,11 @@ export class MyZimmerComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
-      if(zimmers)
+      if(zimmers){
         this.my_zimmer = zimmers.filter(zimmer => zimmer.zimmer_id == this.authService.zimmer.zimmer_id);
-        this.zimmer_to_display = this.my_zimmer[0]    
+        this.zimmer_to_display = this.my_zimmer[0]
+        this.setLngLat(); 
+      }
       this.storage.fetchPendingZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(pending_zimmers => {
         if(pending_zimmers)
           this.my_pending_zimmer = pending_zimmers.filter(pending_zimmer => pending_zimmer.zimmer_id == this.authService.zimmer.zimmer_id);
@@ -66,6 +70,12 @@ export class MyZimmerComponent implements OnInit {
       }) 
     })
   }
+
+  setLngLat(){
+    this.address_lat = +this.zimmer_to_display.address.geometry.location.lat      
+    this.address_lng = +this.zimmer_to_display.address.geometry.location.lng
+  }
+
   onZimmerEdit(){
     this.hut_counter = [...Array(this.zimmer_to_display.huts.length).keys()];
     this.zimmer_to_display.images.forEach(image_url => {
