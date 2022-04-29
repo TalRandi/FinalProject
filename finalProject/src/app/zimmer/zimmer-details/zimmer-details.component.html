@@ -7,17 +7,21 @@
     <h1 *ngIf="this.authService.admin && edit">העריכה של בעלי הצימר</h1>
     <mat-icon class="edit" *ngIf="this.authService.admin" (click)="onFetchEditZimmer()">compare</mat-icon>
     <hr>
-    <div class="row">
-        <div class="col-12 col-md-4 border-right">
-            <h1 class="title">שם הצימר:</h1>
+    <div class="row details-wrapper">
+        <div class="col-6 col-md-3 border-right">
+            <img src="../../../assets/images/hut.png" height="50px" width="50px">
             <h1>{{ zimmer.zimmerName }}</h1>
         </div>
-        <div class="col-6 col-md-4 border-right">
-            <h1 class="title">בעל הצימר:</h1>
+        <div class="col-6 col-md-3 border-right">
+            <img src="../../../assets/images/placeholder.png" height="50px" width="50px">
+            <h1>{{ zimmer.region }}, {{ zimmer.address.formatted_address.includes(", ישראל")? zimmer.address.formatted_address.substring(0, zimmer.address.formatted_address.length - 7) : zimmer.address.formatted_address }}</h1>
+        </div>
+        <div class="col-6 col-md-3 border-right">
+            <img src="../../../assets/images/entrepreneur.png" height="50px" width="50px">
             <h1>{{ zimmer.ownerName }}</h1>
         </div>
-        <div class="col-6 col-md-4 border-right border-left">
-            <h1 class="title">מספר פלאפון:</h1>
+        <div class="col-6 col-md-3 border-right border-left">
+            <img src="../../../assets/images/phone.png" height="50px" width="50px">
             <h1>{{ zimmer.phone }}</h1>
         </div>
     </div>

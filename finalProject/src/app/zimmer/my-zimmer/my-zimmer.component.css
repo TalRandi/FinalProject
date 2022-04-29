@@ -129,4 +129,10 @@ button:active{
     .hut-list h2{
         font-size: small;
     }
+
+    .details-wrapper img{
+        width: 30px;
+        height: 30px;
+    }
+
 }

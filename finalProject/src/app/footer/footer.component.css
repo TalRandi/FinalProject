@@ -11,3 +11,34 @@ footer{
 .secondary-color{
     background-color: #04293A;
 }
+
+mat-icon{
+    vertical-align: middle;
+}
+.publish{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    background-color: #041C32;
+    cursor: pointer;
+    text-align: center;
+    padding: 1%;
+    margin: 0 11%;
+}
+.publish:hover{
+    background-color: #ECB365;
+    transition: 0.5s;
+}
+.logo{
+    margin: 0 11%;
+}
+@media screen and (max-width: 900px) { 
+
+    .publish{
+        margin: 0 3%;
+    }
+    .logo{
+        margin: 0 3%;
+    }
+
+}

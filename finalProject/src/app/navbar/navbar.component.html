@@ -37,6 +37,8 @@
           <div class="search-wrapper">
             <div class="t">
                 <input #zimmer_to_search type="text" class="form-control search-zimmer" placeholder="חיפוש צימר לפי שם">
+                <!-- <input #zimmer_to_search type="text" ngModel class="form-control search-zimmer" ngx-google-places-autocomplete placeholder="חיפוש צימר לפי שם"
+                (onAddressChange)="handleAddressChange($event)" name="address" [options]="options"> -->
             </div>
             <button class="btn" (click)="onZimmerSearch(zimmer_to_search.value)" mat-stroked-button><mat-icon>search</mat-icon></button>
           </div>

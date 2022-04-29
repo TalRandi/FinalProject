@@ -34,19 +34,23 @@
                       <ng-template [ngIf]="my_zimmer.length > 0" [ngIfElse]="EmptyPublished">
                           <div class="container wrapper">
                               <hr>
-                              <div class="row">
-                                  <div class="col-12 col-md-4 border-right">
-                                      <h1 class="title">שם הצימר:</h1>
-                                      <h1>{{ my_zimmer[0].zimmerName }}</h1>
+                              <div class="row details-wrapper">
+                                <div class="col-6 col-md-3 border-right">
+                                    <img src="../../../assets/images/hut.png" height="50px" width="50px">
+                                    <h1>{{ my_zimmer[0].zimmerName }}</h1>
                                   </div>
-                                  <div class="col-6 col-md-4 border-right">
-                                      <h1 class="title">בעל הצימר:</h1>
-                                      <h1>{{ my_zimmer[0].ownerName }}</h1>
+                                  <div class="col-6 col-md-3 border-right">
+                                    <img src="../../../assets/images/placeholder.png" height="50px" width="50px">
+                                    <h1>{{ my_zimmer[0].region }}, {{ my_zimmer[0].address.formatted_address.includes(", ישראל")? my_zimmer[0].address.formatted_address.substring(0, my_zimmer[0].address.formatted_address.length - 7) : my_zimmer[0].address.formatted_address }}</h1>
                                   </div>
-                                  <div class="col-6 col-md-4 border-right border-left">
-                                      <h1 class="title">מספר פלאפון:</h1>
-                                      <h1>{{ my_zimmer[0].phone }}</h1>
-                                  </div>
+                                  <div class="col-6 col-md-3 border-right">
+                                    <img src="../../../assets/images/entrepreneur.png" height="50px" width="50px">
+                                  <h1>{{ my_zimmer[0].ownerName }}</h1>
+                                </div>
+                                <div class="col-6 col-md-3 border-right border-left">
+                                  <img src="../../../assets/images/phone.png" height="50px" width="50px">
+                                    <h1>{{ my_zimmer[0].phone }}</h1>
+                                </div>
                               </div>
                               <hr>
                               <div class="row">

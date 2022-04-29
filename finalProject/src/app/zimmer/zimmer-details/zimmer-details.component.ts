@@ -48,9 +48,9 @@ export class ZimmerDetailsComponent implements OnInit {
       var dates_from_local = JSON.parse(localStorage.getItem('Query')!.toString());
       this.startDate = dates_from_local.start
       this.endDate = dates_from_local.end
+      
     }
-    
-
+  
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
       this.zimmer = zimmers.filter(zimmer => { return zimmer.zimmer_id == this.zimmer_id })[0]
       if(this.zimmer)
@@ -71,7 +71,7 @@ export class ZimmerDetailsComponent implements OnInit {
         })
       }
     })
-    
+ 
   }
   onOrderSubmition(hut: Hut, index: number){
 
