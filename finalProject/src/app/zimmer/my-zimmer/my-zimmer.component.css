@@ -110,6 +110,9 @@ button:active{
 .hut-images{
     margin: 1% 0% 3% 0%;
 }
+agm-map{
+    height: 300px
+}
 @media screen and (max-width: 900px) {
 
     img{

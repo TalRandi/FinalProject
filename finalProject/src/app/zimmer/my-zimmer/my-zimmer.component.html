@@ -72,6 +72,10 @@
                                   </div>
                               </div>
                               <hr>
+                              <agm-map [latitude]="this.address_lat" [longitude]="this.address_lng" [zoom]="10">
+                                  <agm-marker [latitude]="this.address_lat" [longitude]="this.address_lng"></agm-marker>
+                              </agm-map>
+                              <hr>
                               <div class="row hut-list" *ngFor="let hut of my_zimmer[0].huts; let hut_index = index">
                                 <div class="row">
                                   <div class="col-12 col-md-4">

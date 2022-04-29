@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AgmCoreModule } from '@agm/core';
+import { MapsAPILoader } from '@agm/core';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AppComponent } from './app.component';
@@ -97,6 +99,10 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
     MatTabsModule,
     AutosizeModule,
     GooglePlaceModule,
+    AgmCoreModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCDYjSXe1aB3qzPgxWO2pYIBoJX_OSaZTY', libraries: ["places"]
+  }),
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule

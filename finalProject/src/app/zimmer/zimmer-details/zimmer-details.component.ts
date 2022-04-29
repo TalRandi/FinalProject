@@ -34,6 +34,8 @@ export class ZimmerDetailsComponent implements OnInit {
   edit = false;
   points: number = 0;
   points_to_use: number = 0;
+  address_lat: number;
+  address_lng: number;
 
   constructor(private storage: DataStorageService, private router: Router, 
               public authService: AuthenticationService, private _snackBar: MatSnackBar, 
@@ -53,14 +55,18 @@ export class ZimmerDetailsComponent implements OnInit {
   
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
       this.zimmer = zimmers.filter(zimmer => { return zimmer.zimmer_id == this.zimmer_id })[0]
-      if(this.zimmer)
+      if(this.zimmer){
+        this.setLngLat()
         this.isLoading = false
+      }
+            
       if(this.zimmer === undefined && !this.authService.admin){
         this.router.navigate(['/not-found']);
       }
       else if(this.zimmer === undefined && this.authService.admin){
         this.storage.fetchPendingZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(zimmers => {
           this.zimmer = zimmers.filter(zimmer => { return zimmer.zimmer_id == this.zimmer_id })[0]
+          this.setLngLat();
         })
       }
       if(this.authService.zimmer == 'client'){
@@ -146,6 +152,10 @@ export class ZimmerDetailsComponent implements OnInit {
      });
   }
 
+  setLngLat(){
+    this.address_lat = +this.zimmer.address.geometry.location.lat      
+    this.address_lng = +this.zimmer.address.geometry.location.lng
+  }
 
   calculatePricing(start: string, end: string, hut: Hut){
 

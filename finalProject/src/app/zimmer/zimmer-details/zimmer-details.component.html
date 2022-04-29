@@ -45,6 +45,10 @@
         </div>
     </div>
     <hr>
+    <agm-map [latitude]="this.address_lat" [longitude]="this.address_lng" [zoom]="10">
+        <agm-marker [latitude]="this.address_lat" [longitude]="this.address_lng"></agm-marker>
+    </agm-map>
+    <hr>
     <div class="row hut-list" *ngFor="let hut of zimmer.huts; let hut_index = index">
         <mat-accordion>
             <mat-expansion-panel hideToggle>

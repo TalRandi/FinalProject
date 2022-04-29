@@ -104,6 +104,9 @@ button:active{
 .price_after{
 
 }
+agm-map{
+    height: 300px
+}
 
 @media screen and (max-width: 900px) {
 
