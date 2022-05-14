@@ -34,16 +34,24 @@
                                 <h4>מספר אורחים: {{ order.guests }}</h4>
                                 <h3>סכום: {{ order.total_price }} ש"ח</h3>
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-3">
                                 <h2 class="underline">בקשות מיוחדות</h2>
                                 <h3>{{ order.requests }}</h3>
                             </div>
-                            <div class="col-12 col-md-3" *ngIf="!order.isApproved">
+                            <div class="col-12 col-md-2" *ngIf="remaining_days[index] > 0">
+                                <div class="row justify-content-end buttonTab">  
+                                    נותרו {{ remaining_days[index] }} ימים
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2" *ngIf="remaining_days[index] <= 0">
+                                
+                            </div>
+                            <div class="col-12 col-md-2" *ngIf="remaining_days[index] >= 2">
                                 <div class="row justify-content-end buttonTab">  
                                     <button (click)="onCancelOrder(order, index)" class="btn btn-lg btn-block btn-danger">ביטול הזמנה</button>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3" *ngIf="order.isApproved && !order.isRated">
+                            <div class="col-12 col-md-2" *ngIf="order.isApproved && !order.isRated && remaining_days[index] <= 0">
                                 <div class="row justify-content-end buttonTab">  
                                     <button (click)="onRateZimmer(index)" class="btn btn-lg btn-block btn-info">דירוג הצימר</button>
                                 </div>

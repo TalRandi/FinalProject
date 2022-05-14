@@ -48,7 +48,9 @@
     color: #0a3d4d;
     font-weight: bold;
 }
-
+mat-icon{
+    vertical-align: middle;
+}
 .container{
     margin-top: 3%;
 }
