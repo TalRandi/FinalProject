@@ -86,6 +86,7 @@ export class ZimmerDetailsComponent implements OnInit {
 
     let order = new Order(
       this.zimmer.zimmerName,
+      this.zimmer.email,
       this.form.get(index)?.form.value.name,
       this.form.get(index)?.form.value.phone,
       this.form.get(index)?.form.value.email,
