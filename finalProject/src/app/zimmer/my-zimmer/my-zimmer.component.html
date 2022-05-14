@@ -73,6 +73,7 @@
                               </div>
                               <hr>
                               <agm-map [latitude]="this.address_lat" [longitude]="this.address_lng" [zoom]="10">
+                                <agm-map-type-control></agm-map-type-control>
                                   <agm-marker [latitude]="this.address_lat" [longitude]="this.address_lng"></agm-marker>
                               </agm-map>
                               <hr>

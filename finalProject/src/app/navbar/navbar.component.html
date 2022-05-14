@@ -22,6 +22,9 @@
           <a class="nav-link" [routerLink]="['my-zimmer', this.authService.zimmer.zimmer_id]"><mat-icon>home</mat-icon> הצימר שלי</a>
         </li>
         <li *ngIf="isLoggedIn && this.authService.zimmer.zimmer_id" class="nav-item" [routerLinkActive]="['active']" (click)="isMenuCollapsed = !isMenuCollapsed">
+          <a class="nav-link" [routerLink]="['calendar', this.authService.zimmer.zimmer_id]"><mat-icon>date_range</mat-icon> ניהול זמינות</a>
+        </li>
+        <li *ngIf="isLoggedIn && this.authService.zimmer.zimmer_id" class="nav-item" [routerLinkActive]="['active']" (click)="isMenuCollapsed = !isMenuCollapsed">
           <a class="nav-link" [routerLink]="['my-orders', this.authService.zimmer.zimmer_id]"><mat-icon>bookmark</mat-icon> ההזמנות שלי</a>
         </li>
         <li *ngIf="isLoggedIn && this.authService.zimmer == 'client' && !this.authService.admin" class="nav-item" [routerLinkActive]="['active']" (click)="isMenuCollapsed = !isMenuCollapsed">

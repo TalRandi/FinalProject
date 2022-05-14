@@ -1,3 +1,5 @@
+import { CalendarEvent } from "angular-calendar";
+
 export class Hut {
     public hutName: string;
     public capacity: number;
@@ -14,6 +16,7 @@ export class Hut {
     public sauna: boolean;
     public parking: boolean;
     public images: string[] = [];
+    public events: CalendarEvent[] = [];
 
     constructor(hutName: string, capacity: number, regularPrice: number, weekendPrice: number, regularPriceTwoNights: number,
         weekendPriceTwoNights: number, jacuzzi: boolean, pool: boolean, heated_pool: boolean, indoor_pool: boolean, 

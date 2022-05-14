@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { AgmCoreModule } from '@agm/core';
-import { MapsAPILoader } from '@agm/core';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AppComponent } from './app.component';
@@ -50,6 +49,11 @@ import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { ClientFavoritesComponent } from './client-favorites/client-favorites.component';
 import { AutosizeModule } from 'ngx-autosize';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './calendar/calendar.component';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -75,6 +79,7 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
     ClientOrdersComponent,
     ClientFavoritesComponent,
     ForgotPasswordComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,9 +108,11 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCDYjSXe1aB3qzPgxWO2pYIBoJX_OSaZTY', libraries: ["places"]
   }),
-
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [{provide: BUCKET, useValue: 'goeasy-5d966.appspot.com'}, { provide: MAT_DATE_LOCALE, useValue: 'HE' }],
   bootstrap: [AppComponent]

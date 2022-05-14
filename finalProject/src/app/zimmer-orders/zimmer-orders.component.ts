@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { DataStorageService } from '../shared-data/data-storage.service';
 import { EmailService } from '../shared-data/email.service';
+import { Hut } from '../shared-data/hut.model';
 import { Order } from '../shared-data/order.model';
 import { Zimmer } from '../shared-data/zimmer.model';
 
@@ -44,6 +45,10 @@ export class ZimmerOrdersComponent implements OnInit {
       this.my_zimmer[0].orders.forEach(stored_order => {
         if(stored_order.order_id == order.order_id){
           stored_order.isApproved = true;
+          let updated_hut = this.my_zimmer[0].huts.filter(h => h.hutName == order.hut_name);
+          if(updated_hut[0]){
+            this.addEvent(updated_hut[0], order.name, order.start_date, order.end_date, order.order_id);
+          }
           this.storage.setApproveOnBoth(this.my_zimmer[0], order.order_id);
         }
       })
@@ -88,5 +93,45 @@ export class ZimmerOrdersComponent implements OnInit {
     this.emailService.sendLongEmail(header, order.email, line1, line2, line3, line4, line5,
                                     line6, line7, line8, line9, "GoEasy")
 
+  }
+  addEvent(hut: Hut, client_name: string, start_date: string, end_date: string, order_id: string): void {
+    if(!hut.events){
+      hut.events = [];
+    }
+    hut.events = [
+      ...hut.events,
+      {
+        id: order_id,
+        title: `הזמנה של ${client_name}`,
+        start: new Date(this.formatDate(start_date)),
+        end: new Date(this.formatDate(end_date)),
+        color: {
+          primary: '#041C32',
+          secondary: '#ECB365',
+        },
+        draggable: false,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true,
+        },
+      },
+    ];
+  }
+  formatDate(date: string){
+    if(date == "") return ""
+
+    let res = date.split('.');
+    let temp = res[2]
+    res[2] = res[0]
+    res[0] = temp
+
+    
+    if(res[1].length < 2)
+      res[1] = '0'+res[1]
+
+    if(res[2].length < 2)
+      res[2] = '0'+res[2]
+
+    return res[0]+'-'+res[1]+'-'+res[2]
   }
 }

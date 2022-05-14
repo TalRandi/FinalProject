@@ -98,7 +98,12 @@ export class DataStorageService{
             for(var id in zimmers)
                 if(zimmers[id].zimmer_id == zimmer.zimmer_id){
                     zimmer.orders = zimmers[id].orders;
-                    zimmer.rate = zimmers[id].rate;  
+                    zimmer.rate = zimmers[id].rate;
+                    for(var hut of zimmer.huts){
+                        let filtered_hut = zimmers[id].huts.filter(hut_item => hut.hutName == hut_item.hutName)
+                        if(filtered_hut.length > 0)
+                           hut.events = filtered_hut[0].events 
+                    }  
                     delete zimmers[id];
                     this.http.put(this.url_accepted, zimmers).subscribe(() => {
                         this.storeAcceptedZimmer(zimmer).subscribe();
@@ -165,6 +170,14 @@ export class DataStorageService{
             for(var id in zimmers){
                 if(zimmers[id].orders){
                     let filtered_orders = zimmers[id].orders.filter(order => order.order_id != order_id);
+                    let order_to_remove = zimmers[id].orders.filter(order => order.order_id == order_id);
+                    
+                    if(order_to_remove[0]){
+                        let filtered_hut = zimmers[id].huts.filter(hut_item => order_to_remove[0].hut_name == hut_item.hutName)
+                        if(filtered_hut.length > 0){
+                            filtered_hut[0].events = filtered_hut[0].events.filter(event => event.id != order_to_remove[0].order_id)
+                        }
+                    }
                     if(filtered_orders.length != zimmers[id].orders.length){
                         let zimmer = zimmers[id];
                         zimmer.orders = filtered_orders;

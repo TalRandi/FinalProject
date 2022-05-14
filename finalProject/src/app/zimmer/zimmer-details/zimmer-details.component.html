@@ -46,6 +46,7 @@
     </div>
     <hr>
     <agm-map [latitude]="this.address_lat" [longitude]="this.address_lng" [zoom]="10">
+        <agm-map-type-control></agm-map-type-control>
         <agm-marker [latitude]="this.address_lat" [longitude]="this.address_lng"></agm-marker>
     </agm-map>
     <hr>
@@ -134,11 +135,11 @@
                                     <div class="col-6 form-group">
                                         <mat-form-field>
                                             <mat-label>בחר תאריכים</mat-label>
-                                            <mat-date-range-input [rangePicker]="dates_picker">
+                                            <mat-date-range-input #hutDates [rangePicker]="dates_picker" [min]="minDate">
                                                 <input matStartDate #dateRangeStart [value]="startDate">
                                                 <input matEndDate #dateRangeEnd [value]="endDate">
                                             </mat-date-range-input>
-                                            <mat-datepicker-toggle matSuffix [for]="dates_picker"></mat-datepicker-toggle>
+                                            <mat-datepicker-toggle matSuffix [for]="dates_picker" (click)="onOpenDatePicker(hut, hut_index)"></mat-datepicker-toggle>
                                             <mat-date-range-picker #dates_picker></mat-date-range-picker>
                                         </mat-form-field>
                                     </div>

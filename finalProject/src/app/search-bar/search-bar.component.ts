@@ -19,7 +19,8 @@ export class SearchBarComponent implements OnInit {
                 region: "", 
                 }
   private queryExpirationTimer: any;
-
+  minDate = new Date();
+  
   ngOnInit(): void {
     
     if(localStorage.getItem('Query')){

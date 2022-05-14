@@ -15,7 +15,7 @@
       <div class="col-7 col-md-3">
         <mat-label>בחר תאריכים</mat-label>
         <mat-form-field id="form2" appearance="fill">
-          <mat-date-range-input [rangePicker]="picker">
+          <mat-date-range-input [rangePicker]="picker" [min]="minDate">
             <input matStartDate #dateRangeStart [value]="json_query.start">
             <input matEndDate #dateRangeEnd [value]="json_query.end" (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
           </mat-date-range-input>

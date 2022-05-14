@@ -11,6 +11,9 @@ import { Client } from 'src/app/shared-data/client.model';
 import { InnerDataService } from '../../shared-data/inner-data.service';
 import { EmailService } from 'src/app/shared-data/email.service';
 import { finalize } from 'rxjs/operators';
+import { DateFilterFn, MatDateRangeInput } from '@angular/material/datepicker';
+import { addDays, parseISO } from 'date-fns';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -24,6 +27,7 @@ export class ZimmerDetailsComponent implements OnInit {
   @ViewChildren('form') form: QueryList<NgForm>;
   @ViewChildren('dateRangeStart') dateStart: QueryList<ElementRef>;
   @ViewChildren('dateRangeEnd') dateEnd: QueryList<ElementRef>;
+  @ViewChildren('hutDates') hutDates: QueryList<MatDateRangeInput<Date>>;
 
   isLoading = false;
   zimmer_id: string;
@@ -36,6 +40,36 @@ export class ZimmerDetailsComponent implements OnInit {
   points_to_use: number = 0;
   address_lat: number;
   address_lng: number;
+  disabled_dates: string[] = [];
+
+  onOpenDatePicker(hut: Hut, index: number){
+    this.disabled_dates = [];
+    if(hut.events){
+      hut.events.forEach(event => {
+        let temp_date = parseISO(event.start.toString());
+        let start =  parseISO(event.start.toString()).toLocaleDateString()
+        let end =  parseISO(event.end ? event.end.toString() : "").toLocaleDateString()
+        let temp_string = start;
+        while(temp_string != end){
+          if(!this.disabled_dates.includes(temp_string)){
+            this.disabled_dates.push(temp_string);
+          }
+          temp_date = addDays(temp_date, 1);
+          temp_string = temp_date.toLocaleDateString();   
+        }  
+      })
+      this.hutDates.get(index)!.dateFilter = this.rangeFilter.bind(this);
+    }
+  }
+
+  rangeFilter(date: Date | null){
+    if(!date){
+      return false
+    }
+    return this.disabled_dates?.indexOf(date!.toLocaleDateString()) == -1;
+  };
+
+  minDate = new Date();
 
   constructor(private storage: DataStorageService, private router: Router, 
               public authService: AuthenticationService, private _snackBar: MatSnackBar, 
@@ -220,6 +254,4 @@ export class ZimmerDetailsComponent implements OnInit {
       })
     }
   }
-
-
 }

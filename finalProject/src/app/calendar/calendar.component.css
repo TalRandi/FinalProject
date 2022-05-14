@@ -1,0 +1,47 @@
+*{
+    direction: rtl;
+}
+#loading{
+    text-align: center;
+    margin: 18% 0%;
+}
+.container-fluid{
+    padding: 3%;
+}
+::ng-deep .mat-tab-header {
+    overflow-x: scroll !important;
+
+} 
+
+::ng-deep .mat-tab-label-container { 
+    overflow: visible !important;
+}
+
+::ng-deep .mat-tab-header::-webkit-scrollbar {
+    display: none;
+}
+.space{
+    margin-top: 3%;
+}
+
+button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    background-color: #041C32;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #ECB365;
+    transition: 0.5s;
+}
+button:hover[disabled]{
+    color: aliceblue;
+    background-color: #041C32;
+    cursor: not-allowed;
+}
+button:active{
+    background-color: #f59e23;
+    transform: translateY(1px);
+    transition: none;
+}

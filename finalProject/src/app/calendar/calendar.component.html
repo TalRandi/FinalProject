@@ -1,0 +1,150 @@
+<div id="loading" *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+
+<div *ngIf="!isLoading && my_zimmer.length > 0 && my_zimmer[0].status == 'disabled'; else notDisabled">
+    <div class="text-center" style="margin: 18% 0%;">
+        <h1>הצימר חסום, ניתן לפנות קשר עם בעלי האתר בלינק הבא</h1>
+        <a href="/contact-us">צור קשר</a>
+    </div>
+</div>
+
+<ng-template #notDisabled>
+    <div class="container-fluid" *ngIf="!isLoading">
+        <div class="row justify-content-center">
+            <div class="col-11 col-md-8">
+                <mat-tab-group dynamicHeight dir="rtl" [(selectedIndex)]=selectedIndex>
+                    <mat-tab [label]="hut.hutName" *ngFor="let hut of my_zimmer[0].huts; let hut_index = index">
+                        <div class="row text-center space">
+                            <div class="col-md-4">
+                              <div class="btn-group">
+                                <div
+                                  class="btn btn-primary"
+                                  mwlCalendarPreviousView
+                                  [view]="view"
+                                  [(viewDate)]="viewDate"
+                                >
+                                  הקודם
+                                </div>
+                                <div
+                                  class="btn btn-outline-secondary"
+                                  mwlCalendarToday
+                                  [(viewDate)]="viewDate"
+                                >
+                                  נוכחי
+                                </div>
+                                <div
+                                  class="btn btn-primary"
+                                  mwlCalendarNextView
+                                  [view]="view"
+                                  [(viewDate)]="viewDate"
+                                >
+                                  הבא
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+                            </div>
+                          </div>
+                          <br />
+                          <div>
+                            <mwl-calendar-month-view
+                              [viewDate]="viewDate"
+                              [events]="hut.events"
+                              [refresh]="refresh"
+                              (eventTimesChanged)="eventTimesChanged(hut, $event)"
+                            >
+                            </mwl-calendar-month-view>
+                          </div>
+
+                          <br /><br /><br />
+
+                        <h3>
+                        <button class="btn float-right" (click)="addEvent(hut)">
+                            הוספה
+                        </button>
+                        <div class="clearfix"></div>
+                        </h3>
+
+                        <div class="table-responsive text-right">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>תיאור</th>
+                                <th>צבע ראשי</th>
+                                <th>צבע משני</th>
+                                <th>תאריך הגעה</th>
+                                <th>תאריך עזיבה</th>
+                                <th>מחיקה</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr *ngFor="let event of hut.events">
+                                <td>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    [(ngModel)]="event.title"
+                                    (keyup)="refresh.next()"
+                                />
+                                </td>
+                                <td>
+                                <input *ngIf="event.color"
+                                    type="color"
+                                    [(ngModel)]="event.color.primary"
+                                    (change)="refresh.next()"
+                                />
+                                </td>
+                                <td>
+                                <input *ngIf="event.color"
+                                    type="color"
+                                    [(ngModel)]="event.color.secondary"
+                                    (change)="refresh.next()"
+                                />
+                                </td>
+                                <td>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    mwlFlatpickr
+                                    [(ngModel)]="event.start"
+                                    (ngModelChange)="refresh.next()"
+                                    [convertModelValue]="true"
+                                    dateFormat="d.m.Y"
+                                    [enableTime]="false"
+                                    placeholder="Not set"
+                                />
+                                </td>
+                                <td>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    mwlFlatpickr
+                                    [(ngModel)]="event.end"
+                                    (ngModelChange)="refresh.next()"
+                                    [convertModelValue]="true"
+                                    dateFormat="d.m.Y"
+                                    [enableTime]="false"
+                                    placeholder="Not set"
+                                />
+                                </td>
+                                <td>
+                                <button class="btn" (click)="deleteEvent(event, hut)">
+                                    מחק
+                                </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>    
+                    </mat-tab>
+                </mat-tab-group>
+                <div class="text-center">
+                  <button class="btn btn-lg" (click)="onStoreEvents()">שמור שינויים</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+  </ng-template>

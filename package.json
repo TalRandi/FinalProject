@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "@agm/core": "^3.0.0-beta.0"
+    "@agm/core": "^3.0.0-beta.0",
+    "angularx-flatpickr": "^6.6.0",
+    "flatpickr": "^4.6.13"
   }
 }
