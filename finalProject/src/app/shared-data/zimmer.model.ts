@@ -1,6 +1,7 @@
 import { Address } from "ngx-google-places-autocomplete/objects/address";
 import { Hut } from "./hut.model"
 import { Order } from "./order.model";
+import { Review } from "./review";
 
 export class Zimmer {
     public ownerName: string;
@@ -20,6 +21,7 @@ export class Zimmer {
     public images: string[] = [];
     public huts: Hut[];
     public orders: Order[] = [];
+    public reviews: Review[] = [];
 
     constructor(ownerName: string, phone: string, zimmerName: string, email: string, generalDescription: string, 
         total_capacity: number, status: string, min_price_regular: number, min_price_weekend: number, region: string, address: Address, 

@@ -99,6 +99,7 @@ export class DataStorageService{
                 if(zimmers[id].zimmer_id == zimmer.zimmer_id){
                     zimmer.orders = zimmers[id].orders;
                     zimmer.rate = zimmers[id].rate;
+                    zimmer.reviews = zimmers[id].reviews;
                     for(var hut of zimmer.huts){
                         let filtered_hut = zimmers[id].huts.filter(hut_item => hut.hutName == hut_item.hutName)
                         if(filtered_hut.length > 0)
@@ -165,7 +166,7 @@ export class DataStorageService{
             })).subscribe();
         })
     }
-    cancelOrderOnBoth(order_id: string, points: number){
+    cancelOrderOnBoth(order_id: string, points: number, rate_penalty=-1){
         this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
             for(var id in zimmers){
                 if(zimmers[id].orders){
@@ -181,6 +182,9 @@ export class DataStorageService{
                     if(filtered_orders.length != zimmers[id].orders.length){
                         let zimmer = zimmers[id];
                         zimmer.orders = filtered_orders;
+                        if(rate_penalty != -1){
+                            zimmer.rate = zimmer.rate - rate_penalty;
+                        }
                         delete zimmers[id];
                         this.http.put(this.url_accepted, zimmers).subscribe(() => {
                             this.http.post(this.url_accepted, zimmer).subscribe();
@@ -208,7 +212,7 @@ export class DataStorageService{
             }
         })).subscribe();    
     }
-    setRatedOnBoth(client:Client, order_id: string, client_rate: number){
+    setRatedOnBoth(client:Client, order_id: string, client_rate: number, review : any = ""){
         this.updateClient(client).subscribe(() => {
             this.http.get<Zimmer[]>(this.url_accepted).pipe(map(zimmers => {
                 for(var id in zimmers){
@@ -217,6 +221,17 @@ export class DataStorageService{
                             if(order.order_id == order_id){
                                 order.isRated = true;
                                 let zimmer = zimmers[id];
+                                console.log(zimmer.reviews);
+                                console.log(review);
+                                if(review != ""){
+                                    console.log(zimmer.reviews);
+                                    if(zimmer.reviews){
+                                        zimmer.reviews.push(review)
+                                    }
+                                    else{
+                                        zimmer.reviews = [review]
+                                    }
+                                }
                                 zimmer.rate = zimmer.rate * 0.9 + client_rate * 0.1;
                                 delete zimmers[id];
                                 this.http.put(this.url_accepted, zimmers).subscribe(() => {

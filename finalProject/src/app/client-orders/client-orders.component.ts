@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Client } from '../shared-data/client.model';
 import { DataStorageService } from '../shared-data/data-storage.service';
 import { EmailService } from '../shared-data/email.service';
 import { Order } from '../shared-data/order.model';
-
+import { Review } from '../shared-data/review';
 
 @Component({
   selector: 'app-client-orders',
@@ -14,11 +14,12 @@ import { Order } from '../shared-data/order.model';
 })
 
 export class ClientOrdersComponent implements OnInit {
-  @ViewChild('form') rate_form: NgForm;
+  @ViewChildren('form') rate_form: QueryList<NgForm>;
   isLoading = false;
   client: Client;
   orders_index:boolean[] = []
   remaining_days: number[] = []
+
 
   constructor(private storage: DataStorageService, private _snackBar: MatSnackBar, private emailService: EmailService) { }
 
@@ -36,9 +37,7 @@ export class ClientOrdersComponent implements OnInit {
         this.orders_index.push(true) 
         let start_date = new Date(this.formatDate(this.client.orders[i].start_date)).getTime()
                 
-        this.remaining_days[i] = Math.round((start_date - today) / (1000 * 3600 * 24))
-        console.log(this.client.orders[11].zimmerOwnerEmail);
-        
+        this.remaining_days[i] = Math.round((start_date - today) / (1000 * 3600 * 24))  
       }
       
       this.isLoading = false; 
@@ -78,11 +77,24 @@ export class ClientOrdersComponent implements OnInit {
     this.orders_index[index] = !this.orders_index[index]
   }
   onSubmit(order: Order, index: number){
-    let client_rate = (this.rate_form.value.rate1 + this.rate_form.value.rate2 + this.rate_form.value.rate3) / 3;
+    let client_rate = (this.rate_form.get(index)?.value.rate1 + this.rate_form.get(index)?.value.rate2 + this.rate_form.get(index)?.value.rate3) / 3;
     order.isRated = true;
     let new_points = Math.round(order.total_price * 0.1)
     this.client.points += new_points;
-    this.storage.setRatedOnBoth(this.client, order.order_id, client_rate); 
+
+    if(this.rate_form.get(index)?.value.review){
+      let review: Review = {
+        stars : client_rate,
+        name: this.client.name,
+        review: this.rate_form.get(index)?.value.review,
+        hutName: order.hut_name,
+        date: new Date().toLocaleDateString('en-GB'),
+      }
+      this.storage.setRatedOnBoth(this.client, order.order_id, client_rate, review); 
+    }
+    else {
+      this.storage.setRatedOnBoth(this.client, order.order_id, client_rate);
+    }
     this.orders_index[index] = !this.orders_index[index]
     
     this._snackBar.open("הדירוג התקבל! " + new_points +" נקודות חדשות נוספו לחשבונך.", "אישור", {

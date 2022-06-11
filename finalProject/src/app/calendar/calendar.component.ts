@@ -9,6 +9,15 @@ import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarView } from 'ang
 import { Hut } from '../shared-data/hut.model';
 
 
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/he';
+registerLocaleData(localeEs);
+
+import Flatpickr from 'flatpickr';
+import FlatpickrI18n from 'flatpickr/dist/l10n';
+Flatpickr.localize(FlatpickrI18n.he);
+
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',

@@ -24,6 +24,10 @@ export class InnerDataService {
   huts_map = new Map<string, boolean>();
 
   constructor() {
+    this.resetAll();
+  }
+
+  resetAll(){
     this.filters.forEach(filter => {
       this.filters_map.set(filter, false)
     })

@@ -69,3 +69,7 @@ div.t > input {
         margin: 0;
     }
 }
+
+.location.mat-icon{
+    color: rgb(189, 15, 15);
+}

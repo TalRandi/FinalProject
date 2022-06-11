@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-12 col-md-2" *ngIf="remaining_days[index] >= 2">
                                 <div class="row justify-content-end buttonTab">  
-                                    <button (click)="onCancelOrder(order, index)" class="btn btn-lg btn-block btn-danger">ביטול הזמנה</button>
+                                    <button (click)="onCancelOrder(order, index)" class="btn btn-lg btn-block reject_button">ביטול הזמנה</button>
                                 </div>
                             </div>
                             <div class="col-12 col-md-2" *ngIf="order.isApproved && !order.isRated && remaining_days[index] <= 0">
@@ -90,8 +90,12 @@
                                             </div>
                                         </div>
                                         <div class="row">
+                                            <div class="col-12 col-md-12 form-group">
+                                                <h2 class="underline">הוספת ביקורת</h2>
+                                                <textarea autosize name="review" ngModel #review="ngModel" rows="5"></textarea>
+                                            </div>
                                             <div class="col col-auto">
-                                                <button type="submit" [disabled]="form.invalid" class="btn btn-success">שלח</button>
+                                                <button type="submit" [disabled]="form.invalid" class="btn">שלח</button>
                                             </div>
                                         </div>
                                     </form>

@@ -6,6 +6,7 @@ export class Order{
     email: string;
     start_date: string;
     end_date: string;
+    book_time: Date;
     requests: string;
     hut_name: string;
     guests: number;
@@ -25,6 +26,7 @@ export class Order{
         this.email = email;
         this.start_date = start_date;
         this.end_date =  end_date;
+        this.book_time = new Date()
         this.requests = requests;
         this.hut_name = hut_name;
         this.guests = guests; 

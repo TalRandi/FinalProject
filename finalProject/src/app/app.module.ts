@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
@@ -54,6 +54,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { RoundPipe } from './zimmer/zimmer-list/zimmer-list.component'
 
 
 @NgModule({
@@ -80,6 +82,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     ClientFavoritesComponent,
     ForgotPasswordComponent,
     CalendarComponent,
+    RoundPipe,
   ],
   imports: [
     BrowserModule,
@@ -101,10 +104,12 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     MatIconModule,
     HttpClientModule,
     NgxDropzoneModule,
+    ReactiveFormsModule,
     MatTabsModule,
     AutosizeModule,
     GooglePlaceModule,
     AgmCoreModule,
+    MatAutocompleteModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCDYjSXe1aB3qzPgxWO2pYIBoJX_OSaZTY', libraries: ["places"]
   }),

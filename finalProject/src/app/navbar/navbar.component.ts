@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Client } from '../shared-data/client.model';
 import { DataStorageService } from '../shared-data/data-storage.service';
@@ -15,15 +17,34 @@ import { InnerDataService } from '../shared-data/inner-data.service';
 
 export class NavbarComponent implements OnInit, OnDestroy {
   private userSub: Subscription;
+  control = new FormControl();
   isLoggedIn = false;
   client: Client;
   points: number;
   isLoading = false
+  zimmers: string[] = [];
+  zimmers_names: string[] = [];
+  filteredZimmers: Observable<string[]>;
   public isMenuCollapsed = true;
   constructor(public authService: AuthenticationService, public innerData: InnerDataService, private storage: DataStorageService) { }
 
 
   ngOnInit(): void { 
+
+    this.storage.fetchAcceptedZimmers().subscribe(Zimmers => {
+      Zimmers.forEach(z => {
+        this.zimmers.push(z.zimmerName);
+        this.zimmers.push(z.address.vicinity);
+        this.zimmers_names.push(z.zimmerName);
+      })
+      this.zimmers = [...new Set(this.zimmers)];
+    })
+
+    this.filteredZimmers = this.control.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    );
+
     this.userSub = this.authService.user.subscribe(user => {
       if(user){
         this.isLoggedIn = true;
@@ -38,14 +59,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if(this.authService.token){
       this.isLoggedIn = true;
       this.loadClient();
-    }
-    
-    
+    }  
   }
 
   onZimmerSearch(zimmer_to_search: any): void{
     this.innerData.zimmer_to_search = zimmer_to_search
     this.innerData.string_subject.next(this.innerData.zimmer_to_search)
+    this.isMenuCollapsed = !this.isMenuCollapsed 
   }
 
   ngOnDestroy(): void {
@@ -69,5 +89,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     }
   }
+  private _filter(value: string): string[] {
+    const filterValue = this._normalizeValue(value);
+    return this.zimmers.filter(zimmer => this._normalizeValue(zimmer).includes(filterValue));
+  }
 
+  private _normalizeValue(value: string): string {
+    return value.toLowerCase().replace(/\s/g, '');
+  }
+
+  isZimmerName(zimmer_name: string){
+    return this.zimmers_names.includes(zimmer_name)
+  }
 }

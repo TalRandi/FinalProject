@@ -44,12 +44,13 @@
                               </div>
                             </div>
                             <div class="col-md-4">
-                              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+                              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'he' }}</h3>
                             </div>
                           </div>
                           <br />
                           <div>
                             <mwl-calendar-month-view
+                              locale="he"
                               [viewDate]="viewDate"
                               [events]="hut.events"
                               [refresh]="refresh"

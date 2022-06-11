@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { parseISO } from 'date-fns';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { DataStorageService } from '../shared-data/data-storage.service';
 import { EmailService } from '../shared-data/email.service';
@@ -74,10 +75,19 @@ export class ZimmerOrdersComponent implements OnInit {
 
   }
   onCancelOrder(order: Order, index: number){
-    this.storage.cancelOrderOnBoth(order.order_id, order.points_used);
+    let rate = -1;
+    let today = new Date().getTime();
+    let book_date = parseISO(order.book_time.toString()).getTime()
+    let hours_diff = (today - book_date) / 3600000;
+ 
+    if(hours_diff > 30){
+      rate = (hours_diff - 30) / 100;
+      rate = rate > 0.25 ? 0.25 : rate;
+    }
+    
+    this.storage.cancelOrderOnBoth(order.order_id, order.points_used, rate);
     this.orders.splice(index, 1);
 
-    
     let header = order.email + ", שלום רב "
     let line1 = ".לצערנו הזמנתך נדחתה"
     let line2 = "לצימר - " + order.zimmerName

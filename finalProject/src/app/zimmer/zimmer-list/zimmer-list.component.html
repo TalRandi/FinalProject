@@ -19,7 +19,7 @@
                     <div class="sort-elements">
                         <mat-form-field dir='rtl' appearance="fill">
                           <mat-label>מיין לפי</mat-label>
-                          <mat-select (selectionChange)="sortBy($event)" [value]="sort_parameter">
+                          <mat-select (selectionChange)="sortBy($event.value)" [value]="sort_parameter">
                             <mat-option *ngFor="let sort of sorts" [value]="sort.value">
                               {{sort.viewValue}}
                             </mat-option>
@@ -27,7 +27,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row" *ngIf="region_filter.length != 0 || general_filter.length != 0">
+                <div class="row" *ngIf="region_filter.length != 0 || general_filter.length != 0 || zimmer_to_search">
                     <h3 class="active-filter-title">סינונים פעילים:</h3>
                 </div>
                 <div class="row">
@@ -36,6 +36,9 @@
                     </div>
                     <div class="col-4 col-md-2 active-filter" *ngFor="let filter of general_filter">
                         {{getByValue(dictionary, filter)}}
+                    </div>
+                    <div class="col-4 col-md-2 active-filter" *ngIf="zimmer_to_search">
+                        {{zimmer_to_search}}
                     </div>
                 </div>
                 <div class="row justify-content-start hut-details" *ngFor="let zimmer of zimmers_to_display; let index = index">
@@ -85,7 +88,7 @@
                         <h2>{{ zimmer.ownerName }} - {{ zimmer.phone }}</h2>
                         <h4>מקסימום אורחים: {{ zimmer.total_capacity }}</h4>
                         <h4>מספר בקתות: {{ zimmer.huts.length }}</h4>
-                        <h4>דירוג הגולשים: <ngb-rating  [rate]="(zimmer.rate != undefined)? (zimmer.rate):4" [readonly]="true" [max]="5"></ngb-rating></h4>
+                        <h4>דירוג הגולשים: <ngb-rating [rate]="zimmer.rate | round" [readonly]="true" [max]="5"></ngb-rating></h4>
                         <div class="price row">
                             <div class="col-6">
                                 <h2>אמצ"ש החל מ {{ zimmer.min_price_regular }} ש"ח</h2>

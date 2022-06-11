@@ -100,12 +100,27 @@ mat-icon{
 ::ng-deep .mat-tab-header::-webkit-scrollbar {
     display: none;
 }
-
 button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
     text-align: center;
+    background-color: #041C32;
+    cursor: pointer;
     display: block;
 }
-
+.reject_button{
+    background-color: #ECB365;
+    border: solid 2px #041C32;
+}
+button:hover{
+    background-color: #064663;
+    color: aliceblue;
+    transition: 0.1s;
+}
+.reject_button:hover{
+    background-color: #ea9e34;
+}
 .enable-zimmer{
     color: aliceblue;
     border: solid 2px #ECB365;

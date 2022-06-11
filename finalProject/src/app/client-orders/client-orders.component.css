@@ -98,10 +98,6 @@ mat-icon{
 ::ng-deep .mat-tab-header::-webkit-scrollbar {
     display: none;
 }
-
-button{
-    text-align: center;
-}
 .rating{
     transform: scale(2);
 }
@@ -110,4 +106,32 @@ button{
     background-image: linear-gradient(43deg, #041C32 10%, #ECB365 200%, #041C32 10%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+textarea {
+    resize: horizontal;
+    overflow: hidden;
+    width: 100%;
+    height: 200px;
+}
+
+button{
+    color: aliceblue;
+    border: solid 2px #ECB365;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #041C32;
+    cursor: pointer;
+    display: block;
+}
+.reject_button{
+    background-color: #ECB365;
+    border: solid 2px #041C32;
+}
+button:hover{
+    background-color: #064663;
+    color: aliceblue;
+    transition: 0.1s;
+}
+.reject_button:hover{
+    background-color: #ea9e34;
 }

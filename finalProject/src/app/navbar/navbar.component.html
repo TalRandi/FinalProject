@@ -39,9 +39,12 @@
         <li>
           <div class="search-wrapper">
             <div class="t">
-                <input #zimmer_to_search type="text" class="form-control search-zimmer" placeholder="חיפוש צימר לפי שם">
-                <!-- <input #zimmer_to_search type="text" ngModel class="form-control search-zimmer" ngx-google-places-autocomplete placeholder="חיפוש צימר לפי שם"
-                (onAddressChange)="handleAddressChange($event)" name="address" [options]="options"> -->
+                  <input dir="rtl" #zimmer_to_search type="text" [formControl]="control" class="form-control search-zimmer" placeholder="חיפוש צימר לפי שם/עיר" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let zimmer of filteredZimmers | async" [value]="zimmer">
+                      <mat-icon class="location" *ngIf="!isZimmerName(zimmer)">location_on</mat-icon><mat-icon *ngIf="isZimmerName(zimmer)">hotel</mat-icon>{{zimmer}}
+                    </mat-option>
+                  </mat-autocomplete>
             </div>
             <button class="btn" (click)="onZimmerSearch(zimmer_to_search.value)" mat-stroked-button><mat-icon>search</mat-icon></button>
           </div>

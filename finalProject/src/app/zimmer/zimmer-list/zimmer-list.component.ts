@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { stat } from 'fs';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
@@ -10,11 +9,19 @@ import { EmailService } from 'src/app/shared-data/email.service';
 import { Hut } from 'src/app/shared-data/hut.model';
 import { InnerDataService } from 'src/app/shared-data/inner-data.service';
 import { Zimmer } from 'src/app/shared-data/zimmer.model';
-
+import {Pipe} from '@angular/core';
 interface Sort {
   value: string;
   viewValue: string;
 }
+
+@Pipe({name: 'round'})
+export class RoundPipe {
+  transform (input:number) {
+    return Math.round(input);
+  }
+}
+
 
 @Component({
   selector: 'app-zimmer-list',
@@ -23,19 +30,19 @@ interface Sort {
 })
 export class ZimmerListComponent implements OnInit, OnDestroy {
   
+  
   sorts: Sort[] = [
-    {value: 'all', viewValue: '-'},
+    {value: 'rating', viewValue: 'דירוג'},
     {value: 'weekend', viewValue: 'מחיר - סופ"ש'},
     {value: 'midweek', viewValue: 'מחיר - אמצ"ש'},
     {value: 'huts_number', viewValue: 'מספר בקתות'},
     {value: 'total_capacity', viewValue: 'מקסימום אורחים'},
-    {value: 'rating', viewValue: 'דירוג'},
   ];
 
   currentRate = 8;
   client: Client;
   isLoading = false;
-  sort_direction = true;
+  sort_direction = false;
   number_of_guests: number;
   private data: Subscription;
   hut: Hut[] = []
@@ -46,7 +53,8 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   general_filter: string[] = []
   region_filter: string[] = []
   huts_number_filter: string = "";
-  sort_parameter: string = "all";
+  sort_parameter: string = "rating";
+  zimmer_to_search: String = "";
 
 
   constructor(private storage: DataStorageService, public innerData: InnerDataService, private router: Router, public authService: AuthenticationService,
@@ -74,7 +82,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
 
   sortBy(event: any): void{
     this.isLoading = true
-    this.sort_parameter = event.value
+    this.sort_parameter = event
     
     setTimeout(() => {
       switch (this.sort_parameter) {
@@ -91,19 +99,19 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
           this.zimmers_to_display.sort((a,b) => (a.total_capacity > b.total_capacity) ? 1 : ((b.total_capacity > a.total_capacity) ? -1 : 0))
           break;
         case 'rating':
-          this.zimmers_to_display.sort((a,b) => (a.rate > b.rate) ? 1 : ((b.rate > a.rate) ? -1 : 0))
+          this.zimmers_to_display.sort((a,b) => (a.rate > b.rate) ? 1 : ((b.rate > a.rate) ? -1 : 0))    
           break;
-      
         default:
           break;
+      }
+      if(!this.sort_direction){
+        this.zimmers_to_display.reverse();
       }
       this.isLoading = false
     }, 200);
   }
   sortDirection(): void{ 
-
-    if(this.sort_parameter == "all")
-      return 
+ 
     this.isLoading = true
     setTimeout(() => {
       this.zimmers_to_display.reverse();
@@ -167,9 +175,9 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       })  
 
       this.applyFilters()
-      
+      this.applySort();
       this.data = this.innerData.string_subject.subscribe(zimmer_to_search => {
-        
+        this.zimmer_to_search = zimmer_to_search;
         this.zimmers_to_display = [...this.all_zimmers]
         if(zimmer_to_search == '')
           return
@@ -179,11 +187,16 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
           for (let index_zimmer = 0; index_zimmer < this.zimmers_to_display.length; index_zimmer++) {
             if(this.zimmers_to_display[index_zimmer] == undefined)
               break     
-            if(this.zimmers_to_display[index_zimmer].zimmerName != zimmer_to_search){
+            if(this.zimmers_to_display[index_zimmer].zimmerName != zimmer_to_search && this.zimmers_to_display[index_zimmer].address.vicinity != zimmer_to_search){
               this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
               index_zimmer--
             }
           }
+          this.applySort();
+          this.innerData.resetAll();
+          this.general_filter = []
+          this.region_filter = []
+          this.huts_number_filter = "";
           this.isLoading = false;
         }, 500)
       })
@@ -242,6 +255,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   applyFilters(): void {
     
     this.zimmers_to_display = [...this.all_zimmers]
+    this.zimmer_to_search = "";
     
     for (let index_zimmer = 0; index_zimmer < this.zimmers_to_display.length; index_zimmer++) {
 
@@ -254,7 +268,6 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
         
         if(this.huts_number_filter == "הכל"){
           this.huts_number_filter = "";
-          console.log(this.zimmers_to_display);
         }
         else if(this.zimmers_to_display[index_zimmer].huts.length+'' != this.huts_number_filter){
           this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
@@ -294,7 +307,40 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
         }
       }
     }
+    this.applySort();
   }
+
+  applySort(){
+    this.isLoading = true;
+    switch (this.sort_parameter) {
+      case 'weekend':        
+        this.zimmers_to_display.sort((a,b) => (a.min_price_weekend > b.min_price_weekend) ? 1 : ((b.min_price_weekend > a.min_price_weekend) ? -1 : 0))
+        break;
+      case 'midweek':
+        this.zimmers_to_display.sort((a,b) => (a.min_price_regular > b.min_price_regular) ? 1 : ((b.min_price_regular > a.min_price_regular) ? -1 : 0))
+        break;
+      case 'huts_number':
+        this.zimmers_to_display.sort((a,b) => (a.huts.length > b.huts.length) ? 1 : ((b.huts.length > a.huts.length) ? -1 : 0))
+        break;
+      case 'total_capacity':
+        this.zimmers_to_display.sort((a,b) => (a.total_capacity > b.total_capacity) ? 1 : ((b.total_capacity > a.total_capacity) ? -1 : 0))
+        break;
+      case 'rating':
+        this.zimmers_to_display.sort((a,b) => (a.rate > b.rate) ? 1 : ((b.rate > a.rate) ? -1 : 0))    
+        break;
+      default:
+        break;
+    }
+    if(!this.sort_direction){
+      this.zimmers_to_display.reverse();
+    }
+    this.isLoading = false
+  }
+
+    
+   
+
+
 
   isFavorite(zimmer_id: string){
     

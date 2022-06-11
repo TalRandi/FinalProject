@@ -282,4 +282,24 @@
             </mat-expansion-panel>
         </mat-accordion>
     </div>
+    <div *ngIf="zimmer.reviews">
+        <hr>
+        <div class="row justify-content-center details-wrapper">
+            <div class="col-6 col-md-3">
+                <img src="../../../assets/images/feedback.png" height="50px" width="50px">
+                <h1>ביקורות</h1>
+            </div>
+        </div>
+        <div class="row justify-content-start review-details" *ngFor="let review of zimmer.reviews">
+            <div class="col-4 col-md-2">
+                <h2>{{ review.name }}</h2><br>
+                <h3>{{ review.date }}</h3>
+                <h2><ngb-rating  [rate]="review.stars" [readonly]="true" [max]="5"></ngb-rating></h2><br>
+                <h3>{{ review.hutName }}</h3>
+            </div>
+            <div class="col-8 col-md-10">
+                <textarea rows="5" readonly>{{ review.review }}</textarea>
+            </div>
+        </div>
+    </div>
 </div>
