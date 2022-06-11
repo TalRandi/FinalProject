@@ -84,12 +84,12 @@
                             <tbody>
                             <tr *ngFor="let event of hut.events">
                                 <td>
-                                <input
+                                <textarea
                                     type="text"
                                     class="form-control"
                                     [(ngModel)]="event.title"
                                     (keyup)="refresh.next()"
-                                />
+                                ></textarea>
                                 </td>
                                 <td>
                                 <input *ngIf="event.color"
