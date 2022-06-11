@@ -79,7 +79,7 @@ export class ClientOrdersComponent implements OnInit {
   onSubmit(order: Order, index: number){
     let client_rate = (this.rate_form.get(index)?.value.rate1 + this.rate_form.get(index)?.value.rate2 + this.rate_form.get(index)?.value.rate3) / 3;
     order.isRated = true;
-    let new_points = Math.round(order.total_price * 0.1)
+    let new_points = Math.round(order.total_price * 0.05)
     this.client.points += new_points;
 
     if(this.rate_form.get(index)?.value.review){

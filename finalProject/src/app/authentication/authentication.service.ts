@@ -41,7 +41,7 @@ export class AuthenticationService{
             return;
         }
 
-        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate), userData.email == 'harelmadmoni9@gmail.com'? true: false, userData.zimmer);
+        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate), userData.email == 'goeasy.th@gmail.com'? true: false, userData.zimmer);
         
         if(loadedUser.token){ 
             this.token = userData._token;
