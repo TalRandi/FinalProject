@@ -26,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.error = ""
     let email = this.forgot_password_form.value.email
     this.fireAuth.resetPasswordInit(email).then(() => {
-      alert("נשלח קישור לכתובת המייל ובו אפשרות לאפס את הסיסמא")
+      alert("נשלח קישור לכתובת המייל ובו אפשרות לאפס את סיסמה")
       this.router.navigate(['/login-page']);
       this.isLoading = false
     }).catch((e) => {

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { stat } from 'fs';
+import { parseISO } from 'date-fns';
+import { exit } from 'process';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
@@ -48,6 +49,10 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
   huts_number_filter: string = "";
   sort_parameter: string = "all";
 
+  unavailable_dates: { zimmer_name: string, hut_name: string, start_date: Date, end_date: Date }[] = []
+  json_query: {start: string, end: string, number_of_guests: number, region: string };
+
+  private queryExpirationTimer: any;
 
   constructor(private storage: DataStorageService, public innerData: InnerDataService, private router: Router, public authService: AuthenticationService,
               private emailService: EmailService) { }
@@ -120,6 +125,15 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     window.open(url, '_blank');
   }
 
+  setQueryTimeOut(): void{
+    this.queryExpirationTimer = setTimeout(() => {
+      localStorage.removeItem('Query');
+      if(this.queryExpirationTimer){
+          clearTimeout(this.queryExpirationTimer);
+      }
+    }, 10000)
+  }
+
   ngOnInit(): void {
 
     this.number_of_guests = this.innerData.number_of_guests
@@ -150,6 +164,20 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       this.dictionary.set("מזגן", "air_conditioner")
       this.dictionary.set("חניה", "parking")
     
+      this.all_zimmers.forEach(zimmer => zimmer.huts.forEach(hut => {
+        if(hut.events)
+        {
+          hut.events.forEach(event => {
+            this.unavailable_dates.push({
+              zimmer_name: zimmer.zimmerName,
+              hut_name: hut.hutName,
+              start_date: parseISO(event.start.toString()),
+              end_date: parseISO(event.end!.toString())
+            })
+          })
+        }
+      }))
+
 
       this.innerData.regions_map.forEach((value, region) => {
         if(value)
@@ -192,9 +220,14 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
       this.data = this.innerData.number_subject.subscribe(number_of_guests => {
        
         this.number_of_guests = number_of_guests 
-    
+        
+        if(localStorage.getItem('Query')){
+          this.json_query = JSON.parse(localStorage.getItem('Query')!.toString());
+          this.setQueryTimeOut()
+        }
+
         this.isLoading = true;
- 
+
         setTimeout(() => {
 
           this.applyFilters()
@@ -277,6 +310,14 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
           continue
         }
       }
+      if(this.json_query && this.json_query.start && this.json_query.end){
+        
+        if(!this.hasAvailableHut(this.zimmers_to_display[index_zimmer])){
+          this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
+          index_zimmer--
+          continue
+        }
+      }
       for (let index_filter = 0; index_filter < this.general_filter.length; index_filter++) {  
         if (!this.zimmers_to_display[index_zimmer].features.includes(this.general_filter[index_filter])) {
           this.removeZimmer(this.zimmers_to_display, this.zimmers_to_display[index_zimmer])
@@ -294,6 +335,66 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
+
+  hasAvailableHut(zimmer: Zimmer){
+
+    let is_available = false
+
+    zimmer.huts.forEach(hut => {
+      if(hut.events){
+        if(this.isAvailable(hut))
+          is_available = true
+      }
+      else{
+        is_available = true
+      }
+    })
+    return is_available
+  }
+
+  isAvailable(hut: Hut){
+
+    let result = true
+
+    let desired_start = parseISO(this.json_query.start.toString())
+    let desired_end = parseISO(this.json_query.end.toString())
+
+    const d_date = new Date(desired_start.getTime());
+
+    d_date.setDate(d_date.getDate() + 1);
+  
+    const desired_between = [desired_start.toLocaleDateString()];
+  
+    while(d_date < desired_end) {
+      desired_between.push(new Date(d_date).toLocaleDateString());
+      d_date.setDate(d_date.getDate() + 1);
+    }
+    
+    let event_between: any = []
+
+    hut.events.forEach(event => {
+
+      let event_start = parseISO(event.start.toString())
+      let event_end = parseISO(event.end!.toString())
+
+      const e_date = new Date(event_start.getTime());
+
+      // e_date.setDate(e_date.getDate() + 1);
+      
+      event_between = [];
+    
+      while(e_date < event_end) {
+        event_between.push(new Date(e_date).toLocaleDateString());
+        e_date.setDate(e_date.getDate() + 1);
+      }
+      let intersection = event_between.filter((date: string) => desired_between.includes(date))
+    
+      if(intersection.length > 0)
+        result = false
+    })
+    
+    return result
   }
 
   isFavorite(zimmer_id: string){

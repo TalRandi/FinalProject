@@ -37,7 +37,6 @@ export class ClientOrdersComponent implements OnInit {
         let start_date = new Date(this.formatDate(this.client.orders[i].start_date)).getTime()
                 
         this.remaining_days[i] = Math.round((start_date - today) / (1000 * 3600 * 24))
-        console.log(this.client.orders[11].zimmerOwnerEmail);
         
       }
       

@@ -41,14 +41,15 @@ export class ZimmerDetailsComponent implements OnInit {
   address_lat: number;
   address_lng: number;
   disabled_dates: string[] = [];
+  invalidDate: boolean[] = []
 
   onOpenDatePicker(hut: Hut, index: number){
     this.disabled_dates = [];
     if(hut.events){
       hut.events.forEach(event => {
         let temp_date = parseISO(event.start.toString());
-        let start =  parseISO(event.start.toString()).toLocaleDateString()
-        let end =  parseISO(event.end ? event.end.toString() : "").toLocaleDateString()
+        let start = parseISO(event.start.toString()).toLocaleDateString()
+        let end = parseISO(event.end ? event.end.toString() : "").toLocaleDateString()
         let temp_string = start;
         while(temp_string != end){
           if(!this.disabled_dates.includes(temp_string)){
@@ -57,7 +58,7 @@ export class ZimmerDetailsComponent implements OnInit {
           temp_date = addDays(temp_date, 1);
           temp_string = temp_date.toLocaleDateString();   
         }  
-      })
+      })            
       this.hutDates.get(index)!.dateFilter = this.rangeFilter.bind(this);
     }
   }
@@ -84,14 +85,17 @@ export class ZimmerDetailsComponent implements OnInit {
       var dates_from_local = JSON.parse(localStorage.getItem('Query')!.toString());
       this.startDate = dates_from_local.start
       this.endDate = dates_from_local.end
-      
     }
-  
+
     this.storage.fetchAcceptedZimmers().subscribe(zimmers => {
       this.zimmer = zimmers.filter(zimmer => { return zimmer.zimmer_id == this.zimmer_id })[0]
       if(this.zimmer){
         this.setLngLat()
         this.isLoading = false
+
+        for (let index = 0; index < this.zimmer.huts.length; index++) {
+          this.invalidDate[index] = false         
+        }
       }
             
       if(this.zimmer === undefined && !this.authService.admin){
@@ -113,6 +117,50 @@ export class ZimmerDetailsComponent implements OnInit {
     })
  
   }
+
+  dateRangeChange(start: string, end: string, hut_index: number){
+    
+    this.invalidDate[hut_index] = false
+    
+    let desired_start = new Date(this.formatDate(start))
+    let desired_end = new Date(this.formatDate(end))
+    
+    const d_date = new Date(desired_start.getTime());
+
+    d_date.setDate(d_date.getDate() + 1);
+  
+    const desired_between = [desired_start.toLocaleDateString()];
+  
+    while(d_date < desired_end) {
+      desired_between.push(new Date(d_date).toLocaleDateString());
+      d_date.setDate(d_date.getDate() + 1);
+    }
+    
+    let intersection = this.disabled_dates.filter((date: string) => desired_between.includes(date))
+
+    if(intersection.length > 0)
+      this.invalidDate[hut_index] = true
+
+  }
+
+
+  formatDate(date: string){
+    if(date == "") return ""
+
+    let res = date.split('.');
+    let temp = res[2]
+    res[2] = res[0]
+    res[0] = temp
+
+    if(res[1].length < 2)
+      res[1] = '0'+res[1]
+
+    if(res[2].length < 2)
+      res[2] = '0'+res[2]
+
+    return res[0]+'/'+res[1]+'/'+res[2]
+  }
+
   onOrderSubmition(hut: Hut, index: number){
 
     let start = this.dateStart.get(index)?.nativeElement.value

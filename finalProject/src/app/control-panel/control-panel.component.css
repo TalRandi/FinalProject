@@ -1,7 +1,7 @@
 .control{
     filter: drop-shadow(5px 5px 10px #04293A);
     border: solid 1px #ECB365;
-    background-color: #ecb46595;
+    background-color: #ecb465;
     opacity: 0.9;
     border-radius: 20px;
     padding: 3%;
@@ -17,7 +17,7 @@
 .control-mat{
     filter: drop-shadow(5px 5px 10px #04293A);
     border: solid 1px #ECB365;
-    background-color: #ecb46595;
+    background-color: #ecb465;
     opacity: 0.9;
     border-radius: 20px;
     margin: 5%;
@@ -70,7 +70,7 @@ button:hover{
 }
 
 mat-expansion-panel{
-    background-color: #064663be;
+    background-color: #064663;
 }
 mat-panel-description{
     margin: 0;
