@@ -136,12 +136,13 @@
                                         <mat-form-field>
                                             <mat-label>בחר תאריכים</mat-label>
                                             <mat-date-range-input #hutDates [rangePicker]="dates_picker" [min]="minDate">
-                                                <input matStartDate #dateRangeStart [value]="startDate">
-                                                <input matEndDate #dateRangeEnd [value]="endDate">
+                                                <input matStartDate #dateRangeStart readonly>
+                                                <input matEndDate #dateRangeEnd readonly (dateChange)="dateRangeChange(dateRangeStart.value, dateRangeEnd.value, hut_index)">
                                             </mat-date-range-input>
                                             <mat-datepicker-toggle matSuffix [for]="dates_picker" (click)="onOpenDatePicker(hut, hut_index)"></mat-datepicker-toggle>
                                             <mat-date-range-picker #dates_picker></mat-date-range-picker>
                                         </mat-form-field>
+                                        <span class="help-block" *ngIf="invalidDate[hut_index]">* תאריך לא חוקי!</span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -272,9 +273,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="alert alert-warning">
+                            <p>שים לב! ההזמנה תישלח לבעל המקום, ההזמנה תישמר רק לאחר אישורו של בעל המקום וקבלת מייל אישור</p>
+                        </div> 
                         <div class="row">
                             <div class="col col-auto">
-                                <button type="submit" class="btn" [disabled]="form.invalid || dateRangeStart.value == ''||  dateRangeEnd.value == ''">בצע הזמנה</button>
+                                <button type="submit" class="btn" [disabled]="form.invalid || dateRangeStart.value == ''||  dateRangeEnd.value == '' || invalidDate[hut_index]">בצע הזמנה</button>
                             </div>
                         </div>
                     </form>
