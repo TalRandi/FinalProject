@@ -14,7 +14,8 @@
         </div>
         <div class="col-6 col-md-3 border-right">
             <img src="../../../assets/images/placeholder.png" height="50px" width="50px">
-            <h1>{{ zimmer.region }}, {{ zimmer.address.formatted_address.includes(", ישראל")? zimmer.address.formatted_address.substring(0, zimmer.address.formatted_address.length - 7) : zimmer.address.formatted_address }}</h1>
+            <h1 *ngIf="zimmer.address.formatted_address">{{ zimmer.region }}, {{ zimmer.address.formatted_address.includes(", ישראל")? zimmer.address.formatted_address.substring(0, zimmer.address.formatted_address.length - 7) : zimmer.address.formatted_address }}</h1>
+            <h1 *ngIf="!zimmer.address.formatted_address">{{ zimmer.region }}, {{ zimmer.address }}</h1>
         </div>
         <div class="col-6 col-md-3 border-right">
             <img src="../../../assets/images/entrepreneur.png" height="50px" width="50px">

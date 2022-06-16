@@ -130,7 +130,7 @@ export class PendingRequestsComponent implements OnInit {
       for (let i = 0; i < this.requests.length; i++)
         this.requests_index.push(true)        
     })
-    this.storage.fetchArchivedRequests().subscribe(archived_requests => this.requests_archive = archived_requests);
+    this.storage.fetchArchivedRequests().subscribe(archived_requests => this.requests_archive = archived_requests);  
   }
 
   zimmer_clicked(zimmer: Zimmer): void{

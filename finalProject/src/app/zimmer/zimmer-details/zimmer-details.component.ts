@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,9 +11,8 @@ import { Client } from 'src/app/shared-data/client.model';
 import { InnerDataService } from '../../shared-data/inner-data.service';
 import { EmailService } from 'src/app/shared-data/email.service';
 import { finalize } from 'rxjs/operators';
-import { DateFilterFn, MatDateRangeInput } from '@angular/material/datepicker';
+import { MatDateRangeInput } from '@angular/material/datepicker';
 import { addDays, parseISO } from 'date-fns';
-import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -107,7 +106,7 @@ export class ZimmerDetailsComponent implements OnInit {
           this.setLngLat();
         })
       }
-      if(this.authService.zimmer == 'client'){
+      if(this.authService.zimmer == 'client' && !this.authService.admin){
         var userData = JSON.parse(localStorage.getItem('userData')!.toString());
         this.storage.getClient(userData.email).subscribe(client => {
           this.client = client;
@@ -236,8 +235,10 @@ export class ZimmerDetailsComponent implements OnInit {
   }
 
   setLngLat(){
-    this.address_lat = +this.zimmer.address.geometry.location.lat      
-    this.address_lng = +this.zimmer.address.geometry.location.lng
+    if(this.zimmer.address.geometry) {
+      this.address_lat = +this.zimmer.address.geometry.location.lat      
+      this.address_lng = +this.zimmer.address.geometry.location.lng
+    }
   }
 
   calculatePricing(start: string, end: string, hut: Hut){
@@ -285,6 +286,7 @@ export class ZimmerDetailsComponent implements OnInit {
         let edited_zimmer = zimmers.filter(zimmer => {return zimmer.zimmer_id == this.zimmer_id})[0];
         if(edited_zimmer){
           this.zimmer = edited_zimmer;
+          this.setLngLat();
           let css = document.getElementsByClassName('wrapper') as HTMLCollectionOf<HTMLElement>;
           css[0].style.setProperty('border-style', 'dashed');
           this.edit = true;
@@ -296,6 +298,7 @@ export class ZimmerDetailsComponent implements OnInit {
         let active_zimmer = zimmers.filter(zimmer => {return zimmer.zimmer_id == this.zimmer_id})[0];
         if(active_zimmer){
           this.zimmer = active_zimmer;
+          this.setLngLat();
           let css = document.getElementsByClassName('wrapper') as HTMLCollectionOf<HTMLElement>;
           css[0].style.setProperty('border-style', 'solid');
           this.edit = false;

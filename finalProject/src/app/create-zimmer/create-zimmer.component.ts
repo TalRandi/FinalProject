@@ -32,8 +32,7 @@ export class CreateZimmerComponent implements OnInit {
   images: File[] = [];
   hutImages: File[][] = [];
   features: string[] = [];
-  validAddress = false;
-  firstTouch = false;
+  zimmer_address: any;
    
   options = {
     componentRestrictions: { country: "il" },
@@ -47,13 +46,12 @@ export class CreateZimmerComponent implements OnInit {
               private emailService: EmailService) { }
 
   handleAddressChange(address: Address){
-    this.firstTouch = true;
     if(address.geometry && address.formatted_address && address.vicinity){
-      this.validAddress = true;
-      this.generalForm.value.address = address; 
+      this.zimmer_address = address; 
     }
-    else
-      this.validAddress = false;
+    else{
+      this.zimmer_address = undefined;
+    }
   }  
 
   onSubmit(){
@@ -95,7 +93,7 @@ export class CreateZimmerComponent implements OnInit {
         min_price_regular,
         min_price_weekend,
         this.generalForm.value.region,
-        this.generalForm.value.address,
+        this.zimmer_address,
         4,
         zimmer_id,
         this.features,

@@ -32,9 +32,9 @@ export class MyZimmerComponent implements OnInit {
   hut_counter: number[];
   zimmer_to_display:Zimmer;
   features: string[] = [];
-  validAddress = true;
   address_lat: number;
   address_lng: number;
+  zimmer_address: any;
   
   options = {
     componentRestrictions: { country: "il" },
@@ -47,12 +47,12 @@ export class MyZimmerComponent implements OnInit {
 
   handleAddressChange(address: Address){
     if(address.geometry && address.formatted_address && address.vicinity){
-      this.validAddress = true;
-      this.generalForm.value.address = address; 
+      this.zimmer_address = address; 
     }
-    else
-      this.validAddress = false;
-  } 
+    else{
+      this.zimmer_address = undefined;
+    }
+  }  
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -60,7 +60,9 @@ export class MyZimmerComponent implements OnInit {
       if(zimmers){
         this.my_zimmer = zimmers.filter(zimmer => zimmer.zimmer_id == this.authService.zimmer.zimmer_id);
         this.zimmer_to_display = this.my_zimmer[0]
-        this.setLngLat(); 
+        if(this.zimmer_to_display){
+          this.setLngLat(); 
+        }
       }
       this.storage.fetchPendingZimmers().pipe(finalize(() => this.isLoading = false)).subscribe(pending_zimmers => {
         if(pending_zimmers)
@@ -72,12 +74,15 @@ export class MyZimmerComponent implements OnInit {
   }
 
   setLngLat(){
-    this.address_lat = +this.zimmer_to_display.address.geometry.location.lat      
-    this.address_lng = +this.zimmer_to_display.address.geometry.location.lng
+    if(this.zimmer_to_display.address.geometry) {
+      this.address_lat = +this.zimmer_to_display.address.geometry.location.lat      
+      this.address_lng = +this.zimmer_to_display.address.geometry.location.lng
+    }
   }
 
   onZimmerEdit(){
     this.hut_counter = [...Array(this.zimmer_to_display.huts.length).keys()];
+    this.zimmer_address = this.zimmer_to_display.address; 
     this.zimmer_to_display.images.forEach(image_url => {
       this.storage.getImage(image_url).subscribe(request => {     
         request.onload = () => {
@@ -193,10 +198,6 @@ export class MyZimmerComponent implements OnInit {
     return isInvalidHut
   }
   onSubmit(){
-    if(!this.generalForm.value.address.formatted_address){
-      this.handleAddressChange(this.zimmer_to_display.address);
-    }
-    
     this.isLoading = true;
     let valid_form = true;
     this.huts = [];
@@ -231,7 +232,7 @@ export class MyZimmerComponent implements OnInit {
         min_price_regular,
         min_price_weekend,
         this.generalForm.value.region,
-        this.generalForm.value.address,
+        this.zimmer_address,
         4,
         zimmer_id,
         this.features,

@@ -41,7 +41,8 @@
                                   </div>
                                   <div class="col-6 col-md-3 border-right">
                                     <img src="../../../assets/images/placeholder.png" height="50px" width="50px">
-                                    <h1>{{ my_zimmer[0].region }}, {{ my_zimmer[0].address.formatted_address.includes(", ישראל")? my_zimmer[0].address.formatted_address.substring(0, my_zimmer[0].address.formatted_address.length - 7) : my_zimmer[0].address.formatted_address }}</h1>
+                                    <h1 *ngIf="my_zimmer[0].address.formatted_address">{{ my_zimmer[0].region }}, {{ my_zimmer[0].address.formatted_address.includes(", ישראל")? my_zimmer[0].address.formatted_address.substring(0, my_zimmer[0].address.formatted_address.length - 7) : my_zimmer[0].address.formatted_address }}</h1>
+                                    <h1 *ngIf="!my_zimmer[0].address.formatted_address">{{ my_zimmer[0].region }}, {{ my_zimmer[0].address }}</h1>
                                   </div>
                                   <div class="col-6 col-md-3 border-right">
                                     <img src="../../../assets/images/entrepreneur.png" height="50px" width="50px">
@@ -182,8 +183,7 @@
                                     <label for="location">מיקום *</label>
                                     <input name="address" required class="form-control" [ngModel]="zimmer_to_display.address.formatted_address" [options]="options" ngx-google-places-autocomplete #address="ngModel" 
                                     (onAddressChange)="handleAddressChange($event)" placeholder="">
-                                    <span class="help-block" *ngIf="(address.touched && address.invalid) ||  (address.touched && !validAddress)">* חובה לבחור מיקום מהרשימה!</span>
-                                  </div> 
+                                    <span class="help-block" *ngIf="((address.touched && address.invalid) || (address.touched && !zimmer_address))">* חובה לבחור מיקום מהרשימה!</span>                                  </div> 
                               
                                   <div class="form-group">
                                     <label for="generalDescription">תיאור *</label>
@@ -197,7 +197,7 @@
                                     <ngx-dropzone-label>גרור לכאן</ngx-dropzone-label>
                                     <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="img" *ngFor="let img of images" [removable]="true" (removed)="onRemove(img)"></ngx-dropzone-image-preview>
                                   </ngx-dropzone>
-                                  <button type="submit" class="btn append-and-submit" [disabled]="form.invalid || hutValidator() || images.length == 0 || !validAddress">אישור</button>
+                                  <button type="submit" class="btn append-and-submit" [disabled]="form.invalid || hutValidator() || images.length == 0 || !zimmer_address">אישור</button>
                                 </form>
                               </div>
                         

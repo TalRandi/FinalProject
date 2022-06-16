@@ -41,7 +41,7 @@
               <label for="location">מיקום *</label>
               <input name="address" required class="form-control" ngModel [options]="options" ngx-google-places-autocomplete #address="ngModel" 
               (onAddressChange)="handleAddressChange($event)" placeholder="">
-              <span class="help-block" *ngIf="(address.touched && address.invalid) ||  (address.touched && !validAddress && firstTouch)">* חובה לבחור מיקום מהרשימה!</span>
+              <span class="help-block" *ngIf="((address.touched && address.invalid) || (address.touched && !zimmer_address))">* חובה לבחור מיקום מהרשימה!</span>
             </div> 
             
             <div class="form-group col-6">
@@ -70,7 +70,7 @@
               <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="img" *ngFor="let img of images" [removable]="true" (removed)="onRemove(img)"></ngx-dropzone-image-preview>
             </ngx-dropzone>
             
-            <button type="submit" class="btn append-and-submit" [disabled]="form.invalid || hutValidator() || images.length == 0 || !validAddress">אישור</button>
+            <button type="submit" class="btn append-and-submit" [disabled]="form.invalid || hutValidator() || images.length == 0 || !zimmer_address">אישור</button>
         </form>
         <div class="alert alert-danger" *ngIf="error != '' ">
           <p>{{ error }}</p>
