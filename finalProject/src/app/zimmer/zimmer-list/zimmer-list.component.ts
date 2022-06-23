@@ -466,7 +466,7 @@ export class ZimmerListComponent implements OnInit, OnDestroy {
     this.zimmers_to_display.splice(index, 1);
 
     let header = zimmer.ownerName + ", שלום רב "
-    let message = "זוהי הודעה על חסימת הצימר - " + zimmer.zimmerName
+    let message = "זוהי הודעה על הסרת הצימר - " + zimmer.zimmerName
     this.emailService.sendEmail(header, zimmer.email, message, "GoEasy")
 
     this.storage.updateZimmer(zimmer).pipe(finalize(() => this.isLoading = false)).subscribe()

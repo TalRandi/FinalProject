@@ -145,7 +145,7 @@ export class PendingRequestsComponent implements OnInit {
     this.disabled_zimmers.splice(index, 1);
 
     let header = zimmer.ownerName + ", שלום רב "
-    let enable_message = "זוהי הודעה על ביטול החסימה לצימר - " + zimmer.zimmerName
+    let enable_message = "זוהי הודעה על ביטול הסרת הצימר - " + zimmer.zimmerName
     this.emailService.sendEmail(header, zimmer.email, enable_message, "GoEasy")
     
     this.storage.updateZimmer(zimmer).subscribe()

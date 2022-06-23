@@ -89,7 +89,7 @@
                         <h2>{{ zimmer.ownerName }} - {{ zimmer.phone }}</h2>
                         <h4>מקסימום אורחים: {{ zimmer.total_capacity }}</h4>
                         <h4>מספר בקתות: {{ zimmer.huts.length }}</h4>
-                        <h4>דירוג הגולשים: <ngb-rating [rate]="zimmer.rate | round" [readonly]="true" [max]="5"></ngb-rating></h4>
+                        <h4>דירוג משוקלל: <ngb-rating [rate]="zimmer.rate | round" [readonly]="true" [max]="5"></ngb-rating></h4>
                         <div class="price row">
                             <div class="col-6">
                                 <h2>אמצ"ש החל מ {{ zimmer.min_price_regular }} ש"ח</h2>
@@ -103,7 +103,7 @@
                         <mat-icon *ngIf="client && !isFavorite(zimmer.zimmer_id)" (click)="favoriteClicked(zimmer, 'addFavorite')" class="favorite">favorite_border</mat-icon>
                         <mat-icon *ngIf="client && isFavorite(zimmer.zimmer_id)" (click)="favoriteClicked(zimmer, 'removeFavorite')" class="favorite">favorite</mat-icon>
                         <button (click)="zimmer_clicked(zimmer)" class="btn btn-block order-here">הזמן כאן</button>
-                        <button *ngIf="this.authService.admin" (click)="disableZimmer(zimmer, index)" class="btn btn-block block-zimmer">חסימה</button>
+                        <button *ngIf="this.authService.admin" (click)="disableZimmer(zimmer, index)" class="btn btn-block block-zimmer">הסרה</button>
                     </div>
                 </div>
             </ng-template>

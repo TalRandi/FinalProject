@@ -66,7 +66,7 @@
                                 <h2>{{ zimmer.ownerName }} - {{ zimmer.phone }}</h2>
                                 <h4>מקסימום אורחים: {{ zimmer.total_capacity }}</h4>
                                 <h4>מספר בקתות: {{ zimmer.huts.length }}</h4>
-                                <h4>דירוג הגולשים: <ngb-rating  [rate]="zimmer.rate | round" [readonly]="true" [max]="5"></ngb-rating></h4>
+                                <h4>דירוג משוקלל: <ngb-rating  [rate]="zimmer.rate | round" [readonly]="true" [max]="5"></ngb-rating></h4>
                                 <div class="price row">
                                     <div class="col-6">
                                         <h2>אמצ"ש החל מ {{ zimmer.min_price_regular }} ש"ח</h2>
